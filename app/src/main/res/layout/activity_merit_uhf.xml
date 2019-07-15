@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    >
+    <TextView
+        android:id="@+id/textview_title_config"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:focusableInTouchMode="true"
+        android:scrollHorizontally="true"
+        android:scrollbars="horizontal"
+        android:singleLine="true" />
+
+    <TextView
+        android:id="@+id/textView_version"
+        android:text="Text version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="5dp"/>
+
+
+
+    <EditText
+        android:text="Serial No"
+        android:id="@+id/editSerNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="50dp"
+        />
+
+    <Button
+        android:text="Get Details"
+        android:id="@+id/btnGetDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="230dp"
+        android:textSize="20dp"
+        android:layout_marginTop="50dp"/>
+
+    <TextView
+        android:text="Serial No Details"
+        android:id="@+id/tvSNDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="5dp"/>
+
+    <TextView
+        android:text="Item Code :"
+        android:id="@+id/tvItemCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="5dp"/>
+
+    <TextView
+        android:text="Item Code Val "
+        android:id="@+id/tvItemCodeVal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="140dp"/>
+
+
+
+    <TextView
+        android:text="RFID1 :"
+        android:id="@+id/tvRfid1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="5dp"/>
+
+    <EditText
+        android:id="@+id/editRfid1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="90dp" />
+
+    <Button
+        android:id="@+id/btnScan1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scan-1"
+        android:textSize="15sp"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="300dp"
+        />
+
+    <TextView
+        android:text="RFID2 :"
+        android:id="@+id/tvRfid2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        android:layout_marginTop="250dp"
+        android:layout_marginLeft="5dp"/>
+
+
+
+    <EditText
+        android:id="@+id/editRfid2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:layout_marginTop="250dp"
+        android:layout_marginLeft="90dp" />
+
+    <Button
+        android:id="@+id/btnScan2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnScan1"
+        android:layout_marginLeft="300dp"
+        android:layout_marginTop="2dp"
+        android:text="Scan-2"
+        android:textSize="15sp" />
+
+    <Button
+        android:text="Associate"
+        android:id="@+id/btnAssociate"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="90dp"
+        android:layout_marginTop="300dp"
+        />
+
+    <Button
+        android:id="@+id/btnScan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="startInvetory"
+        android:text="Scan"
+        android:textSize="20dp"
+        android:layout_marginTop="350dp"
+        />
+
+    <TextView
+        android:text="EPC label"
+        android:id="@+id/tvEpcLabel1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        android:layout_marginTop="400dp"
+        android:layout_marginLeft="5dp"/>
+
+    <Button
+        android:id="@+id/button_connect"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="connect"
+        android:layout_marginTop="450dp"/>
+
+</RelativeLayout>
