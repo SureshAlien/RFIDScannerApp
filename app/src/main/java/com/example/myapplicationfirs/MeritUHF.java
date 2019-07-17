@@ -114,13 +114,15 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         power = shared.getInt("power", 30);
         area = shared.getInt("area", 3);
 
-
         initView();
 
         Thread thread = new InventoryThread();
         thread.start();
 
         Util.initSoundPool(this);
+
+        connect_erp_server();
+
 
 
     } //onCreate ends
@@ -284,6 +286,19 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                 if(rfid1Flag){
                     editRfid1.setText(epc);
                     rfid1Flag = false;
+
+                    //RFID tag1 validattion against all tag1 of all serial numbers
+
+                    String rfid_tag1 = editRfid1.getText().toString() ;
+                    String serialNum = editSerNo.getText().toString();
+                    JSONObject rfiid_tag1_details ;
+
+                    if (rfid_tag1 != null){
+                        rfid_validation_against_serno(rfid_tag1);
+                    }
+                    //RFID tag1 validattion against all tag2 of all serial numbers
+
+
                 }
                 if(rfid2Flag){
                     editRfid2.setText(epc);
@@ -292,6 +307,8 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
             }
         });
     } //addlist ends
+
+
 
 
     public void onClick(View v) {
@@ -325,6 +342,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                     btnScan1.setText("Scan-1");
 
                 }
+
                 break;
 
             case R.id.btnScan2:
@@ -351,8 +369,11 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                 System.out.println("***************************Associate Button clicked**************************************"+rf1 +" " +rf2 );
 
                 if(rf1 != null || rf2 != null){
-
-                    connect_erp_server(rf1,rf2,serialNum);
+                    try {
+                        populatetheDataModel(username,rf1,rf2,serialNum);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
 
         }
@@ -396,15 +417,15 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
     }
 
     //start of erp connection codes
-    public void connect_erp_server(String rf1,String rf2,String serialNum){
+    public void connect_erp_server(){
         System.out.println("***************************Associate Button clicked**************************************");
-        requestLogin(rf1,rf2,serialNum);
+        requestLogin();
 
         CookieManager cookieManager = new CookieManager(new com.example.myapplicationfirs.PersistentCookieStoreManager(MeritUHF.this), CookiePolicy.ACCEPT_ORIGINAL_SERVER);
         CookieHandler.setDefault(cookieManager);
     } //end connect_erp_server
 
-    private void requestLogin(final String rf1, final String rf2, final String serialNum) {
+    private void requestLogin() {
         final RequestQueue requestQueue1 = Volley.newRequestQueue(MeritUHF.this);
 
         //String  myUrl = "http://192.168.0.62:8000/api/method/login"; //developer lap url
@@ -432,7 +453,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                         System.out.println("Suresh ************From requestLogin Respons ************************ : "+loggedUser);
 
                         //added on 25th Oct 2017 to tie user down to a warehouse
-                        getLoggedInUserData(rf1,rf2,serialNum);
+                        getLoggedInUserData();
 
                     } else {
                         Toast.makeText(getApplicationContext(),"loginResponse is null" , Toast.LENGTH_LONG).show();
@@ -477,7 +498,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
     } //end of request login
 
-    private void getLoggedInUserData(final String rf1, final String rf2, final String serialNum) {
+    private void getLoggedInUserData() {
         RequestQueue requestQueue2 = Volley.newRequestQueue(this);
 
         //StringRequest stringRequest1 = new StringRequest()
@@ -502,7 +523,6 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                     System.out.println("Suresh ************ From getLoggedInUserData Response came for this sec login  ");
 
                     System.out.println("Suresh ************ From getLoggedInUserData Response came for this sec login  ");
-                    populatetheDataModel(username,rf1,rf2,serialNum);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -536,6 +556,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
 
     }
+
     public Map<String, String> getHeaders () {
         Map<String, String> headers = new HashMap<>();
         SharedPreferences prefs = this.getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
@@ -625,6 +646,148 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
     }
 
     //End of erp connection codes
+
+    //validation functions
+    private void rfid_validation_against_serno(String rfid_tag) {
+
+        System.out.println("Suresh ************ From rfid_validation_against_serno" +rfid_tag);
+        final JSONObject dup_rfid_tag_details = new JSONObject() ;
+
+        RequestQueue requestQueue1 = Volley.newRequestQueue(this);
+        //String myUrl2 = "http://192.168.0.62:8000/api/method/frappe.auth.get_logged_user"; //dev lap url
+        String rfid_val_url = "http://192.168.0.15/api/resource/Serial%20No?fields=[\"name\"]&filters=[[\"Serial%20No\",\"pch_rfid_tag1\",\"=\",\""+rfid_tag+ "\"]]";//localhost url
+        System.out.println("Suresh ************ From rfid_validation_against_serno rfid_val_url" +rfid_val_url);
+
+        //JSon Request
+
+
+        JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.GET, rfid_val_url,null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // display response
+                        try {
+                            System.out.println("Suresh ************ rfid_validation_against_serno response   "+response );
+
+                            if (response.length() != 0 ){
+                                //{"data":[{"name":"MeritSystems"}]}
+
+                                JSONArray jsonArray = response.getJSONArray("data");
+                                System.out.println("Suresh ************ rfid_validation_against_serno jsonArray  "+jsonArray );
+
+                                //for sure only one duplicate value will be there so i am itreating array
+                                JSONObject objectInArray = jsonArray.getJSONObject(0);
+                                System.out.println("Suresh ************ rfid_validation_against_serno objectInArray  "+objectInArray );
+
+                                String duplicate_serial_no = objectInArray.getString("name");
+                                System.out.println("Suresh ************ rfid_validation_against_serno duplicate_serial_no  "+duplicate_serial_no );
+
+                                dup_rfid_tag_details.put("duplicate_serial_no",duplicate_serial_no);
+                                dup_rfid_tag_details.put("matched_tag","pch_rfid_tag1");
+
+                                System.out.println("Suresh ************ Error rfid_validation_against_serno dup_rfid_tag_details type " + dup_rfid_tag_details);
+                            }
+                            else{
+                                System.out.println("Suresh ************ rfid_validation_against_serno no matching found for pch_rfid_tag1");
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("Suresh ************ Error rfid_validation_against_serno response type " + error);
+
+                        Toast.makeText(getApplicationContext(),"Error in getLoggedInUserData connection" , Toast.LENGTH_LONG).show();                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                return MeritUHF.this.getHeaders();
+            }
+
+        };
+
+        //Json Request
+        requestQueue1.add(JsonRequest);
+        System.out.println("Suresh ************  rfid_validation_against_serno dup_rfid_tag_details type " + dup_rfid_tag_details);
+
+
+        //req2
+        RequestQueue requestQueue2 = Volley.newRequestQueue(this);
+        //String myUrl2 = "http://192.168.0.62:8000/api/method/frappe.auth.get_logged_user"; //dev lap url
+        String rfid_val_url2 = "http://192.168.0.15/api/resource/Serial%20No?fields=[\"name\"]&filters=[[\"Serial%20No\",\"pch_rfid_tag2\",\"=\",\""+rfid_tag+ "\"]]";//localhost url
+        System.out.println("Suresh ************ From rfid_validation_against_serno rfid_val_url2" +rfid_val_url2);
+
+        //JSon Request
+
+
+        JsonObjectRequest JsonRequest2 = new JsonObjectRequest(Request.Method.GET, rfid_val_url2,null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // display response
+                        try {
+                            System.out.println("Suresh ************ rfid_validation_against_serno response   "+response );
+
+                            if (response.length() != 0 ){
+                                //{"data":[{"name":"MeritSystems"}]}
+
+                                JSONArray jsonArray = response.getJSONArray("data");
+                                System.out.println("Suresh ************ rfid_validation_against_serno jsonArray  "+jsonArray );
+
+                                //for sure only one duplicate value will be there so i am itreating array
+                                JSONObject objectInArray = jsonArray.getJSONObject(0);
+                                System.out.println("Suresh ************ rfid_validation_against_serno objectInArray  "+objectInArray );
+
+                                String duplicate_serial_no = objectInArray.getString("name");
+                                System.out.println("Suresh ************ rfid_validation_against_serno duplicate_serial_no  "+duplicate_serial_no );
+
+                                dup_rfid_tag_details.put("duplicate_serial_no",duplicate_serial_no);
+                                dup_rfid_tag_details.put("matched_tag","pch_rfid_tag2");
+
+                                System.out.println("Suresh ************  rfid_validation_against_serno dup_rfid_tag_details type " + dup_rfid_tag_details);
+                            }
+                            else{
+                                System.out.println("Suresh ************ rfid_validation_against_serno no matching found for pch_rfid_tag2");
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("Suresh ************ Error rfid_validation_against_serno response type " + error);
+
+                        Toast.makeText(getApplicationContext(),"Error in getLoggedInUserData connection" , Toast.LENGTH_LONG).show();                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                return MeritUHF.this.getHeaders();
+            }
+
+        };
+
+        //Json Request
+        requestQueue2.add(JsonRequest2);
+        System.out.println("Suresh ************  rfid_validation_against_serno dup_rfid_tag_details type " + dup_rfid_tag_details);
+
+    }
 
 
 } //whole class ends
