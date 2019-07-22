@@ -2,12 +2,14 @@ package com.example.myapplicationfirs;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -121,9 +123,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
         Util.initSoundPool(this);
 
-        connect_erp_server();
-
-
+        connect_erp_server(); //login erp
 
     } //onCreate ends
 
@@ -213,26 +213,16 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         btnScan2 = (Button)findViewById(R.id.btnScan2);
         btnScan2.setOnClickListener(this);
 
-
         btnAssociate = (Button)findViewById(R.id.btnAssociate);
         btnAssociate.setOnClickListener(this);
-
-
-
 
         editRfid1 = (EditText) findViewById(R.id.editRfid1);
         editRfid2 = (EditText) findViewById(R.id.editRfid2);
         editSerNo = (EditText) findViewById(R.id.editSerNo);
 
-
         tvEpcLabel = (TextView)findViewById(R.id.tvEpcLabel1);
         listEPC = new ArrayList<EPC>();
         textVersion = (TextView) findViewById(R.id.textView_version);
-
-
-
-
-
     } //initView ends
 
     class InventoryThread extends Thread {
@@ -273,7 +263,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
 
 
-    private void addToList(final List<EPC> list, final String epc, final byte rssi) {
+    private void addToList(final List<EPC> list, final String epc, final byte rssi)  {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -291,24 +281,34 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
                     String rfid_tag1 = editRfid1.getText().toString() ;
                     String serialNum = editSerNo.getText().toString();
-                    JSONObject rfiid_tag1_details ;
+                    JSONObject rfiid_tag1_exist_details ;
 
                     if (rfid_tag1 != null){
                         rfid_validation_against_serno(rfid_tag1);
+
+
                     }
                     //RFID tag1 validattion against all tag2 of all serial numbers
-
 
                 }
                 if(rfid2Flag){
                     editRfid2.setText(epc);
                     rfid2Flag = false;
+
+                    //RFID tag2 validattion against all tag1 of all serial numbers
+
+                    String rfid_tag2 = editRfid2.getText().toString() ;
+                    String serialNum = editSerNo.getText().toString();
+                    JSONObject rfiid_tag2_exist_details ;
+
+                    if (rfid_tag2 != null){
+                        rfid_validation_against_serno(rfid_tag2);
+                    }
+                    //RFID tag2 validattion against all tag2 of all serial numbers
                 }
             }
         });
     } //addlist ends
-
-
 
 
     public void onClick(View v) {
@@ -365,7 +365,6 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                 String rf1 = editRfid1.getText().toString();
                 String rf2 = editRfid2.getText().toString();
                 String serialNum = editSerNo.getText().toString();
-                System.out.println("***************************Associate Button clicked**************************************");
                 System.out.println("***************************Associate Button clicked**************************************"+rf1 +" " +rf2 );
 
                 if(rf1 != null || rf2 != null){
@@ -430,14 +429,12 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
         //String  myUrl = "http://192.168.0.62:8000/api/method/login"; //developer lap url
         String  myUrl = "http://192.168.0.15/api/method/login";  //localhost url
-
         System.out.println("Suresh ************ From requestLogin "+myUrl);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,myUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                System.out.println("Suresh ***********Came inside login respomse");
-
+                System.out.println("Suresh ***********Came inside login response");
 
                 String loginResponse = null;
 
@@ -451,10 +448,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                         String loggedUser = jsonObject.get("full" +
                                 "_name").toString();
                         System.out.println("Suresh ************From requestLogin Respons ************************ : "+loggedUser);
-
-                        //added on 25th Oct 2017 to tie user down to a warehouse
                         getLoggedInUserData();
-
                     } else {
                         Toast.makeText(getApplicationContext(),"loginResponse is null" , Toast.LENGTH_LONG).show();
                     }
@@ -466,17 +460,14 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
 
         }//end of sucess response
-                , new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println("Suresh ************ From requestLogin Error in login connection ");
-
-                Toast.makeText(getApplicationContext(),"Error in login connection" , Toast.LENGTH_LONG).show();
-
-
-            }
+        , new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            System.out.println("Suresh ************ From requestLogin Error in login connection ");
+            Toast.makeText(getApplicationContext(),"Error in login connection" , Toast.LENGTH_LONG).show();
+        }
         })
-                //end of error response and stringRequest params
+            //end of error response and stringRequest params
         {
             //This is for providing body for Post request@Override
             @Override
@@ -499,7 +490,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
     } //end of request login
 
     private void getLoggedInUserData() {
-        RequestQueue requestQueue2 = Volley.newRequestQueue(this);
+         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         //StringRequest stringRequest1 = new StringRequest()
 
@@ -507,7 +498,6 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         String myUrl2 = "http://192.168.0.15/api/method/frappe.auth.get_logged_user";//localhost url
         // String myUrl2 = "http://192.168.0.109:8000/api/method/login?usr=Administrator&pwd=password";
 
-        System.out.println("Suresh ************ From Home getLoggedInUserData() : " );
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.PUT, myUrl2, new Response.Listener<String>() {
@@ -517,30 +507,22 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                 try {
                     JSONObject object = new JSONObject(response);
                     //String loggedInUser = object.getString("message");
-                    System.out.println("Suresh ************ From getLoggedInUserData Response came for this sec login JSONObject object "+object );
-                    System.out.println("Suresh ************ From getLoggedInUserData Response came for this sec login JSONObject object "+object.getString("message") );
-
-                    System.out.println("Suresh ************ From getLoggedInUserData Response came for this sec login  ");
-
-                    System.out.println("Suresh ************ From getLoggedInUserData Response came for this sec login  ");
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-
             }
         }//end of sucess responseP
-                , new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+        , new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
 
-                System.out.println("Suresh ************ From getLoggedInUserData fragments Errorrrr in login connection ");
+            System.out.println("Suresh ************ From getLoggedInUserData fragments Errorrrr in login connection ");
 
-                Toast.makeText(getApplicationContext(),"Error in getLoggedInUserData connection" , Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Error in getLoggedInUserData connection" , Toast.LENGTH_LONG).show();
 
 
-            }
+        }
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -552,7 +534,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(30 * 1000, 0,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        requestQueue2.add(stringRequest);
+        requestQueue.add(stringRequest);
 
 
     }
@@ -581,25 +563,14 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
 
         JSONObject rfid_data = new JSONObject();
-
-        // putting data to JSONObject
         rfid_data.put("pch_rfid_tag1",rf1);
-
         rfid_data.put("pch_rfid_tag2",rf2);
 
         System.out.println("****************************Suresh from populatetheDataModel rfid_data**************************************"+ rfid_data);
 
-
-
-
-        String url = "http://192.168.0.15/api/method/nhance.api.android_api_test"; //lap
-
-
         final RequestQueue requestQueue = Volley.newRequestQueue(MeritUHF.this);
 
-        //Json object request
-
-        // prepare the Request
+        // prepare  Request
         JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.PUT, new_url,rfid_data,
                 new Response.Listener<JSONObject>()
                 {
@@ -626,7 +597,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
         };
 
-// add it to the RequestQueue
+        // add it to the RequestQueue
         requestQueue.add(JsonRequest);
 
         //Json object request
@@ -647,15 +618,16 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
     //End of erp connection codes
 
-    //validation functions
+    //validation functions  // {"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}
     private void rfid_validation_against_serno(String rfid_tag) {
 
         System.out.println("Suresh ************ From rfid_validation_against_serno" +rfid_tag);
-        final JSONObject dup_rfid_tag_details = new JSONObject() ;
+
 
         RequestQueue requestQueue1 = Volley.newRequestQueue(this);
         //String myUrl2 = "http://192.168.0.62:8000/api/method/frappe.auth.get_logged_user"; //dev lap url
         String rfid_val_url = "http://192.168.0.15/api/resource/Serial%20No?fields=[\"name\"]&filters=[[\"Serial%20No\",\"pch_rfid_tag1\",\"=\",\""+rfid_tag+ "\"]]";//localhost url
+
         System.out.println("Suresh ************ From rfid_validation_against_serno rfid_val_url" +rfid_val_url);
 
         //JSon Request
@@ -668,12 +640,12 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                     public void onResponse(JSONObject response) {
                         // display response
                         try {
-                            System.out.println("Suresh ************ rfid_validation_against_serno response   "+response );
+                            System.out.println("Suresh ************From 111111111111 rfid_validation_against_serno response   "+response );
 
-                            if (response.length() != 0 ){
-                                //{"data":[{"name":"MeritSystems"}]}
+                            JSONArray jsonArray = response.getJSONArray("data");
 
-                                JSONArray jsonArray = response.getJSONArray("data");
+                            if (jsonArray.length() != 0 ){                                //{"data":[{"name":"MeritSystems"}]}
+
                                 System.out.println("Suresh ************ rfid_validation_against_serno jsonArray  "+jsonArray );
 
                                 //for sure only one duplicate value will be there so i am itreating array
@@ -683,10 +655,18 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                                 String duplicate_serial_no = objectInArray.getString("name");
                                 System.out.println("Suresh ************ rfid_validation_against_serno duplicate_serial_no  "+duplicate_serial_no );
 
+                                JSONObject dup_rfid_tag_details = new JSONObject() ;
+
+
                                 dup_rfid_tag_details.put("duplicate_serial_no",duplicate_serial_no);
-                                dup_rfid_tag_details.put("matched_tag","pch_rfid_tag1");
+                                dup_rfid_tag_details.put("matched_tag","pch_rfid_tag1");   //{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}
 
                                 System.out.println("Suresh ************ Error rfid_validation_against_serno dup_rfid_tag_details type " + dup_rfid_tag_details);
+                                show_alert_dialog("Rfid Tag1",dup_rfid_tag_details);
+
+                                //alert box rfid1
+
+
                             }
                             else{
                                 System.out.println("Suresh ************ rfid_validation_against_serno no matching found for pch_rfid_tag1");
@@ -703,8 +683,8 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         System.out.println("Suresh ************ Error rfid_validation_against_serno response type " + error);
-
-                        Toast.makeText(getApplicationContext(),"Error in getLoggedInUserData connection" , Toast.LENGTH_LONG).show();                    }
+                        Toast.makeText(getApplicationContext(),"Error in getLoggedInUserData connection" , Toast.LENGTH_LONG).show();
+                    }
                 }
         ){
             @Override
@@ -714,10 +694,8 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
             }
 
         };
-
-        //Json Request
         requestQueue1.add(JsonRequest);
-        System.out.println("Suresh ************  rfid_validation_against_serno dup_rfid_tag_details type " + dup_rfid_tag_details);
+
 
 
         //req2
@@ -736,12 +714,13 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                     public void onResponse(JSONObject response) {
                         // display response
                         try {
-                            System.out.println("Suresh ************ rfid_validation_against_serno response   "+response );
+                            System.out.println("Suresh ************ 2222222222 rfid_validation_against_serno response   "+response );
+                            JSONArray jsonArray = response.getJSONArray("data");
 
-                            if (response.length() != 0 ){
+
+                            if (jsonArray.length() != 0 ){
                                 //{"data":[{"name":"MeritSystems"}]}
 
-                                JSONArray jsonArray = response.getJSONArray("data");
                                 System.out.println("Suresh ************ rfid_validation_against_serno jsonArray  "+jsonArray );
 
                                 //for sure only one duplicate value will be there so i am itreating array
@@ -751,10 +730,15 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                                 String duplicate_serial_no = objectInArray.getString("name");
                                 System.out.println("Suresh ************ rfid_validation_against_serno duplicate_serial_no  "+duplicate_serial_no );
 
+                                JSONObject dup_rfid_tag_details = new JSONObject() ;
+
                                 dup_rfid_tag_details.put("duplicate_serial_no",duplicate_serial_no);
                                 dup_rfid_tag_details.put("matched_tag","pch_rfid_tag2");
 
                                 System.out.println("Suresh ************  rfid_validation_against_serno dup_rfid_tag_details type " + dup_rfid_tag_details);
+
+                                show_alert_dialog("Rfid Tag2",dup_rfid_tag_details);
+
                             }
                             else{
                                 System.out.println("Suresh ************ rfid_validation_against_serno no matching found for pch_rfid_tag2");
@@ -785,9 +769,40 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
         //Json Request
         requestQueue2.add(JsonRequest2);
-        System.out.println("Suresh ************  rfid_validation_against_serno dup_rfid_tag_details type " + dup_rfid_tag_details);
+
+    }
+
+    public void  show_alert_dialog(final String tagName, JSONObject rfiid_tag_exist_details ) throws JSONException{
+
+        System.out.print("*************************** Enters show_alert_dialog**************************************");
+
+        String dialog_message ;
+        String dialog_title ;
+
+        dialog_title = "The Selected   "+tagName +"Already Exist"; //{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}
+
+        dialog_message = tagName + "is already bound with "+ rfiid_tag_exist_details.getString("matched_tag")+" of Serial Number "+ rfiid_tag_exist_details.getString("duplicate_serial_no");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MeritUHF.this);
+
+        builder.setMessage(dialog_message)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        System.out.print("*************************** Dialog box  yes clicked**************************************"+tagName);
+
+
+                    }
+                })
+                .setNegativeButton("No",null);
+
+        AlertDialog alert = builder.create();
+        alert.show();
+        System.out.print("*************************** Alert Shown**************************************");
 
     }
 
 
 } //whole class ends
+
+
