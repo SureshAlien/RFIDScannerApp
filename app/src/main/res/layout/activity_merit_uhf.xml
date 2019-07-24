@@ -30,7 +30,6 @@
 
 
     <EditText
-        android:text="Serial No"
         android:id="@+id/editSerNo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,6 +37,7 @@
         android:inputType="text"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="50dp"
+        android:hint="Serial No"
         />
 
     <Button
@@ -153,7 +153,7 @@
         android:onClick="startInvetory"
         android:text="Scan"
         android:textSize="20dp"
-        android:layout_marginTop="350dp"
+        android:layout_marginTop="500dp"
         />
 
     <TextView
@@ -162,15 +162,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24dp"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="550dp"
         android:layout_marginLeft="5dp"/>
-
-    <Button
-        android:id="@+id/button_connect"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="connect"
-        android:layout_marginTop="450dp"/>
 
 </RelativeLayout>

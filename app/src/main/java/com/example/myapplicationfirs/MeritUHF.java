@@ -104,6 +104,12 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
     String username = "administrator";
     JSONObject jsonObject;
 
+    //rfidValidation
+    JSONObject de_associate_rfid_details = new JSONObject();  //de_associate_rfid_details = {"RFID1" : {"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}
+    //"RFID2" : {"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"} }
+
+
+
 
 
 
@@ -281,10 +287,9 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
                     String rfid_tag1 = editRfid1.getText().toString() ;
                     String serialNum = editSerNo.getText().toString();
-                    JSONObject rfiid_tag1_exist_details ;
 
                     if (rfid_tag1 != null){
-                        rfid_validation_against_serno(rfid_tag1);
+                        rfid_validation_against_serno("RFID_TAG1",rfid_tag1);
 
 
                     }
@@ -302,7 +307,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                     JSONObject rfiid_tag2_exist_details ;
 
                     if (rfid_tag2 != null){
-                        rfid_validation_against_serno(rfid_tag2);
+                        rfid_validation_against_serno("RFID_TAG2",rfid_tag2);
                     }
                     //RFID tag2 validattion against all tag2 of all serial numbers
                 }
@@ -460,14 +465,14 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
 
         }//end of sucess response
-        , new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            System.out.println("Suresh ************ From requestLogin Error in login connection ");
-            Toast.makeText(getApplicationContext(),"Error in login connection" , Toast.LENGTH_LONG).show();
-        }
+                , new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("Suresh ************ From requestLogin Error in login connection ");
+                Toast.makeText(getApplicationContext(),"Error in login connection" , Toast.LENGTH_LONG).show();
+            }
         })
-            //end of error response and stringRequest params
+                //end of error response and stringRequest params
         {
             //This is for providing body for Post request@Override
             @Override
@@ -490,7 +495,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
     } //end of request login
 
     private void getLoggedInUserData() {
-         RequestQueue requestQueue = Volley.newRequestQueue(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         //StringRequest stringRequest1 = new StringRequest()
 
@@ -513,16 +518,16 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
             }
         }//end of sucess responseP
-        , new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
+                , new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
-            System.out.println("Suresh ************ From getLoggedInUserData fragments Errorrrr in login connection ");
+                System.out.println("Suresh ************ From getLoggedInUserData fragments Errorrrr in login connection ");
 
-            Toast.makeText(getApplicationContext(),"Error in getLoggedInUserData connection" , Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Error in getLoggedInUserData connection" , Toast.LENGTH_LONG).show();
 
 
-        }
+            }
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -619,16 +624,16 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
     //End of erp connection codes
 
     //validation functions  // {"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}
-    private void rfid_validation_against_serno(String rfid_tag) {
+    private void rfid_validation_against_serno(final String tagName, String rfid_tag) {
 
-        System.out.println("Suresh ************ From rfid_validation_against_serno" +rfid_tag);
+        System.out.println("*****************Enters rfid_validation_against_serno for  tagName :" +tagName+ " rfid_tag : " +rfid_tag);
 
 
         RequestQueue requestQueue1 = Volley.newRequestQueue(this);
         //String myUrl2 = "http://192.168.0.62:8000/api/method/frappe.auth.get_logged_user"; //dev lap url
         String rfid_val_url = "http://192.168.0.15/api/resource/Serial%20No?fields=[\"name\"]&filters=[[\"Serial%20No\",\"pch_rfid_tag1\",\"=\",\""+rfid_tag+ "\"]]";//localhost url
 
-        System.out.println("Suresh ************ From rfid_validation_against_serno rfid_val_url" +rfid_val_url);
+        System.out.println(" From rfid_validation_against_serno rfid_val_url" +rfid_val_url);
 
         //JSon Request
 
@@ -640,20 +645,20 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                     public void onResponse(JSONObject response) {
                         // display response
                         try {
-                            System.out.println("Suresh ************From 111111111111 rfid_validation_against_serno response   "+response );
+                            System.out.println("From  response of "+tagName+"  validation response :   "+response );
 
                             JSONArray jsonArray = response.getJSONArray("data");
 
                             if (jsonArray.length() != 0 ){                                //{"data":[{"name":"MeritSystems"}]}
 
-                                System.out.println("Suresh ************ rfid_validation_against_serno jsonArray  "+jsonArray );
+                                System.out.println("From  response of "+tagName+" rfid_validation_against_serno jsonArray  "+jsonArray );
 
                                 //for sure only one duplicate value will be there so i am itreating array
                                 JSONObject objectInArray = jsonArray.getJSONObject(0);
-                                System.out.println("Suresh ************ rfid_validation_against_serno objectInArray  "+objectInArray );
+                                System.out.println("From  response of "+tagName+" rfid_validation_against_serno objectInArray  "+objectInArray );
 
                                 String duplicate_serial_no = objectInArray.getString("name");
-                                System.out.println("Suresh ************ rfid_validation_against_serno duplicate_serial_no  "+duplicate_serial_no );
+                                System.out.println("From  response of "+tagName+" rfid_validation_against_serno duplicate_serial_no  "+duplicate_serial_no );
 
                                 JSONObject dup_rfid_tag_details = new JSONObject() ;
 
@@ -661,15 +666,15 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                                 dup_rfid_tag_details.put("duplicate_serial_no",duplicate_serial_no);
                                 dup_rfid_tag_details.put("matched_tag","pch_rfid_tag1");   //{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}
 
-                                System.out.println("Suresh ************ Error rfid_validation_against_serno dup_rfid_tag_details type " + dup_rfid_tag_details);
-                                show_alert_dialog("Rfid Tag1",dup_rfid_tag_details);
-
+                                System.out.println("From  response of "+tagName+" rfid_validation_against_serno dup_rfid_tag_details  "+dup_rfid_tag_details );
+                                show_alert_dialog(tagName,dup_rfid_tag_details);
+                                System.out.println("From  response of "+tagName+" called alert box" );
                                 //alert box rfid1
-
 
                             }
                             else{
-                                System.out.println("Suresh ************ rfid_validation_against_serno no matching found for pch_rfid_tag1");
+                                System.out.println("From  response of "+tagName+" rfid_validation_against_serno no matching found for pch_rfid_tag1 " );
+
                             }
 
 
@@ -714,34 +719,36 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                     public void onResponse(JSONObject response) {
                         // display response
                         try {
-                            System.out.println("Suresh ************ 2222222222 rfid_validation_against_serno response   "+response );
+                            System.out.println("From  response of "+tagName+"  validation response :   "+response );
                             JSONArray jsonArray = response.getJSONArray("data");
 
 
                             if (jsonArray.length() != 0 ){
                                 //{"data":[{"name":"MeritSystems"}]}
 
-                                System.out.println("Suresh ************ rfid_validation_against_serno jsonArray  "+jsonArray );
+                                System.out.println("From  response of "+tagName+" rfid_validation_against_serno jsonArray  "+jsonArray );
 
                                 //for sure only one duplicate value will be there so i am itreating array
                                 JSONObject objectInArray = jsonArray.getJSONObject(0);
-                                System.out.println("Suresh ************ rfid_validation_against_serno objectInArray  "+objectInArray );
+                                System.out.println("From  response of "+tagName+" rfid_validation_against_serno objectInArray  "+objectInArray );
 
                                 String duplicate_serial_no = objectInArray.getString("name");
-                                System.out.println("Suresh ************ rfid_validation_against_serno duplicate_serial_no  "+duplicate_serial_no );
+                                System.out.println("From  response of "+tagName+" rfid_validation_against_serno duplicate_serial_no  "+duplicate_serial_no );
 
                                 JSONObject dup_rfid_tag_details = new JSONObject() ;
 
                                 dup_rfid_tag_details.put("duplicate_serial_no",duplicate_serial_no);
                                 dup_rfid_tag_details.put("matched_tag","pch_rfid_tag2");
 
-                                System.out.println("Suresh ************  rfid_validation_against_serno dup_rfid_tag_details type " + dup_rfid_tag_details);
+                                System.out.println("From  response of "+tagName+" rfid_validation_against_serno dup_rfid_tag_details  "+dup_rfid_tag_details );
 
-                                show_alert_dialog("Rfid Tag2",dup_rfid_tag_details);
+                                show_alert_dialog(tagName,dup_rfid_tag_details);
+                                System.out.println("From  response of "+tagName+" called alert box" );
+
 
                             }
                             else{
-                                System.out.println("Suresh ************ rfid_validation_against_serno no matching found for pch_rfid_tag2");
+                                System.out.println("From  response of "+tagName+" rfid_validation_against_serno no matching found for pch_rfid_tag2 " );
                             }
 
 
@@ -772,16 +779,18 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
     }
 
-    public void  show_alert_dialog(final String tagName, JSONObject rfiid_tag_exist_details ) throws JSONException{
+    public void  show_alert_dialog(final String tagName, final JSONObject rfid_tag_exist_details ) throws JSONException{
 
-        System.out.print("*************************** Enters show_alert_dialog**************************************");
+        System.out.print("*************************** Enters show_alert_dialog************************************** for tagName : " +tagName+" rfid_tag_exist_details : "+rfid_tag_exist_details);
 
         String dialog_message ;
         String dialog_title ;
 
-        dialog_title = "The Selected   "+tagName +"Already Exist"; //{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}
+        final String loc_tagName = tagName == "RFID_TAG1" ? "Rfid Tag1" : "Rfid Tag2" ; //tagName is final cant change as client wants
 
-        dialog_message = tagName + "is already bound with "+ rfiid_tag_exist_details.getString("matched_tag")+" of Serial Number "+ rfiid_tag_exist_details.getString("duplicate_serial_no");
+        dialog_title = "The Selected   "+loc_tagName +"Already Exist"; //{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}
+
+        dialog_message = loc_tagName + "is already bound with "+ rfid_tag_exist_details.getString("matched_tag")+" of Serial Number "+ rfid_tag_exist_details.getString("duplicate_serial_no");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MeritUHF.this);
 
@@ -789,16 +798,50 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        System.out.print("*************************** Dialog box  yes clicked**************************************"+tagName);
+                        System.out.println("*************************** Dialog box  yes clicked**************************************"+loc_tagName);
 
+                        //stop scanning
+                        startFlag = false;
+                        if (tagName == "RFID_TAG1"){
+                            btnScan1.setText("Scan-1");
+                        }
+                        else if (tagName == "RFID_TAG2") {
+                            btnScan2.setText("Scan-2");
+                        }
 
+                        try {
+                        if (tagName == "RFID_TAG1") {
+                            de_associate_rfid_details.put("RFID_TAG1",rfid_tag_exist_details);
+                            System.out.println("***************************  yes Pressed RFID_TAG1 inserted to de_associate_rfid_details************************************** de_associate_rfid_details : "+de_associate_rfid_details);
+
+                        }
+                        else if (tagName == "RFID_TAG2"){
+                            de_associate_rfid_details.put("RFID_TAG2",rfid_tag_exist_details);
+                            System.out.println("***************************  yes Pressed RFID_TAG2 inserted to de_associate_rfid_details************************************** de_associate_rfid_details : "+de_associate_rfid_details);
+
+                        }
+                        System.out.println("***************************  yes Pressed ************************************** de_associate_rfid_details : "+de_associate_rfid_details);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 })
-                .setNegativeButton("No",null);
+                .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        if (tagName == "RFID_TAG1"){
+                            editRfid1.setText("");
+                        }
+                        else if (tagName == "RFID_TAG2") {
+                            editRfid2.setText("");
+                        }
+                        dialog.cancel();
+
+                    }
+                });
 
         AlertDialog alert = builder.create();
         alert.show();
-        System.out.print("*************************** Alert Shown**************************************");
 
     }
 
