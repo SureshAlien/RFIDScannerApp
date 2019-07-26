@@ -229,8 +229,8 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
 
         try {
-            de_associate_rfid_details.put("RFID_TAG1",null);
-            de_associate_rfid_details.put("RFID_TAG2",null);
+            de_associate_rfid_details.put("RFID_TAG1","empty");
+            de_associate_rfid_details.put("RFID_TAG2","empty");
 
 
         } catch (Exception e) {
@@ -381,10 +381,18 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                 String serialNum = editSerNo.getText().toString();
                 System.out.println("***************************Associate Button clicked**************************************"+rf1 +" " +rf2 );
 
+                System.out.println("***************************from Associate Button clicked dde_associate_rfid_details**************************************de_associate_rfid_details "+de_associate_rfid_details );
+
+
 //                /
                 //dde_associate_rfid_details : {"RFID_TAG1":{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"},"RFID_TAG2":{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}}eAssociate
                 try {
-                    if (de_associate_rfid_details.getString("RFID_TAG1") != null ){
+                    System.out.println("***************************from Associate Button clicked came inside try**************************************de_associate_rfid_details "+de_associate_rfid_details );
+
+                    if (de_associate_rfid_details.getString("RFID_TAG1") != "empty" ){
+
+                        System.out.println("***************************from Associate Button clicked RFID_TAG1 exist ************************************** " );
+
 
                         JSONObject RFID_TAG1_detail = de_associate_rfid_details.getJSONObject("RFID_TAG1");
 
@@ -393,18 +401,36 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
                         deAssociateRFID(tag_to_be_removed,sereno_with_dup_tag);
                     }
-                    if (de_associate_rfid_details.getString("RFID_TAG2") != null) {
+                    else {  //remove these 2 else blogs after testing
+                        System.out.println("***************************from Associate Button clicked RFID_TAG1 not exist ************************************** " );
+
+                    }
+                    System.out.println("***************************from Associate Button clicked passed RFID_TAG1************************************** ");
+
+                    if (de_associate_rfid_details.getString("RFID_TAG2") != "empty") {
                         JSONObject RFID_TAG2_detail = de_associate_rfid_details.getJSONObject("RFID_TAG2");
 
                         String tag_to_be_removed   =  RFID_TAG2_detail.getString("matched_tag");
                         String sereno_with_dup_tag =  RFID_TAG2_detail.getString("duplicate_serial_no");
 
+
                         deAssociateRFID(tag_to_be_removed,sereno_with_dup_tag);
                     }
+                    else {  //remove these 2 else blogs after testing
+                        System.out.println("***************************from Associate Button clicked RFID_TAG2 not exist ************************************** " );
 
-                    } catch (JSONException e) {
+                    }
+
+                    }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                    System.out.println("***************************from Associate Button clicked Error in try ************************************** "+e );
+
+
                 }
 
+
+                System.out.println("*************************from associate button click deAssociateRFID called**************************************");
 
                 if(rf1 != null || rf2 != null){
                     try {
