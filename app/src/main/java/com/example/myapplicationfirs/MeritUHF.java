@@ -106,9 +106,6 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
     //rfidValidation
     JSONObject de_associate_rfid_details = new JSONObject();  //de_associate_rfid_details = {"RFID1" : {"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}
-    //"RFID2" : {"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"} }
-
-
 
 
 
@@ -229,6 +226,19 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         tvEpcLabel = (TextView)findViewById(R.id.tvEpcLabel1);
         listEPC = new ArrayList<EPC>();
         textVersion = (TextView) findViewById(R.id.textView_version);
+
+
+        try {
+            de_associate_rfid_details.put("RFID_TAG1",null);
+            de_associate_rfid_details.put("RFID_TAG2",null);
+
+
+        } catch (Exception e) {
+            Log.e("ERROR",e.toString());
+        }
+
+
+
     } //initView ends
 
     class InventoryThread extends Thread {
@@ -364,7 +374,6 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                 }
                 break;
             case R.id.btnAssociate :
-                Toast.makeText(MeritUHF.this, "You have clicked Associate Button" ,Toast.LENGTH_SHORT).show();
                 System.out.println("***************************Associate Button clicked**************************************");
 
                 String rf1 = editRfid1.getText().toString();
@@ -372,9 +381,34 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                 String serialNum = editSerNo.getText().toString();
                 System.out.println("***************************Associate Button clicked**************************************"+rf1 +" " +rf2 );
 
+//                /
+                //dde_associate_rfid_details : {"RFID_TAG1":{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"},"RFID_TAG2":{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}}eAssociate
+                try {
+                    if (de_associate_rfid_details.getString("RFID_TAG1") != null ){
+
+                        JSONObject RFID_TAG1_detail = de_associate_rfid_details.getJSONObject("RFID_TAG1");
+
+                        String tag_to_be_removed   =  RFID_TAG1_detail.getString("matched_tag");
+                        String sereno_with_dup_tag =  RFID_TAG1_detail.getString("duplicate_serial_no");
+
+                        deAssociateRFID(tag_to_be_removed,sereno_with_dup_tag);
+                    }
+                    if (de_associate_rfid_details.getString("RFID_TAG2") != null) {
+                        JSONObject RFID_TAG2_detail = de_associate_rfid_details.getJSONObject("RFID_TAG2");
+
+                        String tag_to_be_removed   =  RFID_TAG2_detail.getString("matched_tag");
+                        String sereno_with_dup_tag =  RFID_TAG2_detail.getString("duplicate_serial_no");
+
+                        deAssociateRFID(tag_to_be_removed,sereno_with_dup_tag);
+                    }
+
+                    } catch (JSONException e) {
+                }
+
+
                 if(rf1 != null || rf2 != null){
                     try {
-                        populatetheDataModel(username,rf1,rf2,serialNum);
+                        associateRFIDTags(username,rf1,rf2,serialNum);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -382,6 +416,8 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
         }
     }//Onclick ends
+
+
 
     private void registerReceiver() {
         keyReceiver = new KeyReceiver();
@@ -558,10 +594,10 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         return headers;
     } //end of getuser data
 
-    private void populatetheDataModel(String username,String rf1,String rf2,String serialNum) throws JSONException {
+    private void associateRFIDTags(String username,String rf1,String rf2,String serialNum) throws JSONException {
 
-        System.out.println("****************************Suresh from populatetheDataModel**************************************");
-        System.out.println("**************************** from populatetheDataModel************************************** rf1data "+ rf1+ "rf2:" +rf2+"serialNum :"+serialNum);
+        System.out.println("****************************Suresh from associateRFIDTags**************************************");
+        System.out.println("**************************** from associateRFIDTags************************************** rf1data "+ rf1+ "rf2:" +rf2+"serialNum :"+serialNum);
 
         String new_url ="http://192.168.0.15/api/resource/Serial%20No/"+serialNum ;
         //String new_url ="http://192.168.0.62/api/resource/Serial%20No/"+serialNum ; //lap
@@ -571,7 +607,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         rfid_data.put("pch_rfid_tag1",rf1);
         rfid_data.put("pch_rfid_tag2",rf2);
 
-        System.out.println("****************************Suresh from populatetheDataModel rfid_data**************************************"+ rfid_data);
+        System.out.println("****************************Suresh from associateRFIDTags rfid_data**************************************"+ rfid_data);
 
         final RequestQueue requestQueue = Volley.newRequestQueue(MeritUHF.this);
 
@@ -582,7 +618,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                     @Override
                     public void onResponse(JSONObject response) {
                         // display response
-                        System.out.println("****************************JSON Object Response came **************************************"+response.toString());
+                        System.out.println("****************************JSON Object Response came  for associateRFIDTags**************************************"+response.toString());
 
                     }
                 },
@@ -590,7 +626,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                 {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println("****************************JSON Object Erro responce came **************************************");
+                        System.out.println("****************************JSON Object Erro responce came  for associateRFIDTags**************************************");
                     }
                 }
         ){
@@ -800,15 +836,6 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                     public void onClick(DialogInterface dialogInterface, int i) {
                         System.out.println("*************************** Dialog box  yes clicked**************************************"+loc_tagName);
 
-                        //stop scanning
-                        startFlag = false;
-                        if (tagName == "RFID_TAG1"){
-                            btnScan1.setText("Scan-1");
-                        }
-                        else if (tagName == "RFID_TAG2") {
-                            btnScan2.setText("Scan-2");
-                        }
-
                         try {
                         if (tagName == "RFID_TAG1") {
                             de_associate_rfid_details.put("RFID_TAG1",rfid_tag_exist_details);
@@ -841,7 +868,71 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                 });
 
         AlertDialog alert = builder.create();
+
+        //stop scanning
+        startFlag = false;
+        if (tagName == "RFID_TAG1"){
+            btnScan1.setText("Scan-1");
+        }
+        else if (tagName == "RFID_TAG2") {
+            btnScan2.setText("Scan-2");
+        }
+
         alert.show();
+
+    }
+
+
+
+
+
+    private void deAssociateRFID(String tag_to_be_removed, String sereno_with_dup_tag) throws JSONException {
+
+        System.out.println("****************************Enters deAssociateRFID**************************************");
+        System.out.println("**************************** from deAssociateRFID************************************** tag_to_be_removed "+ tag_to_be_removed+ "sereno_with_dup_tag:" +sereno_with_dup_tag);
+
+        String new_url ="http://192.168.0.15/api/resource/Serial%20No/"+sereno_with_dup_tag ;
+        //String new_url ="http://192.168.0.62/api/resource/Serial%20No/"+serialNum ; //lap
+
+
+        JSONObject rfid_data = new JSONObject();
+        rfid_data.put(tag_to_be_removed,"");
+
+        System.out.println("****************************from deAssociateRFID rfid_data**************************************"+ rfid_data);
+
+        final RequestQueue requestQueue = Volley.newRequestQueue(MeritUHF.this);
+
+        // prepare  Request
+        JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.PUT, new_url,rfid_data,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // display response
+                        System.out.println("****************************JSON Object Response came for deAssociateRFID**************************************"+response.toString());
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("****************************JSON Object Erro responce came  for deAssociateRFID**************************************");
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                return MeritUHF.this.getHeaders_one();
+            }
+
+        };
+
+        // add it to the RequestQueue
+        requestQueue.add(JsonRequest);
+
+        //Json object request
 
     }
 
