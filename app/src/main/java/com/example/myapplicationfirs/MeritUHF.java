@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -34,6 +35,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import cn.pda.serialport.Tools;
+
+import com.android.volley.NetworkResponse;
+import com.android.volley.toolbox.RequestFuture;
 import com.example.myapplicationfirs.R;
 
 //erpnext connection volley
@@ -54,6 +58,9 @@ import org.json.JSONObject;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 
 //
@@ -65,6 +72,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
     private  Button btnScan1;
     private  Button btnScan2;
     private Button btnAssociate;
+    private Button btnGetDetails;
     //buttons
 
     private EditText editRfid1 ;
@@ -219,6 +227,9 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         btnAssociate = (Button)findViewById(R.id.btnAssociate);
         btnAssociate.setOnClickListener(this);
 
+        btnGetDetails = (Button)findViewById(R.id.btnGetDetails);
+        btnGetDetails.setOnClickListener(this);
+
         editRfid1 = (EditText) findViewById(R.id.editRfid1);
         editRfid2 = (EditText) findViewById(R.id.editRfid2);
         editSerNo = (EditText) findViewById(R.id.editSerNo);
@@ -345,6 +356,17 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                 }
                 break;
 
+            //btnGetDetails
+
+            case R.id.btnGetDetails:
+                System.out.println("***************************GetDetails Button clicked**************************************");
+
+                String  serial_no = editSerNo.getText().toString();
+
+                get_rfid_details_ac_serial_number( serial_no);
+                break;
+
+
             case R.id.btnScan1:
                 Toast.makeText(MeritUHF.this, "You have clicked RFID Scan Button" ,Toast.LENGTH_SHORT).show();
                 if (!startFlag) {
@@ -376,18 +398,36 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
             case R.id.btnAssociate :
                 System.out.println("***************************Associate Button clicked**************************************");
 
+/*
+            try {
+                    syncApiCallDummy1();
+                    System.out.println("***************************from Associate Button syncApiCallDummy1 called**************************************");
+
+                     syncApiCallDummy2() ;
+                    System.out.println("***************************from Associate Button syncApiCallDummy2 called**************************************");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                asyncApiCAllDummy();
+                System.out.println("***************************from Associate Button asyncApiCAllDummy called**************************************");
+
+
+ */
+
+
+
+
                 String rf1 = editRfid1.getText().toString();
                 String rf2 = editRfid2.getText().toString();
                 String serialNum = editSerNo.getText().toString();
-                System.out.println("***************************Associate Button clicked**************************************"+rf1 +" " +rf2 );
 
-                System.out.println("***************************from Associate Button clicked dde_associate_rfid_details**************************************de_associate_rfid_details "+de_associate_rfid_details );
+                System.out.println("*************************** from Associate Button clicked**************************************rf1,rf2"+rf1 +" " +rf2 );
+                System.out.println("***************************from Associate Button clicked de_associate_rfid_details**************************************de_associate_rfid_details "+de_associate_rfid_details );
 
-
-//                /
                 //dde_associate_rfid_details : {"RFID_TAG1":{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"},"RFID_TAG2":{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}}eAssociate
                 try {
-                    System.out.println("***************************from Associate Button clicked came inside try**************************************de_associate_rfid_details "+de_associate_rfid_details );
 
                     if (de_associate_rfid_details.getString("RFID_TAG1") != "empty" ){
 
@@ -413,22 +453,18 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                         String tag_to_be_removed   =  RFID_TAG2_detail.getString("matched_tag");
                         String sereno_with_dup_tag =  RFID_TAG2_detail.getString("duplicate_serial_no");
 
-
                         deAssociateRFID(tag_to_be_removed,sereno_with_dup_tag);
                     }
                     else {  //remove these 2 else blogs after testing
                         System.out.println("***************************from Associate Button clicked RFID_TAG2 not exist ************************************** " );
-
                     }
 
-                    }
+                }
                 catch (JSONException e) {
                     e.printStackTrace();
                     System.out.println("***************************from Associate Button clicked Error in try ************************************** "+e );
 
-
                 }
-
 
                 System.out.println("*************************from associate button click deAssociateRFID called**************************************");
 
@@ -442,6 +478,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
         }
     }//Onclick ends
+
 
 
 
@@ -484,7 +521,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
     //start of erp connection codes
     public void connect_erp_server(){
-        System.out.println("***************************Associate Button clicked**************************************");
+        System.out.println("*************************** Entersconnect_erp_server**************************************");
         requestLogin();
 
         CookieManager cookieManager = new CookieManager(new com.example.myapplicationfirs.PersistentCookieStoreManager(MeritUHF.this), CookiePolicy.ACCEPT_ORIGINAL_SERVER);
@@ -496,7 +533,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
         //String  myUrl = "http://192.168.0.62:8000/api/method/login"; //developer lap url
         String  myUrl = "http://192.168.0.15/api/method/login";  //localhost url
-        System.out.println("Suresh ************ From requestLogin "+myUrl);
+        //System.out.println("Suresh ************ From requestLogin "+myUrl);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,myUrl, new Response.Listener<String>() {
             @Override
@@ -514,7 +551,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                     if (loginResponse!=null && loginResponse.equalsIgnoreCase(com.example.myapplicationfirs.Constants.LOGIN_RESPONSE) ) {
                         String loggedUser = jsonObject.get("full" +
                                 "_name").toString();
-                        System.out.println("Suresh ************From requestLogin Respons ************************ : "+loggedUser);
+                        System.out.println("Suresh ************From requestLogin Response ************************ : "+loggedUser);
                         getLoggedInUserData();
                     } else {
                         Toast.makeText(getApplicationContext(),"loginResponse is null" , Toast.LENGTH_LONG).show();
@@ -559,13 +596,10 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
     private void getLoggedInUserData() {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        //StringRequest stringRequest1 = new StringRequest()
+
 
         //String myUrl2 = "http://192.168.0.62:8000/api/method/frappe.auth.get_logged_user"; //dev lap url
         String myUrl2 = "http://192.168.0.15/api/method/frappe.auth.get_logged_user";//localhost url
-        // String myUrl2 = "http://192.168.0.109:8000/api/method/login?usr=Administrator&pwd=password";
-
-
 
         StringRequest stringRequest = new StringRequest(Request.Method.PUT, myUrl2, new Response.Listener<String>() {
             @Override
@@ -583,12 +617,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                 , new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
                 System.out.println("Suresh ************ From getLoggedInUserData fragments Errorrrr in login connection ");
-
-                Toast.makeText(getApplicationContext(),"Error in getLoggedInUserData connection" , Toast.LENGTH_LONG).show();
-
-
             }
         }) {
             @Override
@@ -622,7 +651,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
     private void associateRFIDTags(String username,String rf1,String rf2,String serialNum) throws JSONException {
 
-        System.out.println("****************************Suresh from associateRFIDTags**************************************");
+        System.out.println("****************************Enters associateRFIDTags**************************************");
         System.out.println("**************************** from associateRFIDTags************************************** rf1data "+ rf1+ "rf2:" +rf2+"serialNum :"+serialNum);
 
         String new_url ="http://192.168.0.15/api/resource/Serial%20No/"+serialNum ;
@@ -852,7 +881,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
         dialog_title = "The Selected   "+loc_tagName +"Already Exist"; //{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}
 
-        dialog_message = loc_tagName + "is already bound with "+ rfid_tag_exist_details.getString("matched_tag")+" of Serial Number "+ rfid_tag_exist_details.getString("duplicate_serial_no");
+        dialog_message = loc_tagName + "is already bound with "+ rfid_tag_exist_details.getString("matched_tag")+" of Serial Number "+ rfid_tag_exist_details.getString("duplicate_serial_no") + ".Do you want to reassociate this RFID Tag with this Item";
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MeritUHF.this);
 
@@ -863,17 +892,17 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                         System.out.println("*************************** Dialog box  yes clicked**************************************"+loc_tagName);
 
                         try {
-                        if (tagName == "RFID_TAG1") {
-                            de_associate_rfid_details.put("RFID_TAG1",rfid_tag_exist_details);
-                            System.out.println("***************************  yes Pressed RFID_TAG1 inserted to de_associate_rfid_details************************************** de_associate_rfid_details : "+de_associate_rfid_details);
+                            if (tagName == "RFID_TAG1") {
+                                de_associate_rfid_details.put("RFID_TAG1",rfid_tag_exist_details);
+                                System.out.println("***************************  yes Pressed RFID_TAG1 inserted to de_associate_rfid_details************************************** de_associate_rfid_details : "+de_associate_rfid_details);
 
-                        }
-                        else if (tagName == "RFID_TAG2"){
-                            de_associate_rfid_details.put("RFID_TAG2",rfid_tag_exist_details);
-                            System.out.println("***************************  yes Pressed RFID_TAG2 inserted to de_associate_rfid_details************************************** de_associate_rfid_details : "+de_associate_rfid_details);
+                            }
+                            else if (tagName == "RFID_TAG2"){
+                                de_associate_rfid_details.put("RFID_TAG2",rfid_tag_exist_details);
+                                System.out.println("***************************  yes Pressed RFID_TAG2 inserted to de_associate_rfid_details************************************** de_associate_rfid_details : "+de_associate_rfid_details);
 
-                        }
-                        System.out.println("***************************  yes Pressed ************************************** de_associate_rfid_details : "+de_associate_rfid_details);
+                            }
+                            System.out.println("***************************  yes Pressed ************************************** de_associate_rfid_details : "+de_associate_rfid_details);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -962,7 +991,263 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
     }
 
+    private void syncApiCallDummy1() throws JSONException {
 
+        System.out.println("****************************Enters syncApiCallDummy1 after headers**************************************");
+
+
+        RequestQueue volleyRequestQueue = Volley.newRequestQueue(this);
+
+        //http://localhost/api/resource/Serial%20No
+
+        String new_url ="http://192.168.0.15/api/resource/Serial%20No" ;
+
+        String rfid_val_url = "http://192.168.0.15/api/resource/Serial%20No";//localhost url
+
+
+
+
+        RequestFuture<JSONObject> future = RequestFuture.newFuture();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, new_url, null, future, future)
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                return MeritUHF.this.getHeaders();
+            }
+        };
+        volleyRequestQueue.add(request);
+
+        System.out.println("****************************from syncApiCallDummy1  request added to the queue**************************************");
+
+
+        try {
+            System.out.println("****************************from syncApiCallDummy1  inside try before future.get()");
+
+            //JSONObject response = future.get();
+            JSONObject response = future.get(60,TimeUnit.SECONDS);
+            System.out.println("****************************from syncApiCallDummy1 Came inside try after    response:"+response);
+
+        } catch(InterruptedException | ExecutionException ex)
+        {
+            //check to see if the throwable in an instance of the volley error
+            System.out.println("****************************from syncApiCallDummy1  Exception enters 1 exc**************************************");
+
+            if(ex.getCause() instanceof VolleyError)
+            {
+                //grab the volley error from the throwable and cast it back
+                VolleyError volleyError = (VolleyError)ex.getCause();
+                //now just grab the network response like normal
+                NetworkResponse networkResponse = volleyError.networkResponse;
+                System.out.println("****************************from syncApiCallDummy1  Exception networkResponse:"+networkResponse);
+
+            }
+        }
+        catch(TimeoutException te)
+        {
+            System.out.println("****************************from syncApiCallDummy1  Exception TimeoutException:"+te);
+        }
+    }
+
+    private void syncApiCallDummy2() throws JSONException {
+        System.out.println("****************************Enters syncApiCallDummy2  after headers**************************************");
+
+
+        RequestQueue volleyRequestQueue = Volley.newRequestQueue(this);
+        //http://localhost/api/resource/Serial%20No
+
+        String new_url ="http://192.168.0.15/api/resource/Serial%20No";
+
+
+
+
+        RequestFuture<JSONObject> future = RequestFuture.newFuture();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, new_url, null, future, future){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                return MeritUHF.this.getHeaders();
+            }
+        };
+
+        volleyRequestQueue.add(request);
+
+        System.out.println("****************************from syncApiCallDummy2  request added to the queue**************************************");
+
+
+        try {
+            JSONObject response = future.get(60,TimeUnit.SECONDS);
+            System.out.println("****************************from syncApiCallDummy2 Came inside try after    response:"+response);
+
+        } catch(InterruptedException | ExecutionException ex)
+        {
+            //check to see if the throwable in an instance of the volley error
+            System.out.println("****************************from syncApiCallDummy1  Exception enters 1 exc**************************************");
+
+            if(ex.getCause() instanceof VolleyError)
+            {
+                //grab the volley error from the throwable and cast it back
+                VolleyError volleyError = (VolleyError)ex.getCause();
+                //now just grab the network response like normal
+                NetworkResponse networkResponse = volleyError.networkResponse;
+                System.out.println("****************************from syncApiCallDummy1  Exception networkResponse:"+networkResponse);
+
+            }
+        }
+        catch(TimeoutException te)
+        {
+            System.out.println("****************************from syncApiCallDummy1  Exception TimeoutException:"+te);
+        }
+
+
+    }
+
+    private void asyncApiCAllDummy() {
+
+        System.out.println("*****************Enters asyncApiCAllDummy" );
+
+
+        RequestQueue requestQueue1 = Volley.newRequestQueue(this);
+        String rfid_val_url = "http://192.168.0.15/api/resource/Serial%20No";//localhost url
+
+
+
+
+        JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.GET, rfid_val_url,null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // display response
+                            System.out.println("***************From  asyncApiCAllDummy  response : "+response );
+
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("***************From  asyncApiCAllDummy  error : "+error );
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                return MeritUHF.this.getHeaders();
+            }
+
+        };
+        requestQueue1.add(JsonRequest);
+
+    }
+
+    //get ser no details start
+
+    private void get_rfid_details_ac_serial_number(String serial_no) {
+
+        System.out.println("***************Enters get_rfid_details_ac_serial_number ****************" );
+
+        RequestQueue requestQueue1 = Volley.newRequestQueue(this);
+        String url = "http://192.168.0.15/api/resource/Serial%20No?fields=[\"pch_rfid_tag1\",\"pch_rfid_tag2\"]&filters=[[\"Serial%20No\",\"name\",\"=\",\""+ serial_no+"\"]]";//localhost url // \""+rfid_tag+ "\"
+
+
+
+
+        JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.GET, url,null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // display response
+                        System.out.println("***************From  get_rfid_details_ac_serial_number  response : "+response );
+
+
+                        // {"data":[{"pch_rfid_tag2":null,"pch_rfid_tag1":null}]} ,, Invalid ser no = {"data":[]}
+
+
+                        try{
+                            JSONArray jsonArray = response.getJSONArray("data");
+
+                            if (jsonArray.length() != 0 ){  //valid ser no
+
+                                JSONObject objectInArray = jsonArray.getJSONObject(0);
+
+
+
+                                String rfid_tag1 = objectInArray.getString("pch_rfid_tag1");
+                                String rfid_tag2 = objectInArray.getString("pch_rfid_tag2");
+
+                                System.out.println("***************From  get_rfid_details_ac_serial_number  rfid_tag1 : "+rfid_tag1 );
+                                System.out.println("***************From  get_rfid_details_ac_serial_number  rfid_tag2 : "+rfid_tag2 );
+
+
+
+
+                                if (rfid_tag1 != "null" ){
+
+                                    editRfid1.setText(rfid_tag1);
+                                }
+                                else{
+                                    System.out.println("***************From  get_rfid_details_ac_serial_number   RFID tag1 null ");
+
+                                    editRfid1.setText(rfid_tag1);
+
+                                }
+
+
+                                if (rfid_tag2 != "null"  ){
+
+                                    editRfid2.setText(rfid_tag2);
+                                }
+                                else{
+                                    System.out.println("***************From  get_rfid_details_ac_serial_number   RFID tag2 null ");
+
+                                    editRfid2.setText(rfid_tag2);
+
+                                }
+
+                                if ( rfid_tag2 == "null" &&  rfid_tag1 == "null" )
+                                {
+                                    System.out.println("***************From  get_rfid_details_ac_serial_number  No RFID tags have Associated Given Serial Number has : ");
+
+                                    Toast.makeText(MeritUHF.this, "No RFID tags have Associated Given Serial Number  " ,Toast.LENGTH_SHORT).show();
+
+                                }
+
+                                }
+                            else{ //invalid ser no
+                                Toast.makeText(MeritUHF.this, "Please enter the valid Serial No " ,Toast.LENGTH_SHORT).show();
+
+                            }
+
+                        }catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("***************From  get_rfid_details_ac_serial_number  error : "+error );
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                return MeritUHF.this.getHeaders();
+            }
+
+        };
+        requestQueue1.add(JsonRequest);
+
+
+
+    }
 } //whole class ends
 
 
