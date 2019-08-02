@@ -398,87 +398,99 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
             case R.id.btnAssociate :
                 System.out.println("***************************Associate Button clicked**************************************");
 
-/*
-            try {
-                    syncApiCallDummy1();
-                    System.out.println("***************************from Associate Button syncApiCallDummy1 called**************************************");
-
-                     syncApiCallDummy2() ;
-                    System.out.println("***************************from Associate Button syncApiCallDummy2 called**************************************");
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                asyncApiCAllDummy();
-                System.out.println("***************************from Associate Button asyncApiCAllDummy called**************************************");
-
-
- */
-
-
-
-
-                String rf1 = editRfid1.getText().toString();
-                String rf2 = editRfid2.getText().toString();
-                String serialNum = editSerNo.getText().toString();
+                final String rf1 = editRfid1.getText().toString();
+                final String rf2 = editRfid2.getText().toString();
+                final String serialNum = editSerNo.getText().toString();
 
                 System.out.println("*************************** from Associate Button clicked**************************************rf1,rf2"+rf1 +" " +rf2 );
                 System.out.println("***************************from Associate Button clicked de_associate_rfid_details**************************************de_associate_rfid_details "+de_associate_rfid_details );
 
                 //dde_associate_rfid_details : {"RFID_TAG1":{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"},"RFID_TAG2":{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}}eAssociate
-                try {
 
-                    if (de_associate_rfid_details.getString("RFID_TAG1") != "empty" ){
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            if (de_associate_rfid_details.getString("RFID_TAG1") != "empty" ){
 
-                        System.out.println("***************************from Associate Button clicked RFID_TAG1 exist ************************************** " );
+                                System.out.println("***************************from Associate Button clicked RFID_TAG1 exist ************************************** " );
 
 
-                        JSONObject RFID_TAG1_detail = de_associate_rfid_details.getJSONObject("RFID_TAG1");
+                                JSONObject RFID_TAG1_detail = de_associate_rfid_details.getJSONObject("RFID_TAG1");
 
-                        String tag_to_be_removed   =  RFID_TAG1_detail.getString("matched_tag");
-                        String sereno_with_dup_tag =  RFID_TAG1_detail.getString("duplicate_serial_no");
+                                String tag_to_be_removed   =  RFID_TAG1_detail.getString("matched_tag");
+                                String sereno_with_dup_tag =  RFID_TAG1_detail.getString("duplicate_serial_no");
 
-                        deAssociateRFID(tag_to_be_removed,sereno_with_dup_tag);
+                                deAssociateRFID(tag_to_be_removed,sereno_with_dup_tag);
+
+                                System.out.println("***************************from Associate Button clicked RFID_TAG1 and before remove data local de_associate_rfid_details:"+de_associate_rfid_details );
+                                de_associate_rfid_details.put("RFID_TAG1","empty");
+                                System.out.println("***************************from Associate Button clicked RFID_TAG1 and removed data local de_associate_rfid_details:"+de_associate_rfid_details );
+
+                            }
+                            else {  //remove these 2 else blogs after testing
+                                System.out.println("***************************from Associate Button clicked RFID_TAG1 not exist ************************************** " );
+
+                            }
+                            System.out.println("***************************from Associate Button clicked passed RFID_TAG1************************************** ");
+
+                            if (de_associate_rfid_details.getString("RFID_TAG2") != "empty") {
+                                JSONObject RFID_TAG2_detail = de_associate_rfid_details.getJSONObject("RFID_TAG2");
+
+                                String tag_to_be_removed   =  RFID_TAG2_detail.getString("matched_tag");
+                                String sereno_with_dup_tag =  RFID_TAG2_detail.getString("duplicate_serial_no");
+
+                                deAssociateRFID(tag_to_be_removed,sereno_with_dup_tag);
+
+                                System.out.println("***************************from Associate Button clicked RFID_TAG2 and before remove data local de_associate_rfid_details:"+de_associate_rfid_details );
+                                de_associate_rfid_details.put("RFID_TAG2","empty");
+                                System.out.println("***************************from Associate Button clicked RFID_TAG2 and removed data local de_associate_rfid_details:"+de_associate_rfid_details );
+
+                            }
+                            else {  //remove these 2 else blogs after testing
+                                System.out.println("***************************from Associate Button clicked RFID_TAG2 not exist ************************************** " );
+                            }
+
+
+
+                            //syncApiCallDummy1();
+                            //System.out.println("***************************from Associate Button syncApiCallDummy1 called**************************************");
+                            //syncApiCallDummy2() ;
+                            //System.out.println("***************************from Associate Button syncApiCallDummy2 called**************************************");
+
+                            if(rf1 != null || rf2 != null){
+                                    associateRFIDTags(username,rf1,rf2,serialNum);
+                                     System.out.println("***************************from Associate Button clicked  associateRFIDTags  fun  called ");
+
+                            }
+
+                        } catch (JSONException e) {
+                            System.out.println("***************************from Associate Button clicked Error in try ************************************** "+e );
+                        }
+
+
                     }
-                    else {  //remove these 2 else blogs after testing
-                        System.out.println("***************************from Associate Button clicked RFID_TAG1 not exist ************************************** " );
+                });
+                thread.start();
+                System.out.println("***************************from Associate Button clicked Sample  check for associateRFIDTags  fun ");
 
-                    }
-                    System.out.println("***************************from Associate Button clicked passed RFID_TAG1************************************** ");
 
-                    if (de_associate_rfid_details.getString("RFID_TAG2") != "empty") {
-                        JSONObject RFID_TAG2_detail = de_associate_rfid_details.getJSONObject("RFID_TAG2");
 
-                        String tag_to_be_removed   =  RFID_TAG2_detail.getString("matched_tag");
-                        String sereno_with_dup_tag =  RFID_TAG2_detail.getString("duplicate_serial_no");
 
-                        deAssociateRFID(tag_to_be_removed,sereno_with_dup_tag);
-                    }
-                    else {  //remove these 2 else blogs after testing
-                        System.out.println("***************************from Associate Button clicked RFID_TAG2 not exist ************************************** " );
-                    }
 
-                }
-                catch (JSONException e) {
-                    e.printStackTrace();
-                    System.out.println("***************************from Associate Button clicked Error in try ************************************** "+e );
 
-                }
 
-                System.out.println("*************************from associate button click deAssociateRFID called**************************************");
 
-                if(rf1 != null || rf2 != null){
-                    try {
-                        associateRFIDTags(username,rf1,rf2,serialNum);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+
+
+
+
+
+
+
 
         }
     }//Onclick ends
-
 
 
 
@@ -936,13 +948,71 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         alert.show();
 
     }
+    //de_associate_rfid_details : {"RFID_TAG1":{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"},"RFID_TAG2":{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}}eAssociate
 
+    private void deAssociateRFID(JSONObject de_associate_rfid_details) {
+
+    }
 
 
 
 
     private void deAssociateRFID(String tag_to_be_removed, String sereno_with_dup_tag) throws JSONException {
 
+        System.out.println("****************************Enters deAssociateRFID**************************************");
+        System.out.println("**************************** from deAssociateRFID parameter details************************************** tag_to_be_removed "+ tag_to_be_removed+ "sereno_with_dup_tag:" +sereno_with_dup_tag);
+
+        String new_url ="http://192.168.0.15/api/resource/Serial%20No/"+sereno_with_dup_tag ;
+
+        JSONObject rfid_data = new JSONObject();
+        rfid_data.put(tag_to_be_removed,"");
+
+        RequestQueue volleyRequestQueue = Volley.newRequestQueue(this);
+
+
+        RequestFuture<JSONObject> future = RequestFuture.newFuture();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, new_url,rfid_data, future, future)
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                return MeritUHF.this.getHeaders_one();
+            }
+        };
+        volleyRequestQueue.add(request);
+
+        System.out.println("****************************from deAssociateRFID  request added to the queue**************************************");
+
+
+        try {
+            System.out.println("****************************from deAssociateRFID  inside try before future.get()");
+
+            //JSONObject response = future.get();
+            JSONObject response = future.get(60,TimeUnit.SECONDS);
+            System.out.println("****************************from deAssociateRFID Came inside try after    response:"+response);
+
+        } catch(InterruptedException | ExecutionException ex)
+        {
+            //check to see if the throwable in an instance of the volley error
+            System.out.println("****************************from deAssociateRFID  Exception enters 1 exc**************************************");
+
+            if(ex.getCause() instanceof VolleyError)
+            {
+                //grab the volley error from the throwable and cast it back
+                VolleyError volleyError = (VolleyError)ex.getCause();
+                //now just grab the network response like normal
+                NetworkResponse networkResponse = volleyError.networkResponse;
+                System.out.println("****************************from deAssociateRFID  Exception networkResponse:"+networkResponse);
+
+            }
+        }
+        catch(TimeoutException te)
+        {
+            System.out.println("****************************from deAssociateRFID  Exception TimeoutException:"+te);
+        }
+
+
+        /*
         System.out.println("****************************Enters deAssociateRFID**************************************");
         System.out.println("**************************** from deAssociateRFID************************************** tag_to_be_removed "+ tag_to_be_removed+ "sereno_with_dup_tag:" +sereno_with_dup_tag);
 
@@ -988,6 +1058,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         requestQueue.add(JsonRequest);
 
         //Json object request
+        */
 
     }
 
@@ -1049,99 +1120,9 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         }
     }
 
-    private void syncApiCallDummy2() throws JSONException {
-        System.out.println("****************************Enters syncApiCallDummy2  after headers**************************************");
-
-
-        RequestQueue volleyRequestQueue = Volley.newRequestQueue(this);
-        //http://localhost/api/resource/Serial%20No
-
-        String new_url ="http://192.168.0.15/api/resource/Serial%20No";
 
 
 
-
-        RequestFuture<JSONObject> future = RequestFuture.newFuture();
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, new_url, null, future, future){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-
-                return MeritUHF.this.getHeaders();
-            }
-        };
-
-        volleyRequestQueue.add(request);
-
-        System.out.println("****************************from syncApiCallDummy2  request added to the queue**************************************");
-
-
-        try {
-            JSONObject response = future.get(60,TimeUnit.SECONDS);
-            System.out.println("****************************from syncApiCallDummy2 Came inside try after    response:"+response);
-
-        } catch(InterruptedException | ExecutionException ex)
-        {
-            //check to see if the throwable in an instance of the volley error
-            System.out.println("****************************from syncApiCallDummy1  Exception enters 1 exc**************************************");
-
-            if(ex.getCause() instanceof VolleyError)
-            {
-                //grab the volley error from the throwable and cast it back
-                VolleyError volleyError = (VolleyError)ex.getCause();
-                //now just grab the network response like normal
-                NetworkResponse networkResponse = volleyError.networkResponse;
-                System.out.println("****************************from syncApiCallDummy1  Exception networkResponse:"+networkResponse);
-
-            }
-        }
-        catch(TimeoutException te)
-        {
-            System.out.println("****************************from syncApiCallDummy1  Exception TimeoutException:"+te);
-        }
-
-
-    }
-
-    private void asyncApiCAllDummy() {
-
-        System.out.println("*****************Enters asyncApiCAllDummy" );
-
-
-        RequestQueue requestQueue1 = Volley.newRequestQueue(this);
-        String rfid_val_url = "http://192.168.0.15/api/resource/Serial%20No";//localhost url
-
-
-
-
-        JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.GET, rfid_val_url,null,
-                new Response.Listener<JSONObject>()
-                {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // display response
-                            System.out.println("***************From  asyncApiCAllDummy  response : "+response );
-
-
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println("***************From  asyncApiCAllDummy  error : "+error );
-                    }
-                }
-        ){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-
-                return MeritUHF.this.getHeaders();
-            }
-
-        };
-        requestQueue1.add(JsonRequest);
-
-    }
 
     //get ser no details start
 
