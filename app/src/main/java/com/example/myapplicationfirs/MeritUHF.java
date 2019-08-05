@@ -663,7 +663,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         return headers;
     } //end of getuser data
 
-    private void associateRFIDTags(String username,String rf1,String rf2,String serialNum) throws JSONException {
+    private void associateRFIDTags(String username, String rf1, String rf2, final String serialNum) throws JSONException {
 
         System.out.println("****************************Enters associateRFIDTags**************************************");
         System.out.println("**************************** from associateRFIDTags************************************** rf1data "+ rf1+ "rf2:" +rf2+"serialNum :"+serialNum);
@@ -697,7 +697,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                             String updated_rfid_tag2 = dataObject.getString("pch_rfid_tag1");
 
                             if (updated_rfid_tag1 != "null" && updated_rfid_tag1 != null ){
-                                as_ds_updated_details += "Serial Number has been associated with given RFID Tags" ;
+                                as_ds_updated_details += "Serial Number : "+serialNum +"  has been associated with given RFID Tags" ;
                             }
                         }catch (JSONException e) {
                             e.printStackTrace();
@@ -1023,7 +1023,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
             String deleted_rfidTag = dataObject.getString(tag_to_be_removed);
 
             if(deleted_rfidTag =="null"){
-                as_ds_updated_details +=  tag_to_be_removed + "has been disassociated." ;
+                as_ds_updated_details +=  tag_to_be_removed + " has been disassociated from Serial no : "+ sereno_with_dup_tag + ". \n";
             }
 
         } catch(InterruptedException | ExecutionException ex)
