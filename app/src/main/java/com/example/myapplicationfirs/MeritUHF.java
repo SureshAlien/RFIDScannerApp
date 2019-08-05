@@ -115,6 +115,8 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
     //rfidValidation
     JSONObject de_associate_rfid_details = new JSONObject();  //de_associate_rfid_details = {"RFID1" : {"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}
 
+    private String as_ds_updated_details = "" ;
+
 
 
 
@@ -687,6 +689,38 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                         // display response
                         System.out.println("****************************JSON Object Response came  for associateRFIDTags**************************************"+response.toString());
 
+
+                        try{
+                            JSONObject dataObject = response.getJSONObject("data");
+
+                            String updated_rfid_tag1 = dataObject.getString("pch_rfid_tag1");
+                            String updated_rfid_tag2 = dataObject.getString("pch_rfid_tag1");
+
+                            if (updated_rfid_tag1 != "null" && updated_rfid_tag1 != null ){
+                                as_ds_updated_details += "Serial Number has been associated with given RFID Tags" ;
+                            }
+                        }catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        String dialog_title = "Association Details"; //{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}
+
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MeritUHF.this);
+
+                        builder.setMessage(as_ds_updated_details).setTitle(dialog_title)
+                                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        System.out.println("*************************** Dialog box  Ok clicked**************************************");
+
+                                    }
+                                });
+
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                        as_ds_updated_details ="";
+
                     }
                 },
                 new Response.ErrorListener()
@@ -777,7 +811,6 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                             }
                             else{
                                 System.out.println("From  response of "+tagName+" rfid_validation_against_serno no matching found for pch_rfid_tag1 " );
-
                             }
 
 
@@ -897,7 +930,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MeritUHF.this);
 
-        builder.setMessage(dialog_message)
+        builder.setMessage(dialog_message).setTitle(dialog_title)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -948,14 +981,8 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         alert.show();
 
     }
+
     //de_associate_rfid_details : {"RFID_TAG1":{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"},"RFID_TAG2":{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}}eAssociate
-
-    private void deAssociateRFID(JSONObject de_associate_rfid_details) {
-
-    }
-
-
-
 
     private void deAssociateRFID(String tag_to_be_removed, String sereno_with_dup_tag) throws JSONException {
 
@@ -990,6 +1017,14 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
             //JSONObject response = future.get();
             JSONObject response = future.get(60,TimeUnit.SECONDS);
             System.out.println("****************************from deAssociateRFID Came inside try after    response:"+response);
+
+            JSONObject dataObject = response.getJSONObject("data");
+
+            String deleted_rfidTag = dataObject.getString(tag_to_be_removed);
+
+            if(deleted_rfidTag =="null"){
+                as_ds_updated_details +=  tag_to_be_removed + "has been disassociated." ;
+            }
 
         } catch(InterruptedException | ExecutionException ex)
         {
