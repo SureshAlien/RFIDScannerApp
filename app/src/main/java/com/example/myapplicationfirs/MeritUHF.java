@@ -78,6 +78,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
     private EditText editRfid1 ;
     private EditText editRfid2 ;
     private EditText editSerNo ;
+    private TextView tvItemCode;
 
 
     private TextView tvEpcLabel;
@@ -235,6 +236,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         editRfid1 = (EditText) findViewById(R.id.editRfid1);
         editRfid2 = (EditText) findViewById(R.id.editRfid2);
         editSerNo = (EditText) findViewById(R.id.editSerNo);
+        tvItemCode =  (TextView)  findViewById(R.id.tvItemCodeVal);
 
         tvEpcLabel = (TextView)findViewById(R.id.tvEpcLabel1);
         listEPC = new ArrayList<EPC>();
@@ -1166,7 +1168,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         System.out.println("***************Enters get_rfid_details_ac_serial_number ****************" );
 
         RequestQueue requestQueue1 = Volley.newRequestQueue(this);
-        String url = "http://192.168.0.15/api/resource/Serial%20No?fields=[\"pch_rfid_tag1\",\"pch_rfid_tag2\"]&filters=[[\"Serial%20No\",\"name\",\"=\",\""+ serial_no+"\"]]";//localhost url // \""+rfid_tag+ "\"
+        String url = "http://192.168.0.15/api/resource/Serial%20No?fields=[\"pch_rfid_tag1\",\"pch_rfid_tag2\",\"item_code\"]&filters=[[\"Serial%20No\",\"name\",\"=\",\""+ serial_no+"\"]]";//localhost url // \""+rfid_tag+ "\"
 
 
 
@@ -1194,9 +1196,12 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
                                 String rfid_tag1 = objectInArray.getString("pch_rfid_tag1");
                                 String rfid_tag2 = objectInArray.getString("pch_rfid_tag2");
+                                String ser_item_code = objectInArray.getString("item_code");
 
                                 System.out.println("***************From  get_rfid_details_ac_serial_number  rfid_tag1 : "+rfid_tag1 );
                                 System.out.println("***************From  get_rfid_details_ac_serial_number  rfid_tag2 : "+rfid_tag2 );
+                                System.out.println("***************From  get_rfid_details_ac_serial_number  ser_item_code : "+ser_item_code );
+
 
 
 
@@ -1208,7 +1213,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                                 else{
                                     System.out.println("***************From  get_rfid_details_ac_serial_number   RFID tag1 null ");
 
-                                    editRfid1.setText(rfid_tag1);
+                                    editRfid1.setText(rfid_tag1); //for null now entering null only .
 
                                 }
 
@@ -1220,8 +1225,14 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                                 else{
                                     System.out.println("***************From  get_rfid_details_ac_serial_number   RFID tag2 null ");
 
-                                    editRfid2.setText(rfid_tag2);
+                                    editRfid2.setText(rfid_tag2); //for null now entering null only .
 
+                                }
+
+                                if (ser_item_code != "null"  ) {
+                                    tvItemCode.setText(ser_item_code);
+                                }else{
+                                    tvItemCode.setText("Item Code not available");
                                 }
 
                                 if ( rfid_tag2 == "null" &&  rfid_tag1 == "null" )

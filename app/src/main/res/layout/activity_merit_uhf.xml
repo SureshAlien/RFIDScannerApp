@@ -56,7 +56,8 @@
         android:layout_height="wrap_content"
         android:textSize="24dp"
         android:layout_marginTop="100dp"
-        android:layout_marginLeft="5dp"/>
+        android:layout_marginLeft="5dp"
+        android:textStyle="bold"/>
 
     <TextView
         android:text="Item Code :"
