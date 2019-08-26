@@ -3,4 +3,7 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="cardview_light_background">#FFFFFF</color>
+    <color name="colorSuccess">#32CD32</color>
+    <color name="colorError">#8B0000</color>
 </resources>

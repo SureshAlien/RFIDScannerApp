@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    tools:context=".LoginFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:id= "@+id/linearlayout_username"
+
+            android:layout_marginLeft="@dimen/top_margin"
+            android:layout_marginRight="@dimen/top_margin"
+            android:orientation="horizontal"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:src="@mipmap/ic_user_id">
+
+            </ImageView>
+
+
+            <EditText
+                android:id="@+id/username_entry"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/linearlayout_username"
+                android:layout_marginLeft="@dimen/fabulous_margin"
+                android:layout_weight="0.90"
+                android:hint="@string/username_hint"
+                android:inputType="textEmailAddress" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearlayout_password"
+            android:layout_below="@+id/linearlayout_username"
+            android:weightSum="1"
+            android:layout_marginTop="@dimen/top_margin"
+            android:layout_marginLeft="@dimen/top_margin"
+            android:layout_marginRight="@dimen/top_margin"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:src="@mipmap/ic_password"/>
+            />
+            <EditText
+                android:id="@+id/password_entry"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:layout_weight="0.90"
+                android:layout_marginLeft="@dimen/fabulous_margin"
+                android:hint="@string/password_hint"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/linearlayout_forgotpwd"
+            android:layout_below="@+id/linearlayout_password"
+            android:layout_marginTop="@dimen/top_margin"
+            android:layout_marginLeft="@dimen/top_margin"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/forgotpwd"
+                android:textColor="@color/colorPrimary"
+                android:id="@+id/forgot_password"
+                android:autoLink="none"
+
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearlayout_forgotpwd"
+            android:layout_marginLeft="@dimen/top_margin"
+            android:layout_marginRight="@dimen/top_margin"
+            android:layout_marginTop="50dp"
+            android:id="@+id/linearLayout">
+            <Button
+                android:id="@+id/login_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/login"
+
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/cardview_light_background"
+                />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</FrameLayout>

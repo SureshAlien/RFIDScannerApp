@@ -62,6 +62,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import com.example.myapplicationfirs.utils.Constants;
+
+
 
 //
 
@@ -407,7 +410,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                 final String serialNum = editSerNo.getText().toString();
 
                 System.out.println("*************************** from Associate Button clicked**************************************rf1,rf2"+rf1 +" " +rf2 );
-                System.out.println("***************************from Associate Button clicked de_associate_rfid_details**************************************de_associate_rfid_details "+de_associate_rfid_details );
+                System.out.println ("***************************from Associate Button clicked de_associate_rfid_details**************************************de_associate_rfid_details "+de_associate_rfid_details );
 
                 //dde_associate_rfid_details : {"RFID_TAG1":{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"},"RFID_TAG2":{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}}eAssociate
 
@@ -564,7 +567,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                         jsonObject = new JSONObject(response);
                     }
                     loginResponse = jsonObject.get("message").toString();
-                    if (loginResponse!=null && loginResponse.equalsIgnoreCase(com.example.myapplicationfirs.Constants.LOGIN_RESPONSE) ) {
+                    if (loginResponse!=null && loginResponse.equalsIgnoreCase(Constants.LOGIN_RESPONSE) ) {
                         String loggedUser = jsonObject.get("full" +
                                 "_name").toString();
                         System.out.println("Suresh ************From requestLogin Response ************************ : "+loggedUser);
@@ -593,8 +596,8 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> mapObject = new HashMap<>();
-                mapObject.put(com.example.myapplicationfirs.Constants.KEY_NAME, "administrator");
-                mapObject.put(com.example.myapplicationfirs.Constants.KEY_PASS, "password");
+                mapObject.put(Constants.KEY_NAME, "administrator");
+                mapObject.put(Constants.KEY_PASS, "password");
                 return mapObject;
 
             }

@@ -11,6 +11,7 @@
     tools:context=".Login">
 
     <ImageView
+        android:id="@+id/app_logo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/logo_height"
         android:layout_marginTop="@dimen/top_margin"
@@ -19,21 +20,43 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/linearlayout_username"
-        android:layout_marginTop="@dimen/fabulous_margin"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="100dp"
 
-
-        <EditText
-            android:id="@+id/server_address"
+        >
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:id= "@+id/linearlayout_username"
+
             android:layout_marginLeft="@dimen/fabulous_margin"
             android:layout_marginRight="@dimen/fabulous_margin"
-            android:layout_marginTop="@dimen/fabulous_margin"
-            android:hint="@string/provideserveraddress"
-            android:inputType="text"
-            android:maxLines="1"/>
+            android:orientation="horizontal"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp">
+
+            <EditText
+                android:id="@+id/et_serverAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/linearlayout_username"
+                android:layout_weight="0.80"
+                android:hint="@string/provideserveraddress"
+                android:inputType="textEmailAddress" />
+
+            <Button
+                android:id="@+id/btn_set"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:text="Set"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/cardview_light_background"
+                />
+
+        </LinearLayout>
+
 
         <TextView
             android:layout_width="match_parent"
@@ -41,112 +64,22 @@
             android:layout_marginLeft="@dimen/fabulous_margin"
             android:layout_marginRight="@dimen/fabulous_margin"
             android:text="@string/exampleserveraddress" />
-
-
-
     </LinearLayout>
 
-
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/login_content"
+        android:layout_marginTop="270dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1"
-        android:id= "@+id/linearlayout_username"
+        android:layout_height="400dp">
 
-        android:layout_marginTop="@dimen/top_margin"
-        android:layout_marginLeft="@dimen/top_margin"
-        android:layout_marginRight="@dimen/top_margin"
-        android:orientation="horizontal"
-        android:layout_centerInParent="true"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp">
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.1"
-            android:src="@mipmap/ic_user_id">
-
-        </ImageView>
+    </FrameLayout>
 
 
-        <EditText
-            android:id="@+id/username_entry"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.90"
-            android:inputType="textEmailAddress"
-            android:layout_marginLeft="@dimen/fabulous_margin"
-            android:hint="@string/username_hint"
-            />
 
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearlayout_password"
-        android:layout_below="@+id/linearlayout_username"
-        android:weightSum="1"
-        android:layout_marginTop="@dimen/top_margin"
-        android:layout_marginLeft="@dimen/top_margin"
-        android:layout_marginRight="@dimen/top_margin"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp">
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.1"
-            android:src="@mipmap/ic_password"/>
-        <EditText
-            android:id="@+id/password_entry"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:layout_weight="0.90"
-            android:layout_marginLeft="@dimen/fabulous_margin"
-            android:hint="@string/password_hint"
-            />
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/linearlayout_forgotpwd"
-        android:layout_below="@+id/linearlayout_password"
-        android:layout_marginTop="@dimen/top_margin"
-        android:layout_marginLeft="@dimen/top_margin"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/forgotpwd"
-            android:textColor="@color/colorPrimary"
-            android:id="@+id/forgot_password"
-            android:autoLink="none"
 
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linearlayout_forgotpwd"
-        android:layout_marginLeft="@dimen/top_margin"
-        android:layout_marginRight="@dimen/top_margin"
-        android:layout_marginTop="50dp"
-        android:id="@+id/linearLayout">
-        <Button
-            android:id="@+id/login_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/login"
-
-            android:background="@color/colorPrimaryDark"
-            android:textColor="@color/cardview_light_background"
-            />
-
-    </LinearLayout>
 
 </RelativeLayout>
 

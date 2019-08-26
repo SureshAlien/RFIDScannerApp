@@ -5,6 +5,7 @@ package com.example.myapplicationfirs;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.myapplicationfirs.utils.Constants;
 import com.google.gson.Gson;
 
 import java.net.CookieManager;

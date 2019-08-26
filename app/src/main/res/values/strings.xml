@@ -15,7 +15,7 @@
     <!--settings strings-->
     <string name="welcome_text">Welcome to the MPRP app.</string>
     <string name="serversettings">Welcome to the MPRP App. This app helps you request, issue and transform items. Please set the IP address of your server address below. This will be required only once at the time of installation. Click Next to continue.</string>
-    <string name="provideserveraddress">Please enter your server address here</string>
+    <string name="provideserveraddress">Enter your server address here</string>
     <string name="exampleserveraddress">Example: 192.168.1.4:8000 or examplesite.com:port number</string>
     <string name="progress_dialog_message">Please Wait....</string>
     <string name="login_failed">Could not login. Please re-enter correct username and password</string>
@@ -96,5 +96,6 @@
     <string name="select_WH_str">Select DS WH</string>
     <string name="select_batch_and_sln_str">Batch/Serial No</string>
     <string name="dswhlistisnull_str">Error: The downstream warehouse list for this item is not set on ERPNext. Please choose another item or please set the list on ERPNext and retry.</string>
+    <string name="title_activity_test_login">TestLogin</string>
 
 </resources>
