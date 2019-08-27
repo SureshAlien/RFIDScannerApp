@@ -182,7 +182,7 @@ public class LoginFragment extends BaseFragment {
 
     public void startAssocistaionScanningActivity()
     {
-        Intent startAssocistaionScanningActivity = new Intent(LoginFragment.super.getContext(),TestLogin.class);
+        Intent startAssocistaionScanningActivity = new Intent(LoginFragment.super.getContext(),MeritUHF.class);
         startActivity(startAssocistaionScanningActivity);
     }
 

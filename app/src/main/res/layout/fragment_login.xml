@@ -32,6 +32,7 @@
 
             <EditText
                 android:id="@+id/username_entry"
+                android:text="administrator"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/linearlayout_username"
@@ -61,6 +62,7 @@
             />
             <EditText
                 android:id="@+id/password_entry"
+                android:text="password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"

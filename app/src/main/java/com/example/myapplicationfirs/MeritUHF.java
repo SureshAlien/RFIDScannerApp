@@ -63,7 +63,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import com.example.myapplicationfirs.utils.Constants;
-
+import com.example.myapplicationfirs.utils.CustomUrl;
+import com.example.myapplicationfirs.utils.Utility;
 
 
 //
@@ -140,7 +141,8 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
         Util.initSoundPool(this);
 
-        connect_erp_server(); //login erp
+        //connect_erp_server(); //login erp
+        getLoggedInUserData(); //session id checking from login screen
 
     } //onCreate ends
 
@@ -480,22 +482,6 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                 });
                 thread.start();
                 System.out.println("***************************from Associate Button clicked Sample  check for associateRFIDTags  fun ");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
     }//Onclick ends
 
@@ -538,91 +524,59 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         }
     }
 
-    //start of erp connection codes
-    public void connect_erp_server(){
-        System.out.println("*************************** Entersconnect_erp_server**************************************");
-        requestLogin();
-
-        CookieManager cookieManager = new CookieManager(new com.example.myapplicationfirs.PersistentCookieStoreManager(MeritUHF.this), CookiePolicy.ACCEPT_ORIGINAL_SERVER);
-        CookieHandler.setDefault(cookieManager);
-    } //end connect_erp_server
-
-    private void requestLogin() {
-        final RequestQueue requestQueue1 = Volley.newRequestQueue(MeritUHF.this);
-
-        //String  myUrl = "http://192.168.0.62:8000/api/method/login"; //developer lap url
-        String  myUrl = "http://192.168.0.15/api/method/login";  //localhost url
-        //System.out.println("Suresh ************ From requestLogin "+myUrl);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,myUrl, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                System.out.println("Suresh ***********Came inside login response");
-
-                String loginResponse = null;
-
-
-                try {
-                    if(response!=null){
-                        jsonObject = new JSONObject(response);
-                    }
-                    loginResponse = jsonObject.get("message").toString();
-                    if (loginResponse!=null && loginResponse.equalsIgnoreCase(Constants.LOGIN_RESPONSE) ) {
-                        String loggedUser = jsonObject.get("full" +
-                                "_name").toString();
-                        System.out.println("Suresh ************From requestLogin Response ************************ : "+loggedUser);
-                        getLoggedInUserData();
-                    } else {
-                        Toast.makeText(getApplicationContext(),"loginResponse is null" , Toast.LENGTH_LONG).show();
-                    }
-
-                } catch (Exception e) {
-                    Log.e("ERROR",e.toString());
-                }
-            }
-
-
-        }//end of sucess response
-                , new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println("Suresh ************ From requestLogin Error in login connection ");
-                Toast.makeText(getApplicationContext(),"Error in login connection" , Toast.LENGTH_LONG).show();
-            }
-        })
-                //end of error response and stringRequest params
-        {
-            //This is for providing body for Post request@Override
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> mapObject = new HashMap<>();
-                mapObject.put(Constants.KEY_NAME, "administrator");
-                mapObject.put(Constants.KEY_PASS, "password");
-                return mapObject;
-
-            }
-        };
-
-
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(30 * 1000, 0,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-
-        requestQueue1.add(stringRequest);
-
-    } //end of request login
-
     private void getLoggedInUserData() {
+
+        System.out.println("Suresh ************ From getLoggedInUserData  Entered ");
+        String myUrl2 = Utility.getInstance().buildUrl(CustomUrl.API_METHOD, null, CustomUrl.GET_LOGGED_USER);
+        //String myUrl2 = "http://192.168.0.15/api/method/frappe.auth.get_logged_user";//localhost url
+        System.out.println("Suresh ************ From getLoggedInUserData  customurl came "+myUrl2);
+        String serialNum= "1000";
+
+        String new_url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.SERIAL_NO, serialNum);
+
+        System.out.println("Suresh ************ From getLoggedInUserData  new_url came "+new_url);
+
+
+        //actual --> String rfid_val_url = "http://192.168.0.15/api/resource/Serial%20No?fields=[\"name\"]&filters=[[\"Serial%20No\",\"pch_rfid_tag1\",\"=\",\""+rfid_tag+ "\"]]";//localhost url
+        String rfid_tag = "178999";
+        String rfid_validation1 = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.SERIAL_NO);
+        rfid_validation1 += "?fields=[\"name\"]&filters=[[\"Serial%20No\",\"pch_rfid_tag1\",\"=\",\""+rfid_tag+ "\"]] " ;
+
+        System.out.println("Suresh ************ From getLoggedInUserData  rfid_validation1 came "+rfid_validation1);
+
+
+        //actual --> String rfid_val_url = "http://192.168.0.15/api/resource/Serial%20No?fields=[\"name\"]&filters=[[\"Serial%20No\",\"pch_rfid_tag2\",\"=\",\""+rfid_tag+ "\"]]";//localhost url
+        String rfid_validation2 = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.SERIAL_NO);
+        rfid_validation2 += "?fields=[\"name\"]&filters=[[\"Serial%20No\",\"pch_rfid_tag2\",\"=\",\""+rfid_tag+ "\"]] " ;
+
+        System.out.println("Suresh ************ From getLoggedInUserData  rfid_validation2 came "+rfid_validation2);
+
+        //deassociate
+        String deassociate = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.SERIAL_NO,serialNum);
+        System.out.println("Suresh ************ From getLoggedInUserData  deassociate came "+deassociate);
+
+
+        //get_rfid_details_ac_serial_number
+        String serial_no = "dummy";
+        String url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.SERIAL_NO);
+        url += "?fields=[\"pch_rfid_tag1\",\"pch_rfid_tag2\",\"item_code\"]&filters=[[\"Serial%20No\",\"name\",\"=\",\""+ serial_no+"\"]]" ;
+
+        System.out.println("Suresh ************ From getLoggedInUserData  get_rfid_details_ac_serial_number came "+url);
+
+
+
+
+
+
+
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-
-
         //String myUrl2 = "http://192.168.0.62:8000/api/method/frappe.auth.get_logged_user"; //dev lap url
-        String myUrl2 = "http://192.168.0.15/api/method/frappe.auth.get_logged_user";//localhost url
 
         StringRequest stringRequest = new StringRequest(Request.Method.PUT, myUrl2, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                System.out.println("Suresh ************ From getLoggedInUserData  Response came  ");
+
 
                 try {
                     JSONObject object = new JSONObject(response);
@@ -636,7 +590,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                 , new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("Suresh ************ From getLoggedInUserData fragments Errorrrr in login connection ");
+                System.out.println("Suresh ************ From getLoggedInUserData  Error in request  came  ");
             }
         }) {
             @Override
@@ -673,8 +627,10 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         System.out.println("****************************Enters associateRFIDTags**************************************");
         System.out.println("**************************** from associateRFIDTags************************************** rf1data "+ rf1+ "rf2:" +rf2+"serialNum :"+serialNum);
 
-        String new_url ="http://192.168.0.15/api/resource/Serial%20No/"+serialNum ;
-        //String new_url ="http://192.168.0.62/api/resource/Serial%20No/"+serialNum ; //lap
+        String new_url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.SERIAL_NO,serialNum);
+
+        //from custom url->http://192.168.0.15/api/resource/Serial%20No/1000
+        //String new_url ="http://192.168.0.15/api/resource/Serial%20No/"+serialNum ;
 
 
         JSONObject rfid_data = new JSONObject();
@@ -772,8 +728,11 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
 
         RequestQueue requestQueue1 = Volley.newRequestQueue(this);
-        //String myUrl2 = "http://192.168.0.62:8000/api/method/frappe.auth.get_logged_user"; //dev lap url
-        String rfid_val_url = "http://192.168.0.15/api/resource/Serial%20No?fields=[\"name\"]&filters=[[\"Serial%20No\",\"pch_rfid_tag1\",\"=\",\""+rfid_tag+ "\"]]";//localhost url
+
+        String rfid_val_url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.SERIAL_NO);
+        rfid_val_url += "?fields=[\"name\"]&filters=[[\"Serial%20No\",\"pch_rfid_tag1\",\"=\",\""+rfid_tag+ "\"]] " ;
+
+        //String rfid_val_url = "http://192.168.0.15/api/resource/Serial%20No?fields=[\"name\"]&filters=[[\"Serial%20No\",\"pch_rfid_tag1\",\"=\",\""+rfid_tag+ "\"]]";//localhost url
 
         System.out.println(" From rfid_validation_against_serno rfid_val_url" +rfid_val_url);
 
@@ -846,13 +805,15 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
         //req2
         RequestQueue requestQueue2 = Volley.newRequestQueue(this);
-        //String myUrl2 = "http://192.168.0.62:8000/api/method/frappe.auth.get_logged_user"; //dev lap url
-        String rfid_val_url2 = "http://192.168.0.15/api/resource/Serial%20No?fields=[\"name\"]&filters=[[\"Serial%20No\",\"pch_rfid_tag2\",\"=\",\""+rfid_tag+ "\"]]";//localhost url
+
+        String rfid_val_url2 = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.SERIAL_NO);
+        rfid_val_url2 += "?fields=[\"name\"]&filters=[[\"Serial%20No\",\"pch_rfid_tag2\",\"=\",\""+rfid_tag+ "\"]] " ;
+
+        //String rfid_val_url2 = "http://192.168.0.15/api/resource/Serial%20No?fields=[\"name\"]&filters=[[\"Serial%20No\",\"pch_rfid_tag2\",\"=\",\""+rfid_tag+ "\"]]";//localhost url
+
         System.out.println("Suresh ************ From rfid_validation_against_serno rfid_val_url2" +rfid_val_url2);
 
         //JSon Request
-
-
         JsonObjectRequest JsonRequest2 = new JsonObjectRequest(Request.Method.GET, rfid_val_url2,null,
                 new Response.Listener<JSONObject>()
                 {
@@ -994,7 +955,8 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         System.out.println("****************************Enters deAssociateRFID**************************************");
         System.out.println("**************************** from deAssociateRFID parameter details************************************** tag_to_be_removed "+ tag_to_be_removed+ "sereno_with_dup_tag:" +sereno_with_dup_tag);
 
-        String new_url ="http://192.168.0.15/api/resource/Serial%20No/"+sereno_with_dup_tag ;
+        String new_url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.SERIAL_NO,sereno_with_dup_tag);
+        //String new_url ="http://192.168.0.15/api/resource/Serial%20No/"+sereno_with_dup_tag ;
 
         JSONObject rfid_data = new JSONObject();
         rfid_data.put(tag_to_be_removed,"");
@@ -1171,9 +1133,10 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         System.out.println("***************Enters get_rfid_details_ac_serial_number ****************" );
 
         RequestQueue requestQueue1 = Volley.newRequestQueue(this);
-        String url = "http://192.168.0.15/api/resource/Serial%20No?fields=[\"pch_rfid_tag1\",\"pch_rfid_tag2\",\"item_code\"]&filters=[[\"Serial%20No\",\"name\",\"=\",\""+ serial_no+"\"]]";//localhost url // \""+rfid_tag+ "\"
+        //String url = "http://192.168.0.15/api/resource/Serial%20No?fields=[\"pch_rfid_tag1\",\"pch_rfid_tag2\",\"item_code\"]&filters=[[\"Serial%20No\",\"name\",\"=\",\""+ serial_no+"\"]]";//localhost url // \""+rfid_tag+ "\"
 
-
+        String url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.SERIAL_NO);
+        url += "?fields=[\"pch_rfid_tag1\",\"pch_rfid_tag2\",\"item_code\"]&filters=[[\"Serial%20No\",\"name\",\"=\",\""+ serial_no+"\"]]" ;
 
 
         JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.GET, url,null,
@@ -1279,5 +1242,6 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
     }
 } //whole class ends
+//end
 
 
