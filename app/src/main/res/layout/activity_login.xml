@@ -63,6 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/fabulous_margin"
             android:layout_marginRight="@dimen/fabulous_margin"
+            android:textColor="@color/textColor"
             android:text="@string/exampleserveraddress" />
     </LinearLayout>
 
