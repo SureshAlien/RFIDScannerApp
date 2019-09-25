@@ -1,15 +1,11 @@
 package com.example.myapplicationfirs;
 
-/**
- * Created by pragnya on 9/3/18.
- */
+
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by pragnya on 19/6/17.
- */
+
 
 public class CommonResponseHeaders {
     @SerializedName("full_name")

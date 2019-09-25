@@ -7,9 +7,6 @@ package com.example.myapplicationfirs.utils;
 
 public class CustomUrl {
 
-
-
-
     CustomUrl(){
         //do nothing here, default constructor
     }

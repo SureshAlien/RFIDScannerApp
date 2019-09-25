@@ -64,19 +64,8 @@ public class Login extends BasicActivity {
                 else{
                     Toast.makeText(getApplicationContext(),"Please Enter the Server Address to continue" , Toast.LENGTH_LONG).show();
                 }
-
-
-
-
             }
         });
-
-
-
-
-
-
-
     }
 
     @Override

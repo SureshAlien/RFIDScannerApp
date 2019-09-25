@@ -174,7 +174,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         textView_title_config = (TextView) findViewById(R.id.textview_title_config);
         textView_title_config.setText("Port:com" + 13
                 +";Power:" + powerString + " (EU)");
-        manager = UhfReader.getInstance();
+        manager = UhfReader.getInstance();  //gets power from here
         if (manager == null) {
             textVersion.setText("initFails");
             return;
@@ -1136,8 +1136,11 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         //String url = "http://192.168.0.15/api/resource/Serial%20No?fields=[\"pch_rfid_tag1\",\"pch_rfid_tag2\",\"item_code\"]&filters=[[\"Serial%20No\",\"name\",\"=\",\""+ serial_no+"\"]]";//localhost url // \""+rfid_tag+ "\"
 
         String url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.SERIAL_NO);
+        System.out.println("***************Firs url before filter"+url );
+
         url += "?fields=[\"pch_rfid_tag1\",\"pch_rfid_tag2\",\"item_code\"]&filters=[[\"Serial%20No\",\"name\",\"=\",\""+ serial_no+"\"]]" ;
 
+        System.out.println("***************same url after filter"+url );
 
         JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.GET, url,null,
                 new Response.Listener<JSONObject>()

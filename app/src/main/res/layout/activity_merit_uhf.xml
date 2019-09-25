@@ -9,184 +9,296 @@
     android:paddingRight="16dp"
     android:paddingTop="16dp"
     >
-    <TextView
-        android:id="@+id/textview_title_config"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearlayout_power_config"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ellipsize="marquee"
-        android:focusableInTouchMode="true"
-        android:scrollHorizontally="true"
-        android:scrollbars="horizontal"
-        android:singleLine="true" />
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview_title_config"
+            android:ellipsize="marquee"
+            android:focusableInTouchMode="true"
+            android:scrollHorizontally="true"
+            android:scrollbars="horizontal"
+            android:singleLine="true"
+            />
 
-    <TextView
-        android:id="@+id/textView_version"
-        android:text="Text version"
-        android:layout_width="wrap_content"
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_textVersion"
+        android:layout_below="@+id/linearlayout_power_config"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="5dp"/>
-
-
-
-    <EditText
-        android:id="@+id/editSerNo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="50dp"
-        android:hint="Serial No"
-        />
-
-    <Button
-        android:text="Get Details"
-        android:id="@+id/btnGetDetails"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="230dp"
-        android:textSize="15sp"
-        android:layout_marginTop="50dp"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="@color/cardview_light_background"/>
-
-    <TextView
-        android:text="Serial No Details"
-        android:id="@+id/tvSNDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="24dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginLeft="5dp"
-        android:textStyle="bold"
-        android:textColor="@color/textColor"
-        />
-
-    <TextView
-        android:text="Item Code :"
-        android:id="@+id/tvItemCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="24dp"
-        android:layout_marginTop="150dp"
-        android:layout_marginLeft="5dp"
-        android:textColor="@color/textColor"
-        />
-
-    <TextView
-        android:text="Item Code Val "
-        android:id="@+id/tvItemCodeVal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="24dp"
-        android:layout_marginTop="150dp"
-        android:layout_marginLeft="140dp"
-        android:textColor="@color/textColor"
-        />
-
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        >
 
 
     <TextView
-        android:text="RFID1 :"
-        android:id="@+id/tvRfid1"
-        android:layout_width="wrap_content"
+            android:id="@+id/textView_version"
+            android:text="Text version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginLeft="5dp"
-        android:textColor="@color/textColor"
-        />
+        android:id="@+id/linearlayout_docName_details"
+        android:layout_below="@+id/linearlayout_textVersion"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
 
-    <EditText
-        android:id="@+id/editRfid1"
-        android:layout_width="250dp"
+        <EditText
+            android:id="@+id/editSerNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+
+            android:inputType="text"
+            android:layout_weight="0.80"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:hint="Serial No"
+            />
+
+        <Button
+            android:id="@+id/btnGetDetails"
+            android:text="Get Details"
+            android:layout_weight="0.2"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:textSize="15sp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/cardview_light_background"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_serialNo_details_label"
+
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:layout_marginTop="200dp"
-        android:layout_marginLeft="90dp" />
+        android:orientation="vertical"
+        android:layout_below="@+id/linearlayout_docName_details"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        >
+        <TextView
+            android:id="@+id/tvSNDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Serial No Details"
+            android:autoLink="none"
+            android:textStyle="bold"
+            android:textColor="@color/textColor"
+            android:textSize="24dp"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/btnScan1"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Scan-1"
-        android:textSize="15sp"
-        android:layout_marginTop="200dp"
-        android:layout_marginLeft="320dp"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="@color/cardview_light_background"
-        />
+        android:id="@+id/linearlayout_itemCode"
+        android:layout_below="@+id/linearlayout_serialNo_details_label"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
 
-    <TextView
-        android:text="RFID2 :"
-        android:id="@+id/tvRfid2"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/tvItemCode"
+            android:text="Item Code :"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.50"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+
+            android:textSize="24dp"
+            android:textColor="@color/textColor"
+            />
+
+        <TextView
+            android:text="Item Code Val "
+            android:id="@+id/tvItemCodeVal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.50"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textSize="24dp"
+            android:textColor="@color/textColor"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24dp"
-        android:layout_marginTop="250dp"
-        android:layout_marginLeft="5dp"
-        android:textColor="@color/textColor"
-        />
+        android:id="@+id/linearlayout_rfid1"
+        android:layout_below="@+id/linearlayout_itemCode"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
 
+        <TextView
+            android:id="@+id/tvRfid1"
+            android:text="RFID1 :"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:layout_weight="0.26"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textColor="@color/textColor"
+            />
 
+        <EditText
+            android:id="@+id/editRfid1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.54"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:ems="10"
+            android:inputType="text"
+             />
 
-    <EditText
-        android:id="@+id/editRfid2"
-        android:layout_width="250dp"
+        <Button
+            android:id="@+id/btnScan1"
+            android:text="Scan-1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textSize="15sp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/cardview_light_background"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_rfid2"
+        android:layout_below="@+id/linearlayout_rfid1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:layout_marginTop="250dp"
-        android:layout_marginLeft="90dp" />
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
 
-    <Button
-        android:id="@+id/btnScan2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnScan1"
-        android:layout_marginLeft="320dp"
-        android:layout_marginTop="2dp"
-        android:text="Scan-2"
-        android:textSize="15sp"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="@color/cardview_light_background"/>
+        <TextView
+            android:id="@+id/tvRfid2"
+            android:text="RFID2 :"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:layout_weight="0.26"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textColor="@color/textColor"
+            />
 
-    <Button
-        android:text="Associate"
-        android:id="@+id/btnAssociate"
-        android:textSize="15sp"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="90dp"
-        android:layout_marginTop="300dp"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="@color/cardview_light_background"
-        />
+        <EditText
+            android:id="@+id/editRfid2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.54"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:ems="10"
+            android:inputType="text"
+            />
 
-    <Button
-        android:visibility="invisible"
-        android:id="@+id/btnScan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="startInvetory"
-        android:text="Scan"
-        android:textSize="15dp"
-        android:layout_marginTop="500dp"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="@color/cardview_light_background"
-        />
+        <Button
+            android:id="@+id/btnScan2"
+            android:text="Scan-2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textSize="15sp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/cardview_light_background"
+            />
+    </LinearLayout>
 
-    <TextView
-        android:text="EPC label"
-        android:id="@+id/tvEpcLabel1"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearlayout_associate_button"
+        android:layout_below="@+id/linearlayout_rfid2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24dp"
-        android:layout_marginTop="550dp"
-        android:layout_marginLeft="5dp"
-        android:textColor="@color/textColor"
-        />
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+
+        <Button
+            android:id="@+id/btnAssociate"
+            android:text="Associate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.999"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textSize="15sp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/cardview_light_background"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_scanned_rifd_tag"
+        android:layout_below="@+id/linearlayout_associate_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <TextView
+            android:id="@+id/tvEpcLabel1"
+            android:text="EPC label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:layout_weight="0.90"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textColor="@color/textColor"
+            />
+        <Button
+            android:visibility="invisible"
+            android:id="@+id/btnScan"
+            android:text="Scan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.10"
+            android:onClick="startInvetory"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textSize="15dp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/cardview_light_background"
+            />
+    </LinearLayout>
+
+
+
 
 </RelativeLayout>
