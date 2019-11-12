@@ -130,7 +130,7 @@ public class LoginFragment extends BaseFragment {
                         editor.apply();
                         editor.commit();
 
-                        //added on 25th Oct 2017 to tie user down to a warehouse
+                        //to call next activity after login
                         startAssocistaionScanningActivity();
 
                     } else {
@@ -177,7 +177,6 @@ public class LoginFragment extends BaseFragment {
 
         requestQueue.add(stringRequest);
 
-
     }
 
     public void startAssocistaionScanningActivity()
@@ -185,9 +184,5 @@ public class LoginFragment extends BaseFragment {
         Intent startAssocistaionScanningActivity = new Intent(LoginFragment.super.getContext(),MeritUHF.class);
         startActivity(startAssocistaionScanningActivity);
     }
-
-
-
-
 
 }

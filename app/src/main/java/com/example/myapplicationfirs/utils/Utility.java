@@ -1,17 +1,12 @@
 package com.example.myapplicationfirs.utils;
 
-/**
- * Created by pragnya on 9/3/18.
- */
+
 
 import android.net.Uri;
 
 import java.util.Map;
 
 
-/**
- * Created by pragnya on 21/6/17.
- */
 
 public class Utility {
     public static Utility utility;
@@ -35,8 +30,17 @@ public class Utility {
         builder.encodedAuthority(CustomUrl.getServerAddress());
         builder.appendPath(CustomUrl.API);
         builder.appendPath(methodORresource);
-        for(String path:dottedpath)
-            builder.appendPath(path);
+
+        if (dottedpath != null){
+            for(String path:dottedpath)
+            {
+                System.out.println(" ************From Utility class inside for loop path "+path);
+
+                builder.appendPath(path);
+
+            }
+        }
+
 
 
         //add the parameters to the urlstring

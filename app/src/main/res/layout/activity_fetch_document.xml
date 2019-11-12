@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    tools:context=".FetchDocument"
+    >
+
+    <LinearLayout
+        android:id="@+id/linearlayout_what_document"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_marginRight="@dimen/fabulous_margin"
+            android:text="What Document do you want to Associate the RFID Tag with?" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearlayout_what_document"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:background="#808080"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <Spinner
+            android:id="@+id/spinner_fetch_doc"
+            style="@style/Widget.AppCompat.DropDownItem.Spinner"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="1"
+            android:popupBackground="#FFCCDD" />
+    </LinearLayout>
+
+
+</RelativeLayout>

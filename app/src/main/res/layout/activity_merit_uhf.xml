@@ -40,11 +40,34 @@
         >
 
 
-    <TextView
+        <TextView
             android:id="@+id/textView_version"
-            android:text="Text version"
             android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_doctype_selection"
+        android:layout_below="@+id/linearlayout_textVersion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+
+        <Spinner
+            android:id="@+id/simple_spinner"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_alignParentTop ="true"
+            android:popupBackground="#FFCCDD"
             />
     </LinearLayout>
 
@@ -52,7 +75,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linearlayout_docName_details"
-        android:layout_below="@+id/linearlayout_textVersion"
+        android:layout_below="@+id/linearlayout_doctype_selection"
         android:weightSum="1"
         android:layout_marginTop="@dimen/top_margin"
         android:layout_marginLeft="@dimen/top_margin"
@@ -61,31 +84,29 @@
         android:paddingRight="0dp">
 
         <EditText
-            android:id="@+id/editSerNo"
+            android:id="@+id/editDocNo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ems="10"
-
             android:inputType="text"
-            android:layout_weight="0.80"
+            android:layout_weight="0.70"
             android:layout_marginLeft="@dimen/fabulous_margin"
-            android:hint="Serial No"
+            android:hint="@string/getDocName"
             />
 
         <Button
             android:id="@+id/btnGetDetails"
-            android:text="Get Details"
-            android:layout_weight="0.2"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:textSize="15sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
             android:background="@color/colorPrimaryDark"
+            android:text="Get Doc Details"
             android:textColor="@color/cardview_light_background"
-            />
+            android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearlayout_serialNo_details_label"
+        android:id="@+id/linearlayout_DocType_details_label"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -94,11 +115,12 @@
         android:layout_marginTop="@dimen/top_margin"
         android:layout_marginLeft="@dimen/top_margin"
         >
+
         <TextView
-            android:id="@+id/tvSNDetails"
+            android:id="@+id/tvDocTypeDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Serial No Details"
+            android:text="Details"
             android:autoLink="none"
             android:textStyle="bold"
             android:textColor="@color/textColor"
@@ -111,13 +133,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linearlayout_itemCode"
-        android:layout_below="@+id/linearlayout_serialNo_details_label"
+        android:layout_below="@+id/linearlayout_DocType_details_label"
         android:weightSum="1"
         android:layout_marginTop="@dimen/top_margin"
         android:layout_marginLeft="@dimen/top_margin"
         android:layout_marginRight="@dimen/top_margin"
         android:paddingLeft="0dp"
         android:paddingRight="0dp">
+
 
         <TextView
             android:id="@+id/tvItemCode"
@@ -132,7 +155,7 @@
             />
 
         <TextView
-            android:text="Item Code Val "
+            android:text=""
             android:id="@+id/tvItemCodeVal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -141,6 +164,7 @@
             android:textSize="24dp"
             android:textColor="@color/textColor"
             />
+
     </LinearLayout>
 
     <LinearLayout
@@ -275,7 +299,7 @@
 
         <TextView
             android:id="@+id/tvEpcLabel1"
-            android:text="EPC label"
+            android:text=""
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="24dp"
@@ -296,9 +320,19 @@
             android:background="@color/colorPrimaryDark"
             android:textColor="@color/cardview_light_background"
             />
+        <EditText
+            android:id="@+id/editDoctype"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:layout_weight="0.999"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:hint="@string/getDocType2"
+            />
+
+
     </LinearLayout>
-
-
 
 
 </RelativeLayout>

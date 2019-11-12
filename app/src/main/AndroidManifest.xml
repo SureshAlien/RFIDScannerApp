@@ -11,18 +11,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TestLogin"></activity>
-        <activity android:name=".Login" >
+        <activity android:name=".FetchDocument"></activity>
+        <activity android:name=".UtilityScreen" >
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
-        </activity>
+    </activity>
+        <activity android:name=".TestLogin" />
+        <activity
+            android:name=".Login"
+            android:label="RFID Association">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <activity android:name=".MeritUHF">
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".MeritUHF"
+            android:label="RFID Association" />
         <activity android:name=".MainActivity" />
     </application>
 

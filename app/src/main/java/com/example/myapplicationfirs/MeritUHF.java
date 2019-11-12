@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -81,7 +82,8 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
     private EditText editRfid1 ;
     private EditText editRfid2 ;
-    private EditText editSerNo ;
+    private EditText editDocNo ; //DocNo = name in ErpNext
+    private EditText editDocType ;
     private TextView tvItemCode;
 
 
@@ -120,7 +122,9 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
     //rfidValidation
     JSONObject de_associate_rfid_details = new JSONObject();  //de_associate_rfid_details = {"RFID1" : {"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}
 
-    private String as_ds_updated_details = "" ;
+     String as_ds_updated_details = "" ;
+
+    private android.widget.Spinner myspinner ;
 
 
 
@@ -135,6 +139,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         area = shared.getInt("area", 3);
 
         initView();
+        set_doctypes_on_spinner();
 
         Thread thread = new InventoryThread();
         thread.start();
@@ -170,20 +175,19 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 //			default:
 //				break;
 //		}
-        TextView textView_title_config;
-        textView_title_config = (TextView) findViewById(R.id.textview_title_config);
-        textView_title_config.setText("Port:com" + 13
-                +";Power:" + powerString + " (EU)");
+        //TextView textView_title_config;
+        //textView_title_config = (TextView) findViewById(R.id.textview_title_config);
+        //textView_title_config.setText("Port:com" + 13+";Power:" + powerString + " (EU)");
         manager = UhfReader.getInstance();  //gets power from here
         if (manager == null) {
             textVersion.setText("initFails");
             return;
         }
         //debug
-        if (manager != null) {
+        /*if (manager != null) {
             textVersion.setText("getInstance method sucessfuly returned UhfReader's Object");
             return;
-        }
+        } */
 
         //debug
         try {
@@ -220,7 +224,6 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         super.onDestroy();
     }
 
-
     private void initView() {
 
         btnScan = (Button)findViewById(R.id.btnScan);
@@ -240,12 +243,17 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
         editRfid1 = (EditText) findViewById(R.id.editRfid1);
         editRfid2 = (EditText) findViewById(R.id.editRfid2);
-        editSerNo = (EditText) findViewById(R.id.editSerNo);
+        editDocNo = (EditText) findViewById(R.id.editDocNo);
+        editDocType = (EditText) findViewById(R.id.editDoctype);
         tvItemCode =  (TextView)  findViewById(R.id.tvItemCodeVal);
 
         tvEpcLabel = (TextView)findViewById(R.id.tvEpcLabel1);
         listEPC = new ArrayList<EPC>();
         textVersion = (TextView) findViewById(R.id.textView_version);
+
+        myspinner = (android.widget.Spinner) findViewById(R.id.simple_spinner);
+
+
 
 
         try {
@@ -256,10 +264,15 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         } catch (Exception e) {
             Log.e("ERROR",e.toString());
         }
-
-
-
     } //initView ends
+
+    private void set_doctypes_on_spinner(){
+        String doctype_names[] = {"Serial No","Batch No","Employee"};
+        ArrayAdapter<String> myadapter = new ArrayAdapter<>(MeritUHF.this,android.R.layout.simple_list_item_1,doctype_names);
+        myadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        myspinner.setAdapter(myadapter);
+    }
+
 
     class InventoryThread extends Thread {
         private List<TagModel> tagList;
@@ -316,7 +329,6 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                     //RFID tag1 validattion against all tag1 of all serial numbers
 
                     String rfid_tag1 = editRfid1.getText().toString() ;
-                    String serialNum = editSerNo.getText().toString();
 
                     if (rfid_tag1 != null){
                         rfid_validation_against_serno("RFID_TAG1",rfid_tag1);
@@ -333,7 +345,6 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                     //RFID tag2 validattion against all tag1 of all serial numbers
 
                     String rfid_tag2 = editRfid2.getText().toString() ;
-                    String serialNum = editSerNo.getText().toString();
                     JSONObject rfiid_tag2_exist_details ;
 
                     if (rfid_tag2 != null){
@@ -369,10 +380,9 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
             case R.id.btnGetDetails:
                 System.out.println("***************************GetDetails Button clicked**************************************");
-
-                String  serial_no = editSerNo.getText().toString();
-
-                get_rfid_details_ac_serial_number( serial_no);
+                String doc_type = editDocType.getText().toString() ;
+                String  doc_no = editDocNo.getText().toString();
+                get_rfid_details_ac_doc_number( doc_type,doc_no);
                 break;
 
 
@@ -409,7 +419,12 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
                 final String rf1 = editRfid1.getText().toString();
                 final String rf2 = editRfid2.getText().toString();
-                final String serialNum = editSerNo.getText().toString();
+                final String doc_no_fi = editDocNo.getText().toString();
+                String temp_doc_type  = editDocType.getText().toString() ;
+                temp_doc_type = temp_doc_type.trim();
+                temp_doc_type = temp_doc_type.replaceAll(" +", "%20");
+                final String doc_type_fi = temp_doc_type;
+
 
                 System.out.println("*************************** from Associate Button clicked**************************************rf1,rf2"+rf1 +" " +rf2 );
                 System.out.println ("***************************from Associate Button clicked de_associate_rfid_details**************************************de_associate_rfid_details "+de_associate_rfid_details );
@@ -468,25 +483,20 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                             //System.out.println("***************************from Associate Button syncApiCallDummy2 called**************************************");
 
                             if(rf1 != null || rf2 != null){
-                                    associateRFIDTags(username,rf1,rf2,serialNum);
-                                     System.out.println("***************************from Associate Button clicked  associateRFIDTags  fun  called ");
+                                    associateRFIDTags(username,rf1,rf2,doc_type_fi,doc_no_fi);
+                                    System.out.println("***************************from Associate Button clicked  associateRFIDTags  fun  called ");
 
                             }
 
                         } catch (JSONException e) {
                             System.out.println("***************************from Associate Button clicked Error in try ************************************** "+e );
                         }
-
-
                     }
                 });
                 thread.start();
                 System.out.println("***************************from Associate Button clicked Sample  check for associateRFIDTags  fun ");
         }
     }//Onclick ends
-
-
-
     private void registerReceiver() {
         keyReceiver = new KeyReceiver();
         IntentFilter filter = new IntentFilter();
@@ -526,48 +536,55 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
     private void getLoggedInUserData() {
 
+        //using this function top lines to check urls
+
+
         System.out.println("Suresh ************ From getLoggedInUserData  Entered ");
         String myUrl2 = Utility.getInstance().buildUrl(CustomUrl.API_METHOD, null, CustomUrl.GET_LOGGED_USER);
         //String myUrl2 = "http://192.168.0.15/api/method/frappe.auth.get_logged_user";//localhost url
         System.out.println("Suresh ************ From getLoggedInUserData  customurl came "+myUrl2);
-        String serialNum= "1000";
 
-        String new_url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.SERIAL_NO, serialNum);
+        //?fields=["pch_rfid_tag1","pch_rfid_tag2","item_code"]&filters=[["Serial%20No","name","=","dummy"]]
 
-        System.out.println("Suresh ************ From getLoggedInUserData  new_url came "+new_url);
+        String  fields_str = "[\"pch_rfid_tag1\",\"pch_rfid_tag2\",\"item_code\"]" ;
+        String  filters = "[[\"Serial%20No\",\"name\",\"=\",\"dummy\"]]" ;
 
 
-        //actual --> String rfid_val_url = "http://192.168.0.15/api/resource/Serial%20No?fields=[\"name\"]&filters=[[\"Serial%20No\",\"pch_rfid_tag1\",\"=\",\""+rfid_tag+ "\"]]";//localhost url
+
+
+        //get_rfid_details_ac_doc_number
+        //http:/api/resource/Serial%20No?fields=["pch_rfid_tag1","pch_rfid_tag2","item_code"]&filters=[["Serial%20No","name","=","dummy"]]
+
+
+        String serial_no = "dummy";
+        String doc_name = "Stock  Entry ";
+        String doc_no = "10000";
+
+        doc_name = doc_name.trim();
+        doc_name = doc_name.replaceAll(" +", "%20");
+
+
+        String url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE,null,null);
+        url += "/"+doc_name +"?fields=[\"pch_rfid_tag1\",\"pch_rfid_tag2\",\"item_code\"]&filters=[[\""+doc_name +"\",\"name\",\"=\",\""+ doc_no+"\"]]" ;
+        System.out.println("Suresh ************ From getLoggedInUserData  get_rfid_details_ac_doc_number came "+url);
+
+
+
+
+       /* Sample url checkings
+       //actual --> String rfid_val_url = "http://192.168.0.15/api/resource/Serial%20No?fields=[\"name\"]&filters=[[\"Serial%20No\",\"pch_rfid_tag1\",\"=\",\""+rfid_tag+ "\"]]";//localhost url
         String rfid_tag = "178999";
         String rfid_validation1 = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.SERIAL_NO);
         rfid_validation1 += "?fields=[\"name\"]&filters=[[\"Serial%20No\",\"pch_rfid_tag1\",\"=\",\""+rfid_tag+ "\"]] " ;
-
         System.out.println("Suresh ************ From getLoggedInUserData  rfid_validation1 came "+rfid_validation1);
-
-
         //actual --> String rfid_val_url = "http://192.168.0.15/api/resource/Serial%20No?fields=[\"name\"]&filters=[[\"Serial%20No\",\"pch_rfid_tag2\",\"=\",\""+rfid_tag+ "\"]]";//localhost url
         String rfid_validation2 = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.SERIAL_NO);
         rfid_validation2 += "?fields=[\"name\"]&filters=[[\"Serial%20No\",\"pch_rfid_tag2\",\"=\",\""+rfid_tag+ "\"]] " ;
-
         System.out.println("Suresh ************ From getLoggedInUserData  rfid_validation2 came "+rfid_validation2);
-
         //deassociate
         String deassociate = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.SERIAL_NO,serialNum);
         System.out.println("Suresh ************ From getLoggedInUserData  deassociate came "+deassociate);
-
-
-        //get_rfid_details_ac_serial_number
-        String serial_no = "dummy";
-        String url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.SERIAL_NO);
-        url += "?fields=[\"pch_rfid_tag1\",\"pch_rfid_tag2\",\"item_code\"]&filters=[[\"Serial%20No\",\"name\",\"=\",\""+ serial_no+"\"]]" ;
-
-        System.out.println("Suresh ************ From getLoggedInUserData  get_rfid_details_ac_serial_number came "+url);
-
-
-
-
-
-
+        */
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         //String myUrl2 = "http://192.168.0.62:8000/api/method/frappe.auth.get_logged_user"; //dev lap url
@@ -576,8 +593,6 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
             @Override
             public void onResponse(String response) {
                 System.out.println("Suresh ************ From getLoggedInUserData  Response came  ");
-
-
                 try {
                     JSONObject object = new JSONObject(response);
                     //String loggedInUser = object.getString("message");
@@ -602,10 +617,8 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         };
 
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(30 * 1000, 0,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(stringRequest);
-
-
     }
 
     public Map<String, String> getHeaders () {
@@ -622,16 +635,17 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         return headers;
     } //end of getuser data
 
-    private void associateRFIDTags(String username, String rf1, String rf2, final String serialNum) throws JSONException {
+    private void associateRFIDTags(String username, String rf1, String rf2,final String doc_type, final String doc_no) throws JSONException {
+
 
         System.out.println("****************************Enters associateRFIDTags**************************************");
-        System.out.println("**************************** from associateRFIDTags************************************** rf1data "+ rf1+ "rf2:" +rf2+"serialNum :"+serialNum);
+        System.out.println("**************************** from associateRFIDTags************************************** rf1data "+ rf1+ "rf2:" +rf2+"doc_type :"+doc_type +"doc_no :"+doc_no);
 
-        String new_url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.SERIAL_NO,serialNum);
+        String new_url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, null);
+        new_url += "/"+ doc_type  + "/" + doc_no ;
 
         //from custom url->http://192.168.0.15/api/resource/Serial%20No/1000
         //String new_url ="http://192.168.0.15/api/resource/Serial%20No/"+serialNum ;
-
 
         JSONObject rfid_data = new JSONObject();
         rfid_data.put("pch_rfid_tag1",rf1);
@@ -658,7 +672,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                             String updated_rfid_tag2 = dataObject.getString("pch_rfid_tag1");
 
                             if (updated_rfid_tag1 != "null" && updated_rfid_tag1 != null ){
-                                as_ds_updated_details += "Serial Number : "+serialNum +"  has been associated with given RFID Tags" ;
+                                as_ds_updated_details += doc_type+" : "+ doc_no +" has been associated with given RFID Tags" ;
                             }
                         }catch (JSONException e) {
                             e.printStackTrace();
@@ -1122,113 +1136,75 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         }
     }
 
+    //get doc no details start
+    //String url = "http://192.168.0.15/api/resource/Serial%20No?fields=[\"pch_rfid_tag1\",\"pch_rfid_tag2\",\"item_code\"]&filters=[[\"Serial%20No\",\"name\",\"=\",\""+ serial_no+"\"]]";//localhost url // \""+rfid_tag+ "\"
 
+    private void get_rfid_details_ac_doc_number(String doc_type,String doc_no) {
 
-
-
-    //get ser no details start
-
-    private void get_rfid_details_ac_serial_number(String serial_no) {
-
-        System.out.println("***************Enters get_rfid_details_ac_serial_number ****************" );
+        doc_type = doc_type.trim();
+        doc_type = doc_type.replaceAll(" +", "%20");
 
         RequestQueue requestQueue1 = Volley.newRequestQueue(this);
-        //String url = "http://192.168.0.15/api/resource/Serial%20No?fields=[\"pch_rfid_tag1\",\"pch_rfid_tag2\",\"item_code\"]&filters=[[\"Serial%20No\",\"name\",\"=\",\""+ serial_no+"\"]]";//localhost url // \""+rfid_tag+ "\"
 
-        String url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.SERIAL_NO);
-        System.out.println("***************Firs url before filter"+url );
+        String url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE,null, null);
 
-        url += "?fields=[\"pch_rfid_tag1\",\"pch_rfid_tag2\",\"item_code\"]&filters=[[\"Serial%20No\",\"name\",\"=\",\""+ serial_no+"\"]]" ;
-
-        System.out.println("***************same url after filter"+url );
+        url += "/"+ doc_type +"?fields=[\"pch_rfid_tag1\",\"pch_rfid_tag2\"]&filters=[[\""+doc_type +"\",\"name\",\"=\",\""+ doc_no+"\"]]" ;
+        System.out.println("***************Enters get_rfid_details_ac_doc_number, url :::: "+url );
 
         JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.GET, url,null,
                 new Response.Listener<JSONObject>()
                 {
                     @Override
                     public void onResponse(JSONObject response) {
-                        // display response
-                        System.out.println("***************From  get_rfid_details_ac_serial_number  response : "+response );
-
-
+                        System.out.println("***************From  get_rfid_details_ac_doc_number  response : "+response );
                         // {"data":[{"pch_rfid_tag2":null,"pch_rfid_tag1":null}]} ,, Invalid ser no = {"data":[]}
-
-
                         try{
                             JSONArray jsonArray = response.getJSONArray("data");
-
-                            if (jsonArray.length() != 0 ){  //valid ser no
+                            if (jsonArray.length() != 0 ){  //valid doc no
 
                                 JSONObject objectInArray = jsonArray.getJSONObject(0);
-
-
-
                                 String rfid_tag1 = objectInArray.getString("pch_rfid_tag1");
                                 String rfid_tag2 = objectInArray.getString("pch_rfid_tag2");
-                                String ser_item_code = objectInArray.getString("item_code");
 
-                                System.out.println("***************From  get_rfid_details_ac_serial_number  rfid_tag1 : "+rfid_tag1 );
-                                System.out.println("***************From  get_rfid_details_ac_serial_number  rfid_tag2 : "+rfid_tag2 );
-                                System.out.println("***************From  get_rfid_details_ac_serial_number  ser_item_code : "+ser_item_code );
-
-
-
-
+                                System.out.println("***************From  get_rfid_details_ac_doc_number  rfid_tag1 : "+rfid_tag1 + "rfid_tag2 : "+ rfid_tag2 );
 
                                 if (rfid_tag1 != "null" ){
-
                                     editRfid1.setText(rfid_tag1);
                                 }
                                 else{
-                                    System.out.println("***************From  get_rfid_details_ac_serial_number   RFID tag1 null ");
-
+                                    System.out.println("***************From  get_rfid_details_ac_doc_number   RFID tag1 null ");
                                     editRfid1.setText(rfid_tag1); //for null now entering null only .
-
                                 }
 
-
                                 if (rfid_tag2 != "null"  ){
-
                                     editRfid2.setText(rfid_tag2);
                                 }
                                 else{
-                                    System.out.println("***************From  get_rfid_details_ac_serial_number   RFID tag2 null ");
-
+                                    System.out.println("***************From  get_rfid_details_ac_doc_number   RFID tag2 null ");
                                     editRfid2.setText(rfid_tag2); //for null now entering null only .
-
-                                }
-
-                                if (ser_item_code != "null"  ) {
-                                    tvItemCode.setText(ser_item_code);
-                                }else{
-                                    tvItemCode.setText("Item Code not available");
                                 }
 
                                 if ( rfid_tag2 == "null" &&  rfid_tag1 == "null" )
                                 {
-                                    System.out.println("***************From  get_rfid_details_ac_serial_number  No RFID tags have Associated Given Serial Number has : ");
-
+                                    System.out.println("***************From  get_rfid_details_ac_doc_number  No RFID tags have Associated Given Serial Number has : ");
                                     Toast.makeText(MeritUHF.this, "No RFID tags have Associated Given Serial Number  " ,Toast.LENGTH_SHORT).show();
-
                                 }
 
-                                }
+                            }
                             else{ //invalid ser no
                                 Toast.makeText(MeritUHF.this, "Please enter the valid Serial No " ,Toast.LENGTH_SHORT).show();
-
                             }
 
                         }catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                 },
                 new Response.ErrorListener()
                 {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println("***************From  get_rfid_details_ac_serial_number  error : "+error );
+                        System.out.println("***************From  get_rfid_details_ac_doc_number  error : "+error );
                     }
                 }
         ){
@@ -1237,12 +1213,8 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
                 return MeritUHF.this.getHeaders();
             }
-
         };
         requestQueue1.add(JsonRequest);
-
-
-
     }
 } //whole class ends
 //end

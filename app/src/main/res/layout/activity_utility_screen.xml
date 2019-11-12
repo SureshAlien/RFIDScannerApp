@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    tools:context=".UtilityScreen"
+    >
+
+    <LinearLayout
+        android:id="@+id/linearlayout_associate_utility"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+
+        <Button
+            android:id="@+id/btnAssociateUtility"
+            android:text="Associate RFID Tag"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.999"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textSize="15sp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/cardview_light_background"
+            />
+
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

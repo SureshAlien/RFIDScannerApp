@@ -43,7 +43,8 @@
                 android:layout_alignBottom="@+id/linearlayout_username"
                 android:layout_weight="0.80"
                 android:hint="@string/provideserveraddress"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:text="192.168.0.15"/>
 
             <Button
                 android:id="@+id/btn_set"
@@ -75,6 +76,6 @@
 
     </FrameLayout>
 
-    
+
 </RelativeLayout>
 

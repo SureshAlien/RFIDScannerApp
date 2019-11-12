@@ -38,7 +38,8 @@
                 android:layout_marginLeft="@dimen/fabulous_margin"
                 android:layout_weight="0.90"
                 android:hint="@string/username_hint"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:text="administrator"/>
 
 
         </LinearLayout>
@@ -67,6 +68,7 @@
                 android:layout_weight="0.90"
                 android:layout_marginLeft="@dimen/fabulous_margin"
                 android:hint="@string/password_hint"
+                android:text="password"
                 />
 
         </LinearLayout>
