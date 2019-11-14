@@ -131,7 +131,8 @@ public class LoginFragment extends BaseFragment {
                         editor.commit();
 
                         //to call next activity after login
-                        startAssocistaionScanningActivity();
+                        //startAssocistaionScanningActivity();
+                        startUtilitiesActivity();
 
                     } else {
                         Toast.makeText(LoginFragment.super.context, R.string.login_failed, Toast.LENGTH_LONG).show();
@@ -179,10 +180,21 @@ public class LoginFragment extends BaseFragment {
 
     }
 
+    public void startUtilitiesActivity()
+    {
+        Intent startUtilitiesActivity = new Intent(LoginFragment.super.getContext(),UtilityScreen.class);
+        startActivity(startUtilitiesActivity);
+    }
+
+    /*
     public void startAssocistaionScanningActivity()
     {
         Intent startAssocistaionScanningActivity = new Intent(LoginFragment.super.getContext(),MeritUHF.class);
         startActivity(startAssocistaionScanningActivity);
     }
+
+     */
+
+
 
 }

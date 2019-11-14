@@ -98,12 +98,9 @@
     <string name="dswhlistisnull_str">Error: The downstream warehouse list for this item is not set on ERPNext. Please choose another item or please set the list on ERPNext and retry.</string>
     <string name="title_activity_test_login">TestLogin</string>
     <string name="getDocType2"><font size="10">Enter the DocType you want to Associate </font></string>
-    <string name="getDocName"><font size="10">Enter the Doc Name </font></string>
+    <string name="getDocName"><font size="10">Enter the DocName or Scan </font></string>
+    <string name="getDocDetailsButton">Get Doc Details </string>
 
-    <string-array name="doc_names">
-        <item>Serial No</item>
-        <item>Employee</item>
-        <item>Batch No</item>
 
-    </string-array>
+
 </resources>

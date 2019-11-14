@@ -9,30 +9,9 @@
     android:paddingRight="16dp"
     android:paddingTop="16dp"
     >
-    <LinearLayout
-        android:id="@+id/linearlayout_power_config"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="@dimen/top_margin"
-        android:layout_marginLeft="@dimen/top_margin"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textview_title_config"
-            android:ellipsize="marquee"
-            android:focusableInTouchMode="true"
-            android:scrollHorizontally="true"
-            android:scrollbars="horizontal"
-            android:singleLine="true"
-            />
-
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearlayout_textVersion"
-        android:layout_below="@+id/linearlayout_power_config"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/top_margin"
@@ -48,7 +27,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearlayout_doctype_selection"
+        android:id="@+id/linearlayout_selected_doctype"
         android:layout_below="@+id/linearlayout_textVersion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,15 +38,28 @@
         android:paddingLeft="0dp"
         android:paddingRight="0dp">
 
-
-        <Spinner
-            android:id="@+id/simple_spinner"
+        <TextView
+            android:id="@+id/tv_doctype_label"
+            android:text="Doc Type :"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.50"
             android:layout_marginLeft="@dimen/fabulous_margin"
-            android:layout_alignParentTop ="true"
-            android:popupBackground="#FFCCDD"
+
+            android:textSize="24dp"
+            android:textColor="@color/textColor"
+            />
+
+        <TextView
+            android:id="@+id/tv_doctype"
+            android:text=""
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.50"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+
+            android:textSize="24dp"
+            android:textColor="@color/textColor"
             />
     </LinearLayout>
 
@@ -75,7 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linearlayout_docName_details"
-        android:layout_below="@+id/linearlayout_doctype_selection"
+        android:layout_below="@+id/linearlayout_selected_doctype"
         android:weightSum="1"
         android:layout_marginTop="@dimen/top_margin"
         android:layout_marginLeft="@dimen/top_margin"
@@ -93,39 +85,40 @@
             android:layout_marginLeft="@dimen/fabulous_margin"
             android:hint="@string/getDocName"
             />
-
         <Button
-            android:id="@+id/btnGetDetails"
+            android:id="@+id/btn_scan_qr_bar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.3"
             android:background="@color/colorPrimaryDark"
-            android:text="Get Doc Details"
+            android:text="Scan QR"
             android:textColor="@color/cardview_light_background"
             android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearlayout_DocType_details_label"
-
+        android:id="@+id/linearlayout_get_details_button"
+        android:layout_below="@+id/linearlayout_docName_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/linearlayout_docName_details"
+        android:weightSum="1"
         android:layout_marginTop="@dimen/top_margin"
         android:layout_marginLeft="@dimen/top_margin"
-        >
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
 
-        <TextView
-            android:id="@+id/tvDocTypeDetails"
-            android:layout_width="match_parent"
+
+        <Button
+            android:id="@+id/btnGetDetails"
+            android:text="@string/getDocDetailsButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Details"
-            android:autoLink="none"
-            android:textStyle="bold"
-            android:textColor="@color/textColor"
-            android:textSize="24dp"
+            android:layout_weight="0.999"
             android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textSize="15sp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/cardview_light_background"
             />
     </LinearLayout>
 
@@ -133,7 +126,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linearlayout_itemCode"
-        android:layout_below="@+id/linearlayout_DocType_details_label"
+        android:layout_below="@+id/linearlayout_get_details_button"
         android:weightSum="1"
         android:layout_marginTop="@dimen/top_margin"
         android:layout_marginLeft="@dimen/top_margin"

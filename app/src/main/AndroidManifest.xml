@@ -13,12 +13,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".FetchDocument"></activity>
         <activity android:name=".UtilityScreen" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
+        </activity>
         <activity android:name=".TestLogin" />
         <activity
             android:name=".Login"

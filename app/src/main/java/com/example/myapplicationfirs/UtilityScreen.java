@@ -1,6 +1,9 @@
 package com.example.myapplicationfirs;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +13,25 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.myapplicationfirs.utils.Constants;
+import com.example.myapplicationfirs.utils.CustomUrl;
+import com.example.myapplicationfirs.utils.Utility;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
+import java.util.*;
+
 
 public class UtilityScreen extends AppCompatActivity implements View.OnClickListener {
 
@@ -42,12 +64,13 @@ public class UtilityScreen extends AppCompatActivity implements View.OnClickList
 
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(UtilityScreen.this);
-                builder.setMessage("Please Select the Doctype")
+                builder.setMessage("What Document do you want to Associate the RFID Tag with?")
                         .setView(view)
                         .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                System.out.println("Donne with custom dialog box");
+                                String selected_doctype = doc_name_spinner.getSelectedItem().toString();
+                                startAssocistaionScanningActivity( selected_doctype );
 
                             }
                         }).setNegativeButton("Cancel",null)
@@ -57,12 +80,94 @@ public class UtilityScreen extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void set_doctypes_on_spinner( Spinner doc_name_spinner ){
-        System.out.println("********Came inside  FetchDocument  set_doctypes_on_spinner");
-        String doctype_names[] = {"Serial No","Batch No","Employee"};
-        ArrayAdapter<String> myadapter = new ArrayAdapter<>(UtilityScreen.this,android.R.layout.simple_list_item_1,doctype_names);
-        myadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        doc_name_spinner.setAdapter(myadapter);
+    private void set_doctypes_on_spinner(final Spinner doc_name_spinner  ) {
+
+        RequestQueue requestQueue1 = Volley.newRequestQueue(this);
+
+        //String url1 = "http://192.168.0.15/api/method/nhance.rfid_android_api.get_permitted_doctypes";
+        String url = Utility.getInstance().buildUrl(CustomUrl.API_METHOD, null, CustomUrl.GET_PERMITTED_DOCTYPES);
+        System.out.println("***************Enters fetch_permitted_doctypes, url :::: "+ url);
+
+        JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.GET, url,null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println("***************From  get_rfid_details_ac_doc_number  response : "+response );
+                        try{
+                            JSONArray jsonArray = response.getJSONArray("message");
+                            String temp_pemitted_doctypes[]= new String[jsonArray.length()];
+
+
+                            if (jsonArray.length() != 0 ){  //valid doc no
+                                for(int i = 0; i < jsonArray.length(); i++){
+                                    JSONObject objects = jsonArray.getJSONObject(i);
+                                    String doctype = objects.getString("permitted_doctype");
+                                    temp_pemitted_doctypes[i] = doctype ;
+                                }
+
+                                ArrayAdapter<String> myadapter = new ArrayAdapter<>(UtilityScreen.this,android.R.layout.simple_list_item_1,temp_pemitted_doctypes);
+                                myadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                doc_name_spinner.setAdapter(myadapter);
+                            }
+                            else{ //pemitted_doctypes  has not been configured case
+                            }
+
+                        }catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("***************From  fetch_permitted_doctypes  error : "+error );
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                return UtilityScreen.this.getHeaders();
+            }
+        };
+        requestQueue1.add(JsonRequest);
+
+    }
+    public Map<String, String> getHeaders () {
+        Map<String, String> headers = new HashMap<>();
+        SharedPreferences prefs = this.getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
+        String userId = prefs.getString(Constants.USER_ID, null);
+        String sid = prefs.getString(Constants.SESSION_ID, null);
+        headers.put("user_id", userId);
+        headers.put("sid", sid);
+
+        System.out.println("Suresh ************ From Home userId : "+ userId);
+        System.out.println("Suresh ************ From Home sid : "+ sid);
+        return headers;
+    }
+
+    public void startAssocistaionScanningActivity( String selected_doctype )
+    {
+        Intent startAssocistaionScanningActivity = new Intent(UtilityScreen.this,MeritUHF.class);
+        startAssocistaionScanningActivity.putExtra("selected_doctype",selected_doctype) ;
+        startActivity(startAssocistaionScanningActivity);
     }
 
 }
+
+/*
+public void transferIT(View view){
+String value = ed1.getText().toString()
+Intent intent = new Intent(this, Page.class);
+intent.putExtra("key",value);
+startActivity(intent);
+}
+
+Then in onCreate of second activity
+
+String value = getIntent().getExtras().getString("key");
+ */
+

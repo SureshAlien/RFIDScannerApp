@@ -83,11 +83,12 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
     private EditText editRfid1 ;
     private EditText editRfid2 ;
     private EditText editDocNo ; //DocNo = name in ErpNext
-    private EditText editDocType ;
+
     private TextView tvItemCode;
-
-
     private TextView tvEpcLabel;
+    private TextView tv_doctype;
+
+
     private UhfReader manager;
     private ListView listViewData;
     private ArrayList<EPC> listEPC;
@@ -121,10 +122,11 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
     //rfidValidation
     JSONObject de_associate_rfid_details = new JSONObject();  //de_associate_rfid_details = {"RFID1" : {"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}
+    String as_ds_updated_details = "" ;
 
-     String as_ds_updated_details = "" ;
+    private  String selected_doctype ;
 
-    private android.widget.Spinner myspinner ;
+
 
 
 
@@ -139,7 +141,6 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         area = shared.getInt("area", 3);
 
         initView();
-        set_doctypes_on_spinner();
 
         Thread thread = new InventoryThread();
         thread.start();
@@ -244,34 +245,30 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         editRfid1 = (EditText) findViewById(R.id.editRfid1);
         editRfid2 = (EditText) findViewById(R.id.editRfid2);
         editDocNo = (EditText) findViewById(R.id.editDocNo);
-        editDocType = (EditText) findViewById(R.id.editDoctype);
+
         tvItemCode =  (TextView)  findViewById(R.id.tvItemCodeVal);
-
         tvEpcLabel = (TextView)findViewById(R.id.tvEpcLabel1);
-        listEPC = new ArrayList<EPC>();
         textVersion = (TextView) findViewById(R.id.textView_version);
+        tv_doctype = (TextView) findViewById(R.id.tv_doctype);
 
-        myspinner = (android.widget.Spinner) findViewById(R.id.simple_spinner);
+        listEPC = new ArrayList<EPC>();
 
+
+        selected_doctype = getIntent().getExtras().getString("selected_doctype");
+        tv_doctype.setText(selected_doctype);
+        System.out.println("*********Selected doctye from previous activity"+selected_doctype);
 
 
 
         try {
             de_associate_rfid_details.put("RFID_TAG1","empty");
             de_associate_rfid_details.put("RFID_TAG2","empty");
-
-
         } catch (Exception e) {
             Log.e("ERROR",e.toString());
         }
     } //initView ends
 
-    private void set_doctypes_on_spinner(){
-        String doctype_names[] = {"Serial No","Batch No","Employee"};
-        ArrayAdapter<String> myadapter = new ArrayAdapter<>(MeritUHF.this,android.R.layout.simple_list_item_1,doctype_names);
-        myadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        myspinner.setAdapter(myadapter);
-    }
+
 
 
     class InventoryThread extends Thread {
@@ -309,8 +306,6 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
             }
         }
     }
-
-
 
     private void addToList(final List<EPC> list, final String epc, final byte rssi)  {
         runOnUiThread(new Runnable() {
@@ -379,8 +374,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
             //btnGetDetails
 
             case R.id.btnGetDetails:
-                System.out.println("***************************GetDetails Button clicked**************************************");
-                String doc_type = editDocType.getText().toString() ;
+                String doc_type = tv_doctype.getText().toString() ;
                 String  doc_no = editDocNo.getText().toString();
                 get_rfid_details_ac_doc_number( doc_type,doc_no);
                 break;
@@ -420,11 +414,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                 final String rf1 = editRfid1.getText().toString();
                 final String rf2 = editRfid2.getText().toString();
                 final String doc_no_fi = editDocNo.getText().toString();
-                String temp_doc_type  = editDocType.getText().toString() ;
-                temp_doc_type = temp_doc_type.trim();
-                temp_doc_type = temp_doc_type.replaceAll(" +", "%20");
-                final String doc_type_fi = temp_doc_type;
-
+                final String doc_type_as  = tv_doctype.getText().toString() ;
 
                 System.out.println("*************************** from Associate Button clicked**************************************rf1,rf2"+rf1 +" " +rf2 );
                 System.out.println ("***************************from Associate Button clicked de_associate_rfid_details**************************************de_associate_rfid_details "+de_associate_rfid_details );
@@ -483,9 +473,8 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                             //System.out.println("***************************from Associate Button syncApiCallDummy2 called**************************************");
 
                             if(rf1 != null || rf2 != null){
-                                    associateRFIDTags(username,rf1,rf2,doc_type_fi,doc_no_fi);
+                                    associateRFIDTags(username,rf1,rf2,doc_type_as,doc_no_fi);
                                     System.out.println("***************************from Associate Button clicked  associateRFIDTags  fun  called ");
-
                             }
 
                         } catch (JSONException e) {
@@ -998,9 +987,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
             //JSONObject response = future.get();
             JSONObject response = future.get(60,TimeUnit.SECONDS);
             System.out.println("****************************from deAssociateRFID Came inside try after    response:"+response);
-
             JSONObject dataObject = response.getJSONObject("data");
-
             String deleted_rfidTag = dataObject.getString(tag_to_be_removed);
 
             if(deleted_rfidTag =="null"){
@@ -1026,114 +1013,6 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         {
             System.out.println("****************************from deAssociateRFID  Exception TimeoutException:"+te);
         }
-
-
-        /*
-        System.out.println("****************************Enters deAssociateRFID**************************************");
-        System.out.println("**************************** from deAssociateRFID************************************** tag_to_be_removed "+ tag_to_be_removed+ "sereno_with_dup_tag:" +sereno_with_dup_tag);
-
-        String new_url ="http://192.168.0.15/api/resource/Serial%20No/"+sereno_with_dup_tag ;
-        //String new_url ="http://192.168.0.62/api/resource/Serial%20No/"+serialNum ; //lap
-
-
-        JSONObject rfid_data = new JSONObject();
-        rfid_data.put(tag_to_be_removed,"");
-
-        System.out.println("****************************from deAssociateRFID rfid_data**************************************"+ rfid_data);
-
-        final RequestQueue requestQueue = Volley.newRequestQueue(MeritUHF.this);
-
-        // prepare  Request
-        JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.PUT, new_url,rfid_data,
-                new Response.Listener<JSONObject>()
-                {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // display response
-                        System.out.println("****************************JSON Object Response came for deAssociateRFID**************************************"+response.toString());
-
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println("****************************JSON Object Erro responce came  for deAssociateRFID**************************************");
-                    }
-                }
-        ){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-
-                return MeritUHF.this.getHeaders_one();
-            }
-
-        };
-
-        // add it to the RequestQueue
-        requestQueue.add(JsonRequest);
-
-        //Json object request
-        */
-
-    }
-
-    private void syncApiCallDummy1() throws JSONException {
-
-        System.out.println("****************************Enters syncApiCallDummy1 after headers**************************************");
-
-
-        RequestQueue volleyRequestQueue = Volley.newRequestQueue(this);
-
-        //http://localhost/api/resource/Serial%20No
-
-        String new_url ="http://192.168.0.15/api/resource/Serial%20No" ;
-
-        String rfid_val_url = "http://192.168.0.15/api/resource/Serial%20No";//localhost url
-
-
-
-
-        RequestFuture<JSONObject> future = RequestFuture.newFuture();
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, new_url, null, future, future)
-        {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-
-                return MeritUHF.this.getHeaders();
-            }
-        };
-        volleyRequestQueue.add(request);
-
-        System.out.println("****************************from syncApiCallDummy1  request added to the queue**************************************");
-
-
-        try {
-            System.out.println("****************************from syncApiCallDummy1  inside try before future.get()");
-
-            //JSONObject response = future.get();
-            JSONObject response = future.get(60,TimeUnit.SECONDS);
-            System.out.println("****************************from syncApiCallDummy1 Came inside try after    response:"+response);
-
-        } catch(InterruptedException | ExecutionException ex)
-        {
-            //check to see if the throwable in an instance of the volley error
-            System.out.println("****************************from syncApiCallDummy1  Exception enters 1 exc**************************************");
-
-            if(ex.getCause() instanceof VolleyError)
-            {
-                //grab the volley error from the throwable and cast it back
-                VolleyError volleyError = (VolleyError)ex.getCause();
-                //now just grab the network response like normal
-                NetworkResponse networkResponse = volleyError.networkResponse;
-                System.out.println("****************************from syncApiCallDummy1  Exception networkResponse:"+networkResponse);
-
-            }
-        }
-        catch(TimeoutException te)
-        {
-            System.out.println("****************************from syncApiCallDummy1  Exception TimeoutException:"+te);
-        }
     }
 
     //get doc no details start
@@ -1141,14 +1020,11 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
     private void get_rfid_details_ac_doc_number(String doc_type,String doc_no) {
 
-        doc_type = doc_type.trim();
-        doc_type = doc_type.replaceAll(" +", "%20");
-
         RequestQueue requestQueue1 = Volley.newRequestQueue(this);
 
-        String url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE,null, null);
+        String url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE,null, doc_type);
 
-        url += "/"+ doc_type +"?fields=[\"pch_rfid_tag1\",\"pch_rfid_tag2\"]&filters=[[\""+doc_type +"\",\"name\",\"=\",\""+ doc_no+"\"]]" ;
+        url += "?fields=[\"pch_rfid_tag1\",\"pch_rfid_tag2\"]&filters=[[\""+doc_type +"\",\"name\",\"=\",\""+ doc_no+"\"]]" ;
         System.out.println("***************Enters get_rfid_details_ac_doc_number, url :::: "+url );
 
         JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.GET, url,null,
@@ -1218,5 +1094,3 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
     }
 } //whole class ends
 //end
-
-

@@ -14,6 +14,7 @@ public class CustomUrl {
 
     private static String SERVER_ADDRESS ;
 
+
     public static final String URL_SCHEME = "http";
     public static final String API = "api";
     public static final String API_RESOURCE = "resource";
@@ -23,7 +24,7 @@ public class CustomUrl {
     //begin change
     private static final String ERPNEXT_APPNAME = "nhance";
     private static final String DOT_STRING_IN_PATH_NAME = ".";
-    private static final String CUSTOM_API = "mprp_android_api";
+    private static final String CUSTOM_API = "rfid_android_api";
     private static final String API_PATH_NAME = ERPNEXT_APPNAME+DOT_STRING_IN_PATH_NAME+CUSTOM_API+DOT_STRING_IN_PATH_NAME;
     public static final String COMPANY_NAME = "HSR Services";
     public static final String COMPANY_ABBR = "HSR";
@@ -83,7 +84,9 @@ public class CustomUrl {
     public static final String GET_ISSUE_MATERIAL_FROM_STOCK_ITEM_DETAILS = ALTERNATE_API_PATH_NAME+"get_issue_material_from_stock_details";
     public static final String SEND_ISSUE_ITEMS_FROM_STOCK_LIST = ALTERNATE_API_PATH_NAME+"set_issued_items_from_stock_details";
 
+    //rfid_App custom apis path
 
+    public static final String GET_PERMITTED_DOCTYPES   =API_PATH_NAME+"get_permitted_doctypes" ;
 
     public static String getServerAddress() {
         return SERVER_ADDRESS;
@@ -92,7 +95,7 @@ public class CustomUrl {
     public static void setServerAddress(String serverAddress) {
         SERVER_ADDRESS = serverAddress;
         System.out.println(" ************From Custo url set server address ************************ : ");
-
-
     }
+
+
 }
