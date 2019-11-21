@@ -17,8 +17,6 @@
         android:layout_marginTop="@dimen/top_margin"
         android:layout_marginLeft="@dimen/top_margin"
         >
-
-
         <TextView
             android:id="@+id/textView_version"
             android:layout_width="wrap_content"
@@ -253,8 +251,109 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearlayout_associate_button"
+        android:id="@+id/linearlayout_rfid3"
         android:layout_below="@+id/linearlayout_rfid2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <TextView
+            android:id="@+id/tvRfid3"
+            android:text="RFID3:"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:layout_weight="0.26"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textColor="@color/textColor"
+            />
+
+        <EditText
+            android:id="@+id/editRfid3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.54"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:ems="10"
+            android:inputType="text"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearlayout_rfid4"
+        android:layout_below="@+id/linearlayout_rfid3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <TextView
+            android:id="@+id/tvRfid4"
+            android:text="RFID4:"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:layout_weight="0.26"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textColor="@color/textColor"
+            />
+
+        <EditText
+            android:id="@+id/editRfid4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.54"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:ems="10"
+            android:inputType="text"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_rfid5"
+        android:layout_below="@+id/linearlayout_rfid4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <TextView
+            android:id="@+id/tvRfid5"
+            android:text="RFID5:"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:layout_weight="0.26"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textColor="@color/textColor"
+            />
+
+        <EditText
+            android:id="@+id/editRfid5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.54"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:ems="10"
+            android:inputType="text"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_associate_button"
+        android:layout_below="@+id/linearlayout_rfid5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="1"
@@ -323,7 +422,6 @@
             android:layout_marginLeft="@dimen/fabulous_margin"
             android:hint="@string/getDocType2"
             />
-
 
     </LinearLayout>
 

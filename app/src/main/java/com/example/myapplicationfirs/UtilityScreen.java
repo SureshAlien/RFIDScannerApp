@@ -36,6 +36,9 @@ import java.util.*;
 public class UtilityScreen extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnAssociateUtility;
+    JSONObject permitted_doctype_data ;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +88,7 @@ public class UtilityScreen extends AppCompatActivity implements View.OnClickList
         RequestQueue requestQueue1 = Volley.newRequestQueue(this);
 
         //String url1 = "http://192.168.0.15/api/method/nhance.rfid_android_api.get_permitted_doctypes";
-        String url = Utility.getInstance().buildUrl(CustomUrl.API_METHOD, null, CustomUrl.GET_PERMITTED_DOCTYPES);
+        String url = Utility.getInstance().buildUrl(CustomUrl.API_METHOD, null, CustomUrl.GET_PERMITTED_DOCTYPE_DATA);
         System.out.println("***************Enters fetch_permitted_doctypes, url :::: "+ url);
 
         JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.GET, url,null,
@@ -94,7 +97,9 @@ public class UtilityScreen extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onResponse(JSONObject response) {
                         System.out.println("***************From  get_rfid_details_ac_doc_number  response : "+response );
+                        set_permitted_doctype_data(response);
                         try{
+
                             JSONArray jsonArray = response.getJSONArray("message");
                             String temp_pemitted_doctypes[]= new String[jsonArray.length()];
 
@@ -149,10 +154,16 @@ public class UtilityScreen extends AppCompatActivity implements View.OnClickList
         return headers;
     }
 
+    private void set_permitted_doctype_data(JSONObject temp_permitted_doctype_data  ) {
+        permitted_doctype_data =  temp_permitted_doctype_data;
+    }
+
     public void startAssocistaionScanningActivity( String selected_doctype )
     {
         Intent startAssocistaionScanningActivity = new Intent(UtilityScreen.this,MeritUHF.class);
         startAssocistaionScanningActivity.putExtra("selected_doctype",selected_doctype) ;
+        startAssocistaionScanningActivity.putExtra("permitted_doctype_data",permitted_doctype_data.toString()) ;
+
         startActivity(startAssocistaionScanningActivity);
     }
 

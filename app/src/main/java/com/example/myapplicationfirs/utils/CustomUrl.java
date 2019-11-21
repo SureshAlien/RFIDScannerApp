@@ -40,6 +40,8 @@ public class CustomUrl {
     public static final String SERIAL_NO = "Serial No";
     public static final String ITEM_TABLE = "Item";
     public static final String CUSTOMER_TABLE ="Customer" ;
+    public static final String RFID_TAG_HISTORY_TABLE ="RFID Tag Details" ;
+
     //added on 25th Oct to accommodate the requirement to tie the user to a particulr warehouse
     public static final String USER_TABLE="User";
     public static final String CONTROL_DOCUMENT_TABLE = "ControlDocument";
@@ -87,6 +89,8 @@ public class CustomUrl {
     //rfid_App custom apis path
 
     public static final String GET_PERMITTED_DOCTYPES   =API_PATH_NAME+"get_permitted_doctypes" ;
+    public static final String GET_PERMITTED_DOCTYPE_DATA   =API_PATH_NAME+"get_permitted_doctype_data" ;
+
 
     public static String getServerAddress() {
         return SERVER_ADDRESS;
