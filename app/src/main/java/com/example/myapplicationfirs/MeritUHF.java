@@ -31,8 +31,10 @@ import android.widget.Toast;
 import com.android.hdhe.uhf.reader.UhfReader;
 import com.android.hdhe.uhf.readerInterface.TagModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -158,10 +160,22 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         getLoggedInUserData(); //session id checking from login screen
 
         //debugging
+        /*
         String scanned_rfid_tag_data = "dummyfromappdebug1";
         String doc_type = "Serial No" ;
         String doc_no = "10000" ;
         int rfid_tag_index = 1;
+        String matched_rfid_tag_details_name ="RFID-Tag-00010";
+
+        try{
+            update_rfidTagDetailsDoc( scanned_rfid_tag_data,rfid_tag_index ,doc_type,doc_no,matched_rfid_tag_details_name) ;
+        }
+        catch (JSONException e) {
+            System.out.println("*********From onCreate "+e );
+        }
+
+         */
+
 
 
 
@@ -996,12 +1010,6 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
     } // End  create_rfidTagDetailsDoc
 
-    private void update_rfidTagDetailsDoc(final String scanned_rfid_tag_data,final int  rfid_tag_index,final String doc_type, final String doc_no,final String matched_rfid_tag_details_name ) throws JSONException {
-        //write synchronous fetch and update functions
-    }// End update_rfidTagDetailsDoc
-
-
-
     public Map<String, String> getHeaders_one () {
         Map<String, String> headers = new HashMap<>();
         SharedPreferences prefs = this.getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
@@ -1428,12 +1436,152 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
             }
 
         };
-
         // add it to the RequestQueue
         requestQueue.add(JsonRequest);
-
         //Json object request
+    }
+
+
+    private void update_rfidTagDetailsDoc(final String scanned_rfid_tag_data,final int  rfid_tag_index,final String doc_type, final String doc_no,final String matched_rfid_tag_details_name ) throws JSONException {
+        //write synchronous fetch and update functions
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                JSONObject temp_exist_rfidTagDetailsDoc = fetch_exist_rfidTagDetailsDoc( matched_rfid_tag_details_name);
+                System.out.println("*******from update_rfidTagDetailsDoc temp_exist_rfidTagDetailsDoc "+temp_exist_rfidTagDetailsDoc);
+
+                try {
+                    JSONObject exist_rfidTagDetailsDoc = temp_exist_rfidTagDetailsDoc.getJSONObject("data");
+                    System.out.println("*******from update_rfidTagDetailsDoc exist_rfidTagDetailsDoc "+exist_rfidTagDetailsDoc);
+
+                    JSONArray child_doc = exist_rfidTagDetailsDoc.getJSONArray("rfid_tag_association_details");
+                    System.out.println("*******from update_rfidTagDetailsDoc child_doc "+child_doc);
+
+                    //find largest idx
+                    int largest_idx=0 ;
+                    for(int i = 0; i < child_doc.length(); i++){ //Array
+                        JSONObject child_row = child_doc.getJSONObject(i);
+                        int idx = child_row.getInt("idx");
+                        if(idx > largest_idx){
+                            largest_idx =idx ;
+                        }
+                    }
+                    System.out.println("*******from update_rfidTagDetailsDoc largest_idx : "+largest_idx);
+
+                    //update second to last last row
+                    String end_association_date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
+                    JSONObject second_to_last_row = child_doc.getJSONObject(largest_idx-1);
+                    second_to_last_row.put("pch_rfid_association_end_date", end_association_date);
+                    child_doc.put(largest_idx-1,second_to_last_row);
+                    System.out.println("*******from update_rfidTagDetailsDoc second_to_last_row"+child_doc);
+
+                    //update last row
+                    String rfid_tag_position =  "RFID Tag" + rfid_tag_index;
+                    String start_association_date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
+
+                    JSONObject last_row = new JSONObject();
+                    last_row.put("pch_rfid_association_start_date",start_association_date);
+                    last_row.put("tag_association",rfid_tag_position);
+                    last_row.put("pch_rfid_docid_associated_with",doc_no);
+                    last_row.put("pch_rfid_doctype_associated_with",doc_type);
+                    last_row.put("idx",largest_idx+1);
+
+                    child_doc.put(largest_idx,last_row);
+                    System.out.println("*******from update_rfidTagDetailsDoc last_row"+child_doc);
+
+                    JSONObject  updated_child_doc = new JSONObject();
+                    updated_child_doc.put("rfid_tag_association_details",child_doc);
+                    System.out.println("*******from update_rfidTagDetailsDoc formed json updated_child_doc "+updated_child_doc);
+                    update_rfidTagDetails_child_doc(matched_rfid_tag_details_name , updated_child_doc);
+                    System.out.println("*******from update_rfidTagDetailsDoc child doc update called ");
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }// End update_rfidTagDetailsDoc
+
+    private void update_rfidTagDetails_child_doc(final String matched_rfid_tag_details_name,JSONObject updated_child_doc ) {
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        String update_rfidTagDetails_child_doc_url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.RFID_TAG_HISTORY_TABLE,matched_rfid_tag_details_name);
+        System.out.println(" ******** From update_create_rfidTagDetailsEntry update_rfidTagDetails_child_doc_url" +update_rfidTagDetails_child_doc_url);
+
+        JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.PUT, update_rfidTagDetails_child_doc_url,updated_child_doc,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println("***************From  update_rfidTagDetails_child_doc  response : "+response );
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("***************From  update_rfidTagDetails_child_doc  error : "+error );
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                return MeritUHF.this.getHeaders();
+            }
+        };
+        requestQueue.add(JsonRequest);
 
     }
+
+
+    private JSONObject fetch_exist_rfidTagDetailsDoc(final String matched_rfid_tag_details_name){
+
+        JSONObject exist_rfidTagDetailsDoc = null;
+        System.out.println("*******Enters fetch_exist_rfidTagDetailsDoc");
+        System.out.println("***** from fetch_exist_rfidTagDetailsDoc matched_rfid_tag_details_name"+ matched_rfid_tag_details_name);
+
+        String exist_rfidTagDetailsDoc_url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.RFID_TAG_HISTORY_TABLE,matched_rfid_tag_details_name);
+        System.out.println("***** from fetch_exist_rfidTagDetailsDoc exist_rfidTagDetailsDoc_url"+ exist_rfidTagDetailsDoc_url);
+
+        RequestQueue volleyRequestQueue = Volley.newRequestQueue(this);
+
+        RequestFuture<JSONObject> future = RequestFuture.newFuture();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, exist_rfidTagDetailsDoc_url,null, future, future)
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                return MeritUHF.this.getHeaders_one();
+            }
+        };
+        volleyRequestQueue.add(request);
+        try {
+            //JSONObject response = future.get();
+            exist_rfidTagDetailsDoc = future.get(60,TimeUnit.SECONDS);
+            System.out.println("****************************from fetch_exist_rfidTagDetailsDoc Came inside try after    exist_rfidTagDetailsDoc:"+exist_rfidTagDetailsDoc);
+        } catch(InterruptedException | ExecutionException ex)
+        {
+            //check to see if the throwable in an instance of the volley error
+            System.out.println("****************************from fetch_exist_rfidTagDetailsDoc  Exception enters 1 exc**************************************");
+
+            if(ex.getCause() instanceof VolleyError)
+            {
+                //grab the volley error from the throwable and cast it back
+                VolleyError volleyError = (VolleyError)ex.getCause();
+                //now just grab the network response like normal
+                NetworkResponse networkResponse = volleyError.networkResponse;
+                System.out.println("****************************from fetch_exist_rfidTagDetailsDoc  Exception networkResponse:"+networkResponse);
+            }
+        }
+        catch(TimeoutException te)
+        {
+            System.out.println("****************************from deAssocfetch_exist_rfidTagDetailsDociateRFID  Exception TimeoutException:"+te);
+        }
+        return  exist_rfidTagDetailsDoc ;
+    }
+
 } //whole class ends
 //end
