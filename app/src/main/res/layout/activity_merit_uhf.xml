@@ -282,6 +282,18 @@
             android:ems="10"
             android:inputType="text"
             />
+
+        <Button
+            android:id="@+id/btnScan3"
+            android:text="Scan-3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textSize="15sp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/cardview_light_background"
+            />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/linearlayout_rfid4"
@@ -314,6 +326,17 @@
             android:layout_marginLeft="@dimen/fabulous_margin"
             android:ems="10"
             android:inputType="text"
+            />
+        <Button
+            android:id="@+id/btnScan4"
+            android:text="Scan-4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textSize="15sp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/cardview_light_background"
             />
     </LinearLayout>
 
@@ -348,6 +371,18 @@
             android:layout_marginLeft="@dimen/fabulous_margin"
             android:ems="10"
             android:inputType="text"
+            />
+
+        <Button
+            android:id="@+id/btnScan5"
+            android:text="Scan-5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textSize="15sp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/cardview_light_background"
             />
     </LinearLayout>
 
