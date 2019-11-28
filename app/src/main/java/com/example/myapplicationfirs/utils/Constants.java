@@ -34,6 +34,11 @@ public class Constants {
 
     public static final String PASS_ENTRY_BASED_ON_RAW_MATERIAL ="Raw Material" ;
 
+    public static final String RFID_CUSTOM_FIELD ="pch_rfid_tag" ;
+
+
+
+
 
 
 }
