@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -78,6 +79,13 @@ import com.example.myapplicationfirs.utils.Utility;
 
 public class MeritUHF extends AppCompatActivity implements  OnClickListener
 {
+    //Layouts
+    LinearLayout linearlayout_rfid1 ;
+    LinearLayout linearlayout_rfid2 ;
+    LinearLayout linearlayout_rfid3 ;
+    LinearLayout linearlayout_rfid4 ;
+    LinearLayout linearlayout_rfid5 ;
+
     //buttons
     private  Button btnScan;
     private  Button btnScan1;
@@ -87,7 +95,6 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
     private  Button btnScan5;
     private Button btnAssociate;
     private Button btnGetDetails;
-    //buttons
 
     private EditText editRfid1 ;
     private EditText editRfid2 ;
@@ -238,6 +245,14 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
     private void initView() {
 
+        //Layout
+        linearlayout_rfid1 = (LinearLayout) findViewById(R.id.linearlayout_rfid1);
+        linearlayout_rfid2 = (LinearLayout) findViewById(R.id.linearlayout_rfid2);
+        linearlayout_rfid3 = (LinearLayout) findViewById(R.id.linearlayout_rfid3);
+        linearlayout_rfid4 = (LinearLayout) findViewById(R.id.linearlayout_rfid4);
+        linearlayout_rfid5 = (LinearLayout) findViewById(R.id.linearlayout_rfid5);
+
+
         btnScan = (Button)findViewById(R.id.btnScan);
         btnScan.setOnClickListener(this);
 
@@ -277,6 +292,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         listEPC = new ArrayList<EPC>();
 
         //selected_doctype and rfid_tag_count for selected_doctype
+
         selected_doctype = getIntent().getExtras().getString("selected_doctype");
         tv_doctype.setText(selected_doctype);
         jsonString = getIntent().getExtras().getString("permitted_doctype_data");
@@ -286,6 +302,11 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         } catch (Exception e) {
             Log.e("ERROR",e.toString());
         }
+
+        set_scanning_buttons(rfid_tag_count);
+
+        //End selected_doctype and rfid_tag_count for selected_doctype
+
 
         try {
             de_associate_rfid_details.put("RFID_TAG1","empty");
@@ -504,10 +525,8 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
                                     is_unique_rfid_tags_scanned = false ;
                                 }
-
                             }
                         }
-
                     }
                 }
                 System.out.println("UNique id scan status :"+is_unique_rfid_tags_scanned);
@@ -556,6 +575,31 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                 }
             }
         }
+    }
+
+    public void set_scanning_buttons(int rfid_tag_count){
+
+
+
+        if (rfid_tag_count == 1){
+            linearlayout_rfid2.setVisibility(View.INVISIBLE);
+            linearlayout_rfid3.setVisibility(View.INVISIBLE);
+            linearlayout_rfid4.setVisibility(View.INVISIBLE);
+            linearlayout_rfid5.setVisibility(View.INVISIBLE);
+        }
+        if (rfid_tag_count == 2){
+            linearlayout_rfid3.setVisibility(View.INVISIBLE);
+            linearlayout_rfid4.setVisibility(View.INVISIBLE);
+            linearlayout_rfid5.setVisibility(View.INVISIBLE);
+        }
+        if (rfid_tag_count == 3){
+            linearlayout_rfid4.setVisibility(View.INVISIBLE);
+            linearlayout_rfid5.setVisibility(View.INVISIBLE);
+        }
+        if (rfid_tag_count == 4){
+            linearlayout_rfid5.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     public void startBarCodeScanning(View view) {

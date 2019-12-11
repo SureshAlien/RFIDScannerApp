@@ -34,8 +34,11 @@
         </activity>
         <activity
             android:name=".MeritUHF"
-            android:label="RFID Association" />
-        <activity android:name=".MainActivity" />
+            android:label="RFID Association" >
+
+    </activity>
+
+    <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

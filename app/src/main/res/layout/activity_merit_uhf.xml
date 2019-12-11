@@ -161,49 +161,46 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearlayout_rfid1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearlayout_rfid1"
         android:layout_below="@+id/linearlayout_itemCode"
-        android:weightSum="1"
-        android:layout_marginTop="@dimen/top_margin"
         android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
         android:layout_marginRight="@dimen/top_margin"
         android:paddingLeft="0dp"
-        android:paddingRight="0dp">
+        android:paddingRight="0dp"
+        android:weightSum="1">
 
         <TextView
             android:id="@+id/tvRfid1"
-            android:text="RFID1 :"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="24dp"
-            android:layout_weight="0.26"
             android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.26"
+            android:text="RFID1 :"
             android:textColor="@color/textColor"
-            />
+            android:textSize="24dp" />
 
         <EditText
             android:id="@+id/editRfid1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.54"
             android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.54"
             android:ems="10"
-            android:inputType="text"
-             />
+            android:inputType="text" />
 
         <Button
             android:id="@+id/btnScan1"
-            android:text="Scan-1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.20"
             android:layout_marginLeft="@dimen/fabulous_margin"
-            android:textSize="15sp"
+            android:layout_weight="0.20"
             android:background="@color/colorPrimaryDark"
+            android:text="Scan-1"
             android:textColor="@color/cardview_light_background"
-            />
+            android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
