@@ -91,7 +91,9 @@
             android:background="@color/colorPrimaryDark"
             android:text="Scan QR"
             android:textColor="@color/cardview_light_background"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:onClick="startBarCodeScanning"
+            />
     </LinearLayout>
 
     <LinearLayout

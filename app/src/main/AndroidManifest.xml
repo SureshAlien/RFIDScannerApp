@@ -3,6 +3,10 @@
     package="com.example.myapplicationfirs">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:allowBackup="true"
@@ -11,9 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FetchDocument"></activity>
-        <activity android:name=".UtilityScreen" >
+        <activity android:name=".TestScan">
+
         </activity>
+        <activity android:name=".BarCodeScanning" />
+        <activity android:name=".FetchDocument" />
+        <activity android:name=".UtilityScreen" />
         <activity android:name=".TestLogin" />
         <activity
             android:name=".Login"
@@ -23,6 +30,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".MeritUHF"
