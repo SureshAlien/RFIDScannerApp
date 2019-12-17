@@ -13,10 +13,8 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
-
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import com.google.zxing.Result;
-
 import static android.Manifest.permission.CAMERA;
 
 

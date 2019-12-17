@@ -15,13 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TestScan">
-
-        </activity>
         <activity android:name=".BarCodeScanning" />
         <activity android:name=".FetchDocument" />
         <activity android:name=".UtilityScreen" />
-        <activity android:name=".TestLogin" />
         <activity
             android:name=".Login"
             android:label="RFID Association">

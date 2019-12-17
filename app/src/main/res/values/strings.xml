@@ -100,6 +100,8 @@
     <string name="getDocType2"><font size="10">Enter the DocType you want to Associate </font></string>
     <string name="getDocName"><font size="10">Enter the DocName or Scan </font></string>
     <string name="getDocDetailsButton">Get Doc Details </string>
+    <string name="fetch_document_message">Please Select The Doctype</string>
+
 
 
 </resources>

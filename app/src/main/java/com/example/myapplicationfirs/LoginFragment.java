@@ -1,11 +1,8 @@
 package com.example.myapplicationfirs;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,14 +33,6 @@ import com.example.myapplicationfirs.common.BaseFragment;
 import com.example.myapplicationfirs.utils.CustomUrl;
 import com.example.myapplicationfirs.utils.Utility;
 import com.example.myapplicationfirs.utils.Constants;
-import com.example.myapplicationfirs.MeritUHF;
-import com.example.myapplicationfirs.TestLogin;
-
-
-
-
-
-
 
 
 //public class LoginFragment extends BaseF {
@@ -72,8 +61,6 @@ public class LoginFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        System.out.println("Suresh ************ Entered login fragments ");
-
 
         View loginFragment = inflater.inflate(R.layout.fragment_login, container, false);
         username_entry = loginFragment.findViewById(R.id.username_entry);
@@ -101,12 +88,10 @@ public class LoginFragment extends BaseFragment {
         RequestQueue requestQueue = Volley.newRequestQueue(LoginFragment.super.context);
 
         String  myUrl = Utility.getInstance().buildUrl(CustomUrl.API_METHOD,null,CustomUrl.LOGIN_URL);
-        System.out.println("Suresh ************ From login fragments The url to login is : "+myUrl);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,myUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                System.out.println("Suresh ************From login fragments Entered login response ************************ : ");
 
                 hideProgress(); //hide processing
                 String loginResponse = null;
@@ -119,7 +104,6 @@ public class LoginFragment extends BaseFragment {
                     if (loginResponse!=null && loginResponse.equalsIgnoreCase(Constants.LOGIN_RESPONSE)) {
                         String loggedUser = jsonObject.get("full" +
                                 "_name").toString();
-                        System.out.println("Suresh ************From login fragments loggedUser ************************ : "+loggedUser);
 
                         String successmsg = Constants.LOGIN_SUCCESS + " " + loggedUser;
                         Toast.makeText(LoginFragment.super.context, successmsg, Toast.LENGTH_LONG).show();
@@ -150,10 +134,9 @@ public class LoginFragment extends BaseFragment {
                 , new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("Suresh ************From login fragments Entered login error************************ : ");
 
                 hideProgress();
-                System.out.println("Suresh ************ From requestLogin Error in login connection ");
+                System.out.println("****** From requestLogin Error in login connection ");
                 Toast.makeText(LoginFragment.super.context, "Login Failed, Server Error: "+error.toString(), Toast.LENGTH_LONG).show();
 
 

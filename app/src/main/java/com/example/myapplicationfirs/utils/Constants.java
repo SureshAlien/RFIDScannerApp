@@ -1,9 +1,5 @@
 package com.example.myapplicationfirs.utils;
 
-/**
- * Created by pragnya on 9/3/18.
- */
-
 public class Constants {
 
 
@@ -35,6 +31,9 @@ public class Constants {
     public static final String PASS_ENTRY_BASED_ON_RAW_MATERIAL ="Raw Material" ;
 
     public static final String RFID_CUSTOM_FIELD ="pch_rfid_tag" ;
+
+    public static final String ASSOCIATE_UTILTY_DIALOG_MESSAGE = "What Document do you want to Associate the RFID Tag with?" ;
+
 
 
 

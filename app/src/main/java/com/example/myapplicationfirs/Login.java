@@ -44,7 +44,6 @@ public class Login extends BasicActivity {
 
                 if(serverAddress != null || serverAddress != ""){
                     serveraddressfound = true;
-                    System.out.println("Suresh clicked next button ");
 
                     SharedPreferences.Editor editor = getSharedPreferences(my_PREFS_NAME, MODE_PRIVATE).edit();
                     editor.putBoolean("ServeraddressFound_MPRP",serveraddressfound);
@@ -56,8 +55,6 @@ public class Login extends BasicActivity {
                     CustomUrl.setServerAddress(serverAddress);
 
                     System.out.println(" ************From Login  CustomUrl.getServerAddress()) :"+CustomUrl.getServerAddress());
-
-
 
                     callloginFragment();
                 }
@@ -76,7 +73,6 @@ public class Login extends BasicActivity {
     private void callloginFragment() {
         LoginFragment loginFragment = new LoginFragment();
         addFragment(loginFragment);
-
     }
 
     public void addFragment(Fragment fragment1) {
@@ -84,7 +80,6 @@ public class Login extends BasicActivity {
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.login_content, fragment1);
         fragmentTransaction.commitAllowingStateLoss();
-
     }
 
 }

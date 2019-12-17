@@ -90,6 +90,7 @@ public class CustomUrl {
 
     public static final String GET_PERMITTED_DOCTYPES   =API_PATH_NAME+"get_permitted_doctypes" ;
     public static final String GET_PERMITTED_DOCTYPE_DATA   =API_PATH_NAME+"get_permitted_doctype_data" ;
+    public static final String CUSTOM_JSON_OBJECT_CHECK   =API_PATH_NAME+"custom_json_object_check" ;
 
 
     public static String getServerAddress() {
