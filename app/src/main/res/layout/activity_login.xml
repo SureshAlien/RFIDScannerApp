@@ -44,7 +44,7 @@
                 android:layout_weight="0.80"
                 android:hint="@string/provideserveraddress"
                 android:inputType="textEmailAddress"
-                android:text="192.168.0.15"/>
+                android:text="192.168.1.45"/>
 
             <Button
                 android:id="@+id/btn_set"

@@ -90,6 +90,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
     private  Button btnScan5;
     private Button btnAssociate;
     private Button btnGetDetails;
+    private Button btnTestDev ;
 
     private EditText editRfid1 ;
     private EditText editRfid2 ;
@@ -153,6 +154,15 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         area = shared.getInt("area", 3);
 
         initView();
+        /*
+        try{
+            custom_json_object_check();
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        */
+
 
         Thread thread = new InventoryThread();
         thread.start();
@@ -267,6 +277,9 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
         btnGetDetails = (Button)findViewById(R.id.btnGetDetails);
         btnGetDetails.setOnClickListener(this);
+
+        btnTestDev = (Button)findViewById(R.id.btnTestDev);
+        btnTestDev.setOnClickListener(this);
 
         editRfid1 = (EditText) findViewById(R.id.editRfid1);
         editRfid2 = (EditText) findViewById(R.id.editRfid2);
@@ -468,6 +481,15 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                     btnScan5.setText("Scan-5");
                 }
                 break;
+
+            case R.id.btnTestDev:
+                try {
+                    test_dev_action();
+                }catch (Exception e) {
+                    Log.e("ERROR",e.toString());
+                }
+                break;
+
             case R.id.btnAssociate :
                 showProgress();
                 System.out.println("***************************Associate Button clicked**************************************");
@@ -711,6 +733,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
                         if(rf1.trim().length() > 0 && rf2.trim().length() > 0){
                             associateRFIDTags(scanned_rfid_tag_data,doc_type_as,doc_no_fi);
+                            //devo_associateRFIDTags(scanned_rfid_tag_data,doc_type_as,doc_no_fi);
                             //System.out.println("*************serial_num*from Associate Button clicked  associateRFIDTags  fun  called rf1:"+"rf2"+rf2);
                         }
                     }
@@ -803,91 +826,48 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
     private void associateRFIDTags(final String[] scanned_rfid_tag_data,final String doc_type, final String doc_no) throws JSONException {
 
-
-        String asso_url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, doc_type,doc_no);
-
-        JSONObject scanned_rfid_tags_data_list = new JSONObject();
+        JSONObject json_scanned_rfid_tag_data =  new JSONObject();
 
         for (int i = 0; i < scanned_rfid_tag_data.length ; i++) {
             String key = "pch_rfid_tag" + (i+1) ;
-            scanned_rfid_tags_data_list.put(key,scanned_rfid_tag_data[i]);
+            json_scanned_rfid_tag_data.put(key,scanned_rfid_tag_data[i]);
         }
-        System.out.println("*****from associateRFIDTags scanned_rfid_tags_data_list"+ scanned_rfid_tags_data_list);
-        System.out.println("*****from associateRFIDTags asso_url"+ asso_url);
 
+        System.out.println("*******from associateRFIDTags  for"+ doc_type+ "json_scanned_rfid_tag_data "+json_scanned_rfid_tag_data);
+
+        Map<String, String> rfid_association_details = new HashMap<>();
+        rfid_association_details.put("doc_type",doc_type);
+        rfid_association_details.put("doc_no",doc_no);
+        rfid_association_details.put("scanned_rfid_tag_data",json_scanned_rfid_tag_data.toString());
+
+        String asso_url = Utility.getInstance().buildUrl(CustomUrl.API_METHOD, rfid_association_details, CustomUrl.CUSTOM_JSON_OBJECT_CHECK);
+        System.out.println("*****from associateRFIDTags asso_url"+ asso_url);
 
         final RequestQueue requestQueue = Volley.newRequestQueue(MeritUHF.this);
 
-        JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.PUT, asso_url,scanned_rfid_tags_data_list,
+        JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.POST, asso_url,null,
                 new Response.Listener<JSONObject>()
                 {
                     @Override
                     public void onResponse(JSONObject response) {
-                        //System.out.println("*********from associateRFIDTags JSON Object Response came  for associateRFIDTags"+response.toString());
+                        System.out.println("*********from associateRFIDTags JSON Object Response came  for associateRFIDTags"+response.toString());
 
                         try{
-                            JSONObject dataObject = response.getJSONObject("data");
+                            int is_updated = response.getInt("message");
 
-                            if(rfid_tag_count == 1){
-                                String updated_rfid_tag1 = dataObject.getString("pch_rfid_tag1");
-
-                                if (updated_rfid_tag1.equals( scanned_rfid_tag_data[0] ) )
-                                {
+                            if(is_updated == 1){
                                     as_ds_updated_details += doc_type+" : "+ doc_no +" has been associated with given RFID Tags" ;
                                     rfidTagDetailsEntry(scanned_rfid_tag_data ,doc_type ,doc_no );
-                                }
-                            }else if (rfid_tag_count == 2){
-
-                                String updated_rfid_tag1 = dataObject.getString("pch_rfid_tag1");
-                                String updated_rfid_tag2 = dataObject.getString("pch_rfid_tag2");
-
-                                if (updated_rfid_tag1.equals(scanned_rfid_tag_data[0]) && updated_rfid_tag2.equals(scanned_rfid_tag_data[1])  ){
-                                    as_ds_updated_details += doc_type+" : "+ doc_no +" has been associated with given RFID Tags" ;
-                                    rfidTagDetailsEntry(scanned_rfid_tag_data ,doc_type ,doc_no );
-                                }
-                            }else if (rfid_tag_count == 3){
-
-                                String updated_rfid_tag1 = dataObject.getString("pch_rfid_tag1");
-                                String updated_rfid_tag2 = dataObject.getString("pch_rfid_tag2");
-                                String updated_rfid_tag3 = dataObject.getString("pch_rfid_tag3");
-
-                                if (updated_rfid_tag1.equals(scanned_rfid_tag_data[0]) && updated_rfid_tag2.equals(scanned_rfid_tag_data[1]) && updated_rfid_tag3.equals(scanned_rfid_tag_data[2])  ){
-                                    System.out.println("******* from associateRFIDTags came inside  ifupdated_rfid_tag1 ");
-                                    as_ds_updated_details += doc_type+" : "+ doc_no +" has been associated with given RFID Tags" ;
-                                    rfidTagDetailsEntry(scanned_rfid_tag_data ,doc_type ,doc_no );
-
-                                }
-                            }else if (rfid_tag_count == 4){
-
-                                String updated_rfid_tag1 = dataObject.getString("pch_rfid_tag1");
-                                String updated_rfid_tag2 = dataObject.getString("pch_rfid_tag2");
-                                String updated_rfid_tag3 = dataObject.getString("pch_rfid_tag3");
-                                String updated_rfid_tag4 = dataObject.getString("pch_rfid_tag4");
-
-                                if (updated_rfid_tag1.equals(scanned_rfid_tag_data[0]) && updated_rfid_tag2.equals(scanned_rfid_tag_data[1]) && updated_rfid_tag3.equals(scanned_rfid_tag_data[2]) && updated_rfid_tag4.equals(scanned_rfid_tag_data[3])  ){
-                                    as_ds_updated_details += doc_type+" : "+ doc_no +" has been associated with given RFID Tags" ;
-                                    rfidTagDetailsEntry(scanned_rfid_tag_data ,doc_type ,doc_no );
-
-                                }
-                            }else if (rfid_tag_count == 5){
-
-                                String updated_rfid_tag1 = dataObject.getString("pch_rfid_tag1");
-                                String updated_rfid_tag2 = dataObject.getString("pch_rfid_tag2");
-                                String updated_rfid_tag3 = dataObject.getString("pch_rfid_tag3");
-                                String updated_rfid_tag4 = dataObject.getString("pch_rfid_tag4");
-                                String updated_rfid_tag5 = dataObject.getString("pch_rfid_tag5");
-
-                                if (updated_rfid_tag1.equals(scanned_rfid_tag_data[0]) && updated_rfid_tag2.equals(scanned_rfid_tag_data[1]) && updated_rfid_tag3.equals(scanned_rfid_tag_data[2]) && updated_rfid_tag4.equals(scanned_rfid_tag_data[3]) && updated_rfid_tag5.equals(scanned_rfid_tag_data[4])  ){
-                                    as_ds_updated_details += doc_type+" : "+ doc_no +" has been associated with given RFID Tags" ;
-                                    rfidTagDetailsEntry(scanned_rfid_tag_data ,doc_type ,doc_no );
-                                }
+                            }
+                            else{
+                                System.out.println(" rom associateRFIDTags scanned_rfid_tags_data_list******not updated");
                             }
                         }catch (JSONException e) {
                             e.printStackTrace();
                         }
                         hideProgress();
 
-                        String dialog_title = "Association Details"; //{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}
+                        String dialog_title = "Association Details";
                         AlertDialog.Builder builder = new AlertDialog.Builder(MeritUHF.this);
 
                         builder.setMessage(as_ds_updated_details).setTitle(dialog_title)
@@ -1056,21 +1036,74 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
     //de_associate_rfid_details : {"RFID_TAG1":{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"},"RFID_TAG2":{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}}eAssociate
     private void deAssociateRFID(String deas_tag_position, String deas_doc_id,String deas_doc_type ) throws JSONException {
+        /*
+        RequestQueue requestQueue1 = Volley.newRequestQueue(this);
 
-        String deas_url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, deas_doc_type,deas_doc_id);
+        JSONObject json_scanned_rfid_tag_data =  new JSONObject();
 
-        String erpnext_tag_position_field_name = "pch_rfid_tag" ;
+        for (int i = 0; i < scanned_rfid_tag_data.length ; i++) {
+            String key = "pch_rfid_tag" + (i+1) ;
+            json_scanned_rfid_tag_data.put(key,scanned_rfid_tag_data[i]);
+        }
+
+        System.out.println("*******from devo_associateRFIDTags  for"+ doc_type+ "json_scanned_rfid_tag_data "+json_scanned_rfid_tag_data);
+
+        Map<String, String> rfid_association_details = new HashMap<>();
+        rfid_association_details.put("doc_type",doc_type);
+        rfid_association_details.put("doc_no",doc_no);
+        rfid_association_details.put("scanned_rfid_tag_data",json_scanned_rfid_tag_data.toString());
+
+        String url = Utility.getInstance().buildUrl(CustomUrl.API_METHOD, rfid_association_details, CustomUrl.CUSTOM_JSON_OBJECT_CHECK);
+
+        System.out.println("*******from custom_json_object_check url "+url);
+        System.out.println("*******from custom_json_object_check rfid_data  "+rfid_association_details);
+
+        JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.POST, url,null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println("***** From  devo_associateRFIDTags  response : "+response );
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("***** From  devo_associateRFIDTags  error : "+error );
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                return MeritUHF.this.getHeaders_one();
+            }
+        };
+        requestQueue1.add(JsonRequest);
+         */
+
         char position_number = deas_tag_position.charAt(8);
         String tag_position = Constants.RFID_CUSTOM_FIELD + position_number ;
-        //System.out.println("************* rfid_position "+tag_position );
 
-        JSONObject rfid_data = new JSONObject();
-        rfid_data.put( tag_position,"");
+        JSONObject json_scanned_rfid_tag_data =  new JSONObject();
+        json_scanned_rfid_tag_data.put(tag_position," ");
+
+        System.out.println("*******from deAssociateRFID  for"+ deas_doc_type+ "json_scanned_rfid_tag_data "+json_scanned_rfid_tag_data);
+
+        Map<String, String> rfid_association_details = new HashMap<>();
+        rfid_association_details.put("doc_type",deas_doc_type);
+        rfid_association_details.put("doc_no",deas_doc_id);
+        rfid_association_details.put("scanned_rfid_tag_data",json_scanned_rfid_tag_data.toString());
+
+        String deas_url = Utility.getInstance().buildUrl(CustomUrl.API_METHOD, rfid_association_details, CustomUrl.CUSTOM_JSON_OBJECT_CHECK);
+        System.out.println("*******from deAssociateRFID  deas_url"+ deas_url);
+
 
         RequestQueue volleyRequestQueue = Volley.newRequestQueue(this);
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, deas_url,rfid_data, future, future)
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, deas_url,null, future, future)
         {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -1083,12 +1116,13 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         try {
             //JSONObject response = future.get();
             JSONObject response = future.get(60,TimeUnit.SECONDS);
-            //System.out.println("*************from deAssociateRFID Came inside try after    response:"+response);
-            JSONObject dataObject = response.getJSONObject("data");
-            String deleted_rfidTag = dataObject.getString(tag_position);
+            System.out.println("*************from deAssociateRFID Came inside try after    response:"+response);
+            int is_deas_updated = response.getInt("message");
 
-            if(deleted_rfidTag =="null"){
+            if(is_deas_updated == 1){
                 as_ds_updated_details +=  deas_tag_position + " has been disassociated from "+deas_doc_type  +" : "+ deas_doc_id + ". \n";
+            }else{
+                System.out.println("*************from deAssociateRFID some problem in deassociation");
             }
 
         } catch(InterruptedException | ExecutionException ex)
@@ -1576,53 +1610,171 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         }
     }
 
-    public void custom_json_object_check (){
+
+
+    private void test_dev_action() throws JSONException{
+        System.out.println("*******Entered  test_dev_action");
+
+        //Serial No
+        /*
+        int dup_rfid_tag_count = 2 ;
+        String[] scanned_rfid_tag_data =  new String[dup_rfid_tag_count];
+        scanned_rfid_tag_data[0] = "validE1" ;
+        scanned_rfid_tag_data[1] = "validE2";
+
+        String doc_type_as ="Serial No" ;
+        String doc_no_fi ="10000" ;
+
+         */
+
+        //Item
+/*
+        int dup_rfid_tag_count = 2 ;
+        String[] scanned_rfid_tag_data =  new String[dup_rfid_tag_count];
+        scanned_rfid_tag_data[0] = "it1" ;
+        scanned_rfid_tag_data[1] = "it2";
+
+        String doc_type_as ="Item" ;
+        String doc_no_fi ="Vehicle" ;
+        */
+
+        //Employee
+        /*
+        int dup_rfid_tag_count = 1 ;
+        String[] scanned_rfid_tag_data =  new String[dup_rfid_tag_count];
+        scanned_rfid_tag_data[0] = "emp1" ;
+
+        String doc_type_as ="Item" ;
+        String doc_no_fi ="Vehicle" ;
+
+         */
+
+        //Batch
+        /*
+        int dup_rfid_tag_count = 5 ;
+
+        String[] scanned_rfid_tag_data =  new String[dup_rfid_tag_count];
+        scanned_rfid_tag_data[0] = "brfa1" ;
+        scanned_rfid_tag_data[1] = "brfa2";
+        scanned_rfid_tag_data[2] = "brfa3";
+        scanned_rfid_tag_data[3] = "brfa4";
+        scanned_rfid_tag_data[4] = "brfa5";
+
+        String doc_type_as ="Batch" ;
+        String doc_no_fi ="sam2" ;
+
+         */
+        //deassociation testing started
+
+        //Serial No
+        int dup_rfid_tag_count = 2 ;
+        String[] scanned_rfid_tag_data =  new String[dup_rfid_tag_count];
+        scanned_rfid_tag_data[0] = " " ;
+        scanned_rfid_tag_data[1] = " ";
+
+        String doc_type_as ="Serial No" ;
+        String doc_no_fi ="d1" ;
+
+
+        devo_associateRFIDTags(scanned_rfid_tag_data,doc_type_as,doc_no_fi);
+
+        //sample_update(scanned_rfid_tag_data,doc_type_as,doc_no_fi);
+
+    }
+
+    private void devo_associateRFIDTags(final String[] scanned_rfid_tag_data,final String doc_type, final String doc_no) throws JSONException {
+
         RequestQueue requestQueue1 = Volley.newRequestQueue(this);
 
-        String url = Utility.getInstance().buildUrl(CustomUrl.API_METHOD, null, CustomUrl.CUSTOM_JSON_OBJECT_CHECK);
 
-        JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.GET, url,null,
+        JSONObject json_scanned_rfid_tag_data =  new JSONObject();
+
+        for (int i = 0; i < scanned_rfid_tag_data.length ; i++) {
+            String key = "pch_rfid_tag" + (i+1) ;
+            json_scanned_rfid_tag_data.put(key,scanned_rfid_tag_data[i]);
+        }
+
+        System.out.println("*******from devo_associateRFIDTags  for"+ doc_type+ "json_scanned_rfid_tag_data "+json_scanned_rfid_tag_data);
+
+        Map<String, String> rfid_association_details = new HashMap<>();
+        rfid_association_details.put("doc_type",doc_type);
+        rfid_association_details.put("doc_no",doc_no);
+        rfid_association_details.put("scanned_rfid_tag_data",json_scanned_rfid_tag_data.toString());
+
+        String url = Utility.getInstance().buildUrl(CustomUrl.API_METHOD, rfid_association_details, CustomUrl.CUSTOM_JSON_OBJECT_CHECK);
+
+        System.out.println("*******from custom_json_object_check url "+url);
+        System.out.println("*******from custom_json_object_check rfid_data  "+rfid_association_details);
+
+        JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.POST, url,null,
                 new Response.Listener<JSONObject>()
                 {
                     @Override
                     public void onResponse(JSONObject response) {
-                        try{
-
-                            JSONArray jsonArray = response.getJSONArray("message");
-                            String temp_pemitted_doctypes[]= new String[jsonArray.length()];
-
-                            if (jsonArray.length() != 0 ){  //valid doc no
-                                for(int i = 0; i < jsonArray.length(); i++){
-                                    JSONObject objects = jsonArray.getJSONObject(i);
-                                    String doctype = objects.getString("permitted_doctype");
-                                    temp_pemitted_doctypes[i] = doctype ;
-                                }
-
-                                ArrayAdapter<String> myadapter = new ArrayAdapter<>(UtilityScreen.this,android.R.layout.simple_list_item_1,temp_pemitted_doctypes);
-                                myadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                doc_name_spinner.setAdapter(myadapter);
-                            }
-                            else{ //pemitted_doctypes  has not been configured case
-                            }
-
-                        }catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
+                        System.out.println("***** From  devo_associateRFIDTags  response : "+response );
                     }
                 },
                 new Response.ErrorListener()
                 {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println("***** From  fetch_permitted_doctypes  error : "+error );
+                        System.out.println("***** From  devo_associateRFIDTags  error : "+error );
                     }
                 }
         ){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
 
-                return MeritUHF.this.getHeaders();
+                return MeritUHF.this.getHeaders_one();
+            }
+        };
+        requestQueue1.add(JsonRequest);
+    }
+
+
+
+    private void sample_update(final String[] scanned_rfid_tag_data,final String doc_type, final String doc_no) throws JSONException {
+
+        RequestQueue requestQueue1 = Volley.newRequestQueue(this);
+        JSONObject json_scanned_rfid_tag_data =  new JSONObject();
+
+        for (int i = 0; i < scanned_rfid_tag_data.length ; i++) {
+            String key = "pch_rfid_tag" + (i+1) ;
+            json_scanned_rfid_tag_data.put(key,scanned_rfid_tag_data[i]);
+        }
+
+        System.out.println("*******from sample_update  for"+ doc_type+ "json_scanned_rfid_tag_data "+json_scanned_rfid_tag_data);
+
+        Map<String, String> rfid_association_details = new HashMap<>();
+        rfid_association_details.put("doc_type",doc_type);
+        rfid_association_details.put("doc_no",doc_no);
+        rfid_association_details.put("scanned_rfid_tag_data",json_scanned_rfid_tag_data.toString());
+
+        String url = Utility.getInstance().buildUrl(CustomUrl.API_METHOD, rfid_association_details,CustomUrl.SAMPLE_UPDATE);
+
+        System.out.println("*******from  sample_update custom_json_object_check url "+url);
+        System.out.println("*******from sample_update  custom_json_object_check rfid_data  "+rfid_association_details);
+
+        JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.POST, url,null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println("***** From  sample_update  response : "+response );
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("***** From  sample_update  error : "+error );
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                return MeritUHF.this.getHeaders_one();
             }
         };
         requestQueue1.add(JsonRequest);
