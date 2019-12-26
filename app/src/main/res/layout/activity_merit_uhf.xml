@@ -412,34 +412,8 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearlayout_test_button"
-        android:layout_below="@+id/linearlayout_associate_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1"
-        android:layout_marginTop="@dimen/top_margin"
-        android:layout_marginLeft="@dimen/top_margin"
-        android:layout_marginRight="@dimen/top_margin"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp">
-
-
-        <Button
-            android:id="@+id/btnTestDev"
-            android:text="Test Dev"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.999"
-            android:layout_marginLeft="@dimen/fabulous_margin"
-            android:textSize="15sp"
-            android:background="@color/colorPrimaryDark"
-            android:textColor="@color/cardview_light_background"
-            />
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/linearlayout_scanned_rifd_tag"
-        android:layout_below="@+id/linearlayout_test_button"
+        android:layout_below="@+id/linearlayout_associate_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="1"
@@ -482,7 +456,6 @@
             android:layout_marginLeft="@dimen/fabulous_margin"
             android:hint="@string/getDocType2"
             />
-
     </LinearLayout>
 
 

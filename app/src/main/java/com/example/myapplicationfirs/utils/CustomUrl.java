@@ -90,8 +90,12 @@ public class CustomUrl {
 
     public static final String GET_PERMITTED_DOCTYPES   =API_PATH_NAME+"get_permitted_doctypes" ;
     public static final String GET_PERMITTED_DOCTYPE_DATA   =API_PATH_NAME+"get_permitted_doctype_data" ;
-    public static final String CUSTOM_JSON_OBJECT_CHECK   =API_PATH_NAME+"custom_json_object_check" ;
+    public static final String ASSOCIATE_DOCTYPE_RFID_TAGS   =API_PATH_NAME+"associate_doctype_rfid_tags" ;
+
+
     public static final String SAMPLE_UPDATE   =API_PATH_NAME+"sample_update" ;
+    public static final String UPDATE_RFID_TAG_DETAILS_CHILD_DOC   =API_PATH_NAME+"update_rfid_tag_details_child_doc" ;
+
 
 
     public static String getServerAddress() {
