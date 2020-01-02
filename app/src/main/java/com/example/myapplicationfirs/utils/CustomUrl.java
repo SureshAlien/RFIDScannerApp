@@ -22,9 +22,9 @@ public class CustomUrl {
 
     //added on 27Oct 2017 to reflect changes made in the app name (new app name is motoinventory_tracker, old one renfield)
     //begin change
-    private static final String ERPNEXT_APPNAME = "nhance";
+    private static final String ERPNEXT_APPNAME = "rfid";
     private static final String DOT_STRING_IN_PATH_NAME = ".";
-    private static final String CUSTOM_API = "rfid_android_api";
+    private static final String CUSTOM_API = "api";
     private static final String API_PATH_NAME = ERPNEXT_APPNAME+DOT_STRING_IN_PATH_NAME+CUSTOM_API+DOT_STRING_IN_PATH_NAME;
     public static final String COMPANY_NAME = "HSR Services";
     public static final String COMPANY_ABBR = "HSR";
@@ -40,7 +40,7 @@ public class CustomUrl {
     public static final String SERIAL_NO = "Serial No";
     public static final String ITEM_TABLE = "Item";
     public static final String CUSTOMER_TABLE ="Customer" ;
-    public static final String RFID_TAG_HISTORY_TABLE ="RFID Tag Details" ;
+    public static final String RFID_TAG_HISTORY_TABLE ="RFID Tag Info" ;
 
     //added on 25th Oct to accommodate the requirement to tie the user to a particulr warehouse
     public static final String USER_TABLE="User";
@@ -54,11 +54,6 @@ public class CustomUrl {
 
     //all api method calls related to receive vehicle from RE
 
-    public static final String VALIDATE_SERIAL_NO = API_PATH_NAME+"validate_serial_no";
-    public static final String SUBMIT_STOCK_ENTRY = API_PATH_NAME+"submit_stock_entry";
-    public static final String MAKE_STOCK_ENTRY = API_PATH_NAME+"make_stock_entry";
-    public static final String SEND_MAIL = API_PATH_NAME+"send_IBNR_mail";
-    public static final String MAKE_NEW_SERIAL_NO_ENTRY = API_PATH_NAME+"make_new_serial_no_entry";
 
 
 
@@ -66,35 +61,22 @@ public class CustomUrl {
 
 
 
-    //default WH string..using this in ReceiveFromRE createStockEntry method, have to change this hard coded value, replace with a dummy string, let server throw an error
-    public static final String DEFAULT_WH = "Finished Goods - "+COMPANY_ABBR;
-
-    //to get requested items table
-    public static final String GET_REQUESTED_ITEM_DETAILS =API_PATH_NAME+"get_requested_items_details" ;
-    //to input the requested Items
-    public static final String SEND_REQUESTED_ITEMS_LIST = API_PATH_NAME+"set_requested_items_details";
 
     //transform items apis
     private static final String TRANSFORM_API = "mprp_txfm_api";
 
     private static final String ALTERNATE_API_PATH_NAME = ERPNEXT_APPNAME+DOT_STRING_IN_PATH_NAME+TRANSFORM_API+DOT_STRING_IN_PATH_NAME;
-    public static final String GET_TRANSFORMED_ITEM_DETAILS = ALTERNATE_API_PATH_NAME+"get_transformed_items_details";
-    public static final String SEND_TRANSFORMED_ITEMS_LIST = ALTERNATE_API_PATH_NAME+"set_transformed_items_details";
 
     private static final String ISSUE_FROM_STOCK_API = "mprp_issue_items_from_stock";
-    private static final String ISSUE_API_PATH = ERPNEXT_APPNAME+DOT_STRING_IN_PATH_NAME+ISSUE_FROM_STOCK_API+DOT_STRING_IN_PATH_NAME;
-    public static final String GET_ISSUE_MATERIAL_FROM_STOCK_ITEM_DETAILS = ALTERNATE_API_PATH_NAME+"get_issue_material_from_stock_details";
-    public static final String SEND_ISSUE_ITEMS_FROM_STOCK_LIST = ALTERNATE_API_PATH_NAME+"set_issued_items_from_stock_details";
+
 
     //rfid_App custom apis path
-
-    public static final String GET_PERMITTED_DOCTYPES   =API_PATH_NAME+"get_permitted_doctypes" ;
     public static final String GET_PERMITTED_DOCTYPE_DATA   =API_PATH_NAME+"get_permitted_doctype_data" ;
     public static final String ASSOCIATE_DOCTYPE_RFID_TAGS   =API_PATH_NAME+"associate_doctype_rfid_tags" ;
-
-
     public static final String SAMPLE_UPDATE   =API_PATH_NAME+"sample_update" ;
     public static final String UPDATE_RFID_TAG_DETAILS_CHILD_DOC   =API_PATH_NAME+"update_rfid_tag_details_child_doc" ;
+    public static final String CREATE_RFID_TAG_DETAILS_DOC   =API_PATH_NAME+"create_rfid_tag_details_doc" ;
+
 
 
 

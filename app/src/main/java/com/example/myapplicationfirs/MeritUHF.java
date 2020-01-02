@@ -905,7 +905,8 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String get_rfidTagDetails_url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.RFID_TAG_HISTORY_TABLE);
-        get_rfidTagDetails_url += "?fields=[\"name\"]&filters=[[\"RFID%20Tag%20Details\",\"rfid_tag\",\"=\",\""+scanned_rfid_tag_data+ "\"]] " ;
+        get_rfidTagDetails_url += "?fields=[\"name\"]&filters=[[\"RFID%20Tag%20Info\",\"rfid_tag\",\"=\",\""+scanned_rfid_tag_data+ "\"]] " ;
+
 
         //{"data":[{"name":"RFID-Tag-00001"}]}
         JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.GET, get_rfidTagDetails_url,null,
@@ -954,39 +955,36 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
     private void create_rfidTagDetailsDoc(final String scanned_rfid_tag_data,final int  rfid_tag_index,final String doc_type, final String doc_no ) throws JSONException {
 
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        String create_rfidTagDetailsDoc_url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.RFID_TAG_HISTORY_TABLE);
-
         String rfid_tag_position =  "RFID Tag" + rfid_tag_index;
         String manufacturer = "Suresh" ;
-        JSONArray rfid_tag_deails_item_doc = new JSONArray();
 
-        JSONObject rfid_tag_row = new JSONObject();
-        rfid_tag_row.put("tag_association",rfid_tag_position);
-        rfid_tag_row.put("pch_rfid_docid_associated_with",doc_no);
-        rfid_tag_row.put("pch_rfid_doctype_associated_with",doc_type);
-        rfid_tag_row.put("idx",1);
+        Map<String, String> rfid_doc_details = new HashMap<>();
+        rfid_doc_details.put("scanned_rfid_tag_data",scanned_rfid_tag_data);
+        rfid_doc_details.put("tag_association",rfid_tag_position);
+        rfid_doc_details.put("pch_rfid_docid_associated_with",doc_no);
+        rfid_doc_details.put("pch_rfid_doctype_associated_with",doc_type);
 
-        rfid_tag_deails_item_doc.put(rfid_tag_row);
+        System.out.println(" from create_rfidTagDetailsDoc rfid_doc_details map"+rfid_doc_details);
 
-        JSONObject rfid_tag_deails_doc = new JSONObject();
-
-        //rfid_tag_deails_doc.put("pch_manufacturer",manufacturer);
-        rfid_tag_deails_doc.put("rfid_tag",scanned_rfid_tag_data);
-        rfid_tag_deails_doc.put("rfid_tag_association_details",rfid_tag_deails_item_doc);
-
-       // System.out.println("***********Enters create_rfidTagDetailsDoc  rfid_tag_deails_item_doc json : "+rfid_tag_deails_doc );
+        final RequestQueue requestQueue = Volley.newRequestQueue(MeritUHF.this);
+        String create_rfidTagDetailsDoc_url = Utility.getInstance().buildUrl(CustomUrl.API_METHOD, rfid_doc_details, CustomUrl.CREATE_RFID_TAG_DETAILS_DOC);
 
 
-        JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.POST, create_rfidTagDetailsDoc_url,rfid_tag_deails_doc,
+        JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.POST, create_rfidTagDetailsDoc_url,null,
                 new Response.Listener<JSONObject>()
                 {
                     @Override
                     public void onResponse(JSONObject response) {
                         try{
 
-                            JSONArray jsonArray = response.getJSONArray("message");
-                            String temp_pemitted_doctypes[]= new String[jsonArray.length()];
+                            int is_created = response.getInt("message");
+
+                            if(is_created == 1){
+                                System.out.println(" from create_rfidTagDetailsDoc sucesfully create rfid_doc");
+                            }
+                            else{
+                                System.out.println(" from create_rfidTagDetailsDoc api hitted failed to create rfid tags");
+                            }
 
                         }catch (JSONException e) {
                             e.printStackTrace();
@@ -1010,7 +1008,8 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         };
         requestQueue.add(JsonRequest);
 
-    } // End  create_rfidTagDetailsDoc
+    }
+    // End  create_rfidTagDetailsDoc
 
     public Map<String, String> getHeaders_one () {
         Map<String, String> headers = new HashMap<>();
@@ -1023,6 +1022,10 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         headers.put("Content-Type", "application/json");
         return headers;
     }
+
+    //new_custoom_create_api
+
+    //endnew_custoom_create_api
 
     //de_associate_rfid_details : {"RFID_TAG1":{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"},"RFID_TAG2":{"duplicate_serial_no":"MeritSystems","matched_tag":"pch_rfid_tag2"}}eAssociate
     private void deAssociateRFID(String deas_tag_position, String deas_doc_id,String deas_doc_type ) throws JSONException {
@@ -1281,7 +1284,8 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String rfid_validation_against_doc_url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.RFID_TAG_HISTORY_TABLE);
-        rfid_validation_against_doc_url += "?fields=[\"name\"]&filters=[[\"RFID%20Tag%20Details\",\"rfid_tag\",\"=\",\""+rfid_tag+ "\"]] " ;
+        rfid_validation_against_doc_url += "?fields=[\"name\"]&filters=[[\"RFID%20Tag%20Info\",\"rfid_tag\",\"=\",\""+rfid_tag+ "\"]] " ;
+        System.out.println("***** From response  rfid_validation_against_doc  rfid_validation_against_doc_url :"+rfid_validation_against_doc_url);
 
         //{"data":[{"name":"RFID-Tag-00001"}]}
         JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.GET, rfid_validation_against_doc_url,null,
@@ -1332,6 +1336,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
     private void fetch_rfidTagDetailsDoc_data(final String tagName ,final String matched_rfid_tag_details_name) {
 
         String exist_rfidTagDetailsDoc_url = Utility.getInstance().buildUrl(CustomUrl.API_RESOURCE, null, CustomUrl.RFID_TAG_HISTORY_TABLE,matched_rfid_tag_details_name);
+        System.out.println("***************From  exist_rfidTagDetailsDoc_url:"+exist_rfidTagDetailsDoc_url );
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
@@ -1344,8 +1349,8 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                         try {
                             JSONObject rfidTagDetailsDoc = response.getJSONObject("data");
 
-                            JSONArray child_doc = rfidTagDetailsDoc.getJSONArray("rfid_tag_association_details");
-                            //System.out.println("*******from fetch_rfidTagDetailsDoc_data child_doc "+child_doc);
+                            JSONArray child_doc = rfidTagDetailsDoc.getJSONArray("rfid_tag_association_info");
+                            System.out.println("*******from fetch_rfidTagDetailsDoc_data child_doc "+child_doc);
 
                             int largest_idx=0 ;
                             for(int i = 0; i < child_doc.length(); i++){ //Array
@@ -1395,6 +1400,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
     public void  show_alert_dialog(final String tagName, final JSONObject dup_rfid_tag_details ) throws JSONException{
 
+        System.out.println("*******from  show_alert_dialog Entered ");
 
         String dialog_message ;
         String dialog_title ;
