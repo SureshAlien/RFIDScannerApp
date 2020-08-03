@@ -88,6 +88,7 @@ public class LoginFragment extends BaseFragment {
         RequestQueue requestQueue = Volley.newRequestQueue(LoginFragment.super.context);
 
         String  myUrl = Utility.getInstance().buildUrl(CustomUrl.API_METHOD,null,CustomUrl.LOGIN_URL);
+        //http://localhost/api/method/login?usr=administrator&pwd=password
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,myUrl, new Response.Listener<String>() {
             @Override
