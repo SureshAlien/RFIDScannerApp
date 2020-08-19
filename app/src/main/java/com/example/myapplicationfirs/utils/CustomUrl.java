@@ -54,12 +54,7 @@ public class CustomUrl {
 
     //all api method calls related to receive vehicle from RE
 
-
-
-
-
-
-
+    //fetch_tag_packing_details
 
 
     //transform items apis
@@ -77,6 +72,17 @@ public class CustomUrl {
     public static final String UPDATE_RFID_TAG_DETAILS_CHILD_DOC   =API_PATH_NAME+"update_rfid_tag_details_child_doc" ;
     public static final String CREATE_RFID_TAG_DETAILS_DOC   =API_PATH_NAME+"create_rfid_tag_details_doc" ;
 
+    //packig details api
+
+    private static final String ERPNEXT_APPNAME_TEMP = "rfid";
+    private static final String DOT_STRING_IN_PATH_NAME_TEMP = ".";
+    private static final String CUSTOM_API_TEMP = "api";
+    private static final String API_PATH_NAME_TEMP = ERPNEXT_APPNAME_TEMP+DOT_STRING_IN_PATH_NAME_TEMP+CUSTOM_API_TEMP+DOT_STRING_IN_PATH_NAME_TEMP;
+
+
+    public static final String FETCH_TAG_PACKING_DETAILS   =API_PATH_NAME+"fetch_tag_packing_details" ;
+    public static final String TEST_PD_FROM_ANDROID   =API_PATH_NAME+"test_pd_from_android" ;
+    public static final String FETCH_SI_PIPB_DETAILS   =API_PATH_NAME+"fetch_si_pipb_details" ;
 
 
 

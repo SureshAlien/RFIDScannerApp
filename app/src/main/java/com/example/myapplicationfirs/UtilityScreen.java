@@ -36,6 +36,7 @@ import java.util.*;
 public class UtilityScreen extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnAssociateUtility;
+    private Button btnPackingDetails;
     JSONObject permitted_doctype_data ;
     private ProgressDialog progressDialog;
 
@@ -47,11 +48,18 @@ public class UtilityScreen extends AppCompatActivity implements View.OnClickList
 
         btnAssociateUtility = (Button)findViewById(R.id.btnAssociateUtility);
         btnAssociateUtility.setOnClickListener(this);
+
+        btnPackingDetails = (Button)findViewById(R.id.btnPackingDetails);
+        btnPackingDetails.setOnClickListener(this);
     }
 
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case R.id.btnPackingDetails :
+                showProgress();
+                startPDActivity();
+
             case R.id.btnAssociateUtility :
                 showProgress();
                 View view = LayoutInflater.from(UtilityScreen.this).inflate(R.layout.activity_fetch_document,null);
@@ -75,6 +83,8 @@ public class UtilityScreen extends AppCompatActivity implements View.OnClickList
                 AlertDialog alert = builder.show();
         }
     }
+
+
 
     private void set_doctypes_on_spinner(final Spinner doc_name_spinner  ) {
 
@@ -147,10 +157,18 @@ public class UtilityScreen extends AppCompatActivity implements View.OnClickList
 
     public void startAssocistaionScanningActivity( String selected_doctype )
     {
+        System.out.println("cames inside  startAssocistaionScanningActivity");
         Intent startAssocistaionScanningActivity = new Intent(UtilityScreen.this,MeritUHF.class);
         startAssocistaionScanningActivity.putExtra("selected_doctype",selected_doctype) ;
         startAssocistaionScanningActivity.putExtra("permitted_doctype_data",permitted_doctype_data.toString()) ;
         startActivity(startAssocistaionScanningActivity);
+    }
+
+    private void startPDActivity() {
+        hideProgress();
+        System.out.println(" startPackingDetailsActivity started");
+        Intent PackingDetailsActivity = new Intent(UtilityScreen.this,PackingDetails.class);
+        startActivity(PackingDetailsActivity);
     }
 
     public void showProgress() {

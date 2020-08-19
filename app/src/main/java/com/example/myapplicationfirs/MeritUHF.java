@@ -482,7 +482,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
             case R.id.btnAssociate :
                 showProgress();
-               // System.out.println("***************************Associate Button clicked**************************************");
+                // System.out.println("***************************Associate Button clicked**************************************");
                 boolean is_unique_tags_scanned = true ;
 
                 String[] scanned_rfid_tag_data =  new String[5];
@@ -501,7 +501,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
 
                             for (int j = i+1; j < scanned_rfid_tag_data.length; j++) {
                                 if (scanned_rfid_tag_data[i].equals(scanned_rfid_tag_data[j])) {
-                                   // System.out.println("duplicate_found"+scanned_rfid_tag_data[i]);
+                                    // System.out.println("duplicate_found"+scanned_rfid_tag_data[i]);
 
                                     is_unique_rfid_tags_scanned = false ;
                                 }
@@ -840,14 +840,14 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                 {
                     @Override
                     public void onResponse(JSONObject response) {
-                       // System.out.println("*********from associateRFIDTags JSON Object Response came  for associateRFIDTags"+response.toString());
+                        // System.out.println("*********from associateRFIDTags JSON Object Response came  for associateRFIDTags"+response.toString());
 
                         try{
                             int is_updated = response.getInt("message");
 
                             if(is_updated == 1){
-                                    as_ds_updated_details += doc_type+" : "+ doc_no +" has been associated with given RFID Tags" ;
-                                    rfidTagDetailsEntry(scanned_rfid_tag_data ,doc_type ,doc_no );
+                                as_ds_updated_details += doc_type+" : "+ doc_no +" has been associated with given RFID Tags" ;
+                                rfidTagDetailsEntry(scanned_rfid_tag_data ,doc_type ,doc_no );
                             }
                             else{
                                 System.out.println(" rom associateRFIDTags scanned_rfid_tags_data_list******not updated");
@@ -921,7 +921,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                             if (jsonArray.length() != 0 ){  //RFID tag already exist
                                 JSONObject objects = jsonArray.getJSONObject(0);
                                 String matched_rfid_tag_details_name = objects.getString("name");
-                               // System.out.println("***** From response  set_rfidTagDetailsEntry  matched_rfid_tag_details_name : "+matched_rfid_tag_details_name );
+                                // System.out.println("***** From response  set_rfidTagDetailsEntry  matched_rfid_tag_details_name : "+matched_rfid_tag_details_name );
                                 update_rfidTagDetailsDoc( scanned_rfid_tag_data,rfid_tag_index ,doc_type,doc_no,matched_rfid_tag_details_name) ;
 
                             }
@@ -1045,7 +1045,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         rfid_association_details.put("scanned_rfid_tag_data",json_scanned_rfid_tag_data.toString());
 
         String deas_url = Utility.getInstance().buildUrl(CustomUrl.API_METHOD, rfid_association_details, CustomUrl.ASSOCIATE_DOCTYPE_RFID_TAGS);
-       // System.out.println("*******from deAssociateRFID  deas_url"+ deas_url);
+        // System.out.println("*******from deAssociateRFID  deas_url"+ deas_url);
 
 
         RequestQueue volleyRequestQueue = Volley.newRequestQueue(this);
@@ -1064,7 +1064,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
         try {
             //JSONObject response = future.get();
             JSONObject response = future.get(60,TimeUnit.SECONDS);
-           // System.out.println("*************from deAssociateRFID Came inside try after    response:"+response);
+            // System.out.println("*************from deAssociateRFID Came inside try after    response:"+response);
             int is_deas_updated = response.getInt("message");
 
             if(is_deas_updated == 1){
@@ -1414,7 +1414,7 @@ public class MeritUHF extends AppCompatActivity implements  OnClickListener
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                       // System.out.println("*************************** Dialog box  yes clicked**************************************"+tagName);
+                        // System.out.println("*************************** Dialog box  yes clicked**************************************"+tagName);
                         try {
                             de_associate_rfid_details.put(tagName,dup_rfid_tag_details);
                         } catch (JSONException e) {

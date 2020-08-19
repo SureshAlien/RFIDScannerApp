@@ -38,15 +38,14 @@
 
         <TextView
             android:id="@+id/tv_doctype_label"
-            android:text="Doc Type :"
-            android:layout_width="0dp"
+            android:layout_width="121dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.50"
             android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.50"
+            android:text="Doc Type :"
 
-            android:textSize="24dp"
             android:textColor="@color/textColor"
-            />
+            android:textSize="24dp" />
 
         <TextView
             android:id="@+id/tv_doctype"

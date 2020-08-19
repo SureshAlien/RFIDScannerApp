@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    >
+
+    <LinearLayout
+        android:id="@+id/linearlayout_textVersion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        >
+        <TextView
+            android:id="@+id/textView_version"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_scan_button"
+        android:layout_below="@+id/linearlayout_textVersion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+
+        <Button
+            android:id="@+id/btnScanRfid"
+            android:text="Scan RFID"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.999"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textSize="15sp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/cardview_light_background"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_scanned_rifd_tag"
+        android:layout_below="@+id/linearlayout_scan_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <TextView
+            android:id="@+id/tvEpcLabel1"
+            android:text=""
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:layout_weight="0.90"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textColor="@color/textColor"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_pointer"
+        android:layout_below="@+id/linearlayout_scanned_rifd_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tvPointerlab"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.42"
+            android:text="Pointer :"
+            android:textColor="@color/textColor"
+            android:textSize="24dp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/tvPointer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.68"
+            android:text=""
+            android:textColor="@color/textColor"
+            android:textSize="24dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_pointer_wh"
+        android:layout_below="@+id/linearlayout_pointer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tvPointerWhlab"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.42"
+            android:text="Pointer WH:"
+            android:textColor="@color/textColor"
+            android:textSize="24dp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/tvPointer_wh"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.68"
+            android:text=""
+            android:textColor="@color/textColor"
+            android:textSize="24dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_pointer_rarb"
+        android:layout_below="@+id/linearlayout_pointer_wh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tvPointerRarblab"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.5"
+            android:text="Pointer Rarb:"
+            android:textColor="@color/textColor"
+            android:textStyle="bold|italic"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/tvPointer_rarb"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.5"
+            android:text=""
+            android:textColor="@color/textColor"
+            android:textSize="24dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_tag_reference"
+        android:layout_below="@+id/linearlayout_pointer_rarb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tvTagReferenceLab"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.43"
+            android:text="PItem/PBox :"
+            android:textColor="@color/textColor"
+            android:textStyle="bold|italic"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/tvTagReference"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.67"
+            android:text=""
+            android:textColor="@color/textColor"
+            android:textSize="24dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_tag_refrence_id"
+        android:layout_below="@+id/linearlayout_tag_reference"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_tag_refrence_id_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.42"
+            android:text="Tag DocId :"
+            android:textStyle="bold|italic"
+            android:textColor="@color/textColor"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/tv_tag_refrence_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.68"
+            android:text=""
+            android:textColor="@color/textColor"
+            android:textSize="24dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_box_status"
+        android:layout_below="@+id/linearlayout_tag_refrence_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_box_status_lab"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.42"
+            android:text="Box Status :"
+            android:textStyle="bold|italic"
+            android:textColor="@color/textColor"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/tvbox_status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.68"
+            android:text=""
+            android:textColor="@color/textColor"
+            android:textSize="24dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_box_name"
+        android:layout_below="@+id/linearlayout_box_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_box_name_lab"
+            android:layout_width="134dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.42"
+            android:text="Box Name :"
+            android:textColor="@color/textColor"
+            android:textSize="24dp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/tv_box_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.68"
+            android:text=""
+            android:textColor="@color/textColor"
+            android:textSize="24dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_box_id"
+        android:layout_below="@+id/linearlayout_box_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_box_id_lab"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.42"
+            android:text="Box Id :"
+            android:textStyle="bold|italic"
+            android:textColor="@color/textColor"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/tv_box_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.68"
+            android:text=""
+            android:textColor="@color/textColor"
+            android:textSize="24dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_box_rarb_id"
+        android:layout_below="@+id/linearlayout_box_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_box_rarb_id_lab"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.42"
+            android:text="Box Rarb :"
+            android:textStyle="bold|italic"
+            android:textColor="@color/textColor"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/tv_box_rarb_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.68"
+            android:text=""
+            android:textColor="@color/textColor"
+            android:textSize="24dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_pitem_rarb_id"
+        android:layout_below="@+id/linearlayout_box_rarb_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_pitem_rarb_id_lab"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.42"
+            android:text="PItem Rarb :"
+            android:textStyle="bold|italic"
+            android:textColor="@color/textColor"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/tv_pitem_rarb_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.68"
+            android:text=""
+            android:textColor="@color/textColor"
+            android:textSize="24dp" />
+
+    </LinearLayout>
+</RelativeLayout>

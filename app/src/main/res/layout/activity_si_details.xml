@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearlayout_docName_details"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <EditText
+            android:id="@+id/editDocNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:layout_weight="0.70"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:hint="SI ID"
+            />
+        <Button
+            android:id="@+id/btn_scan_qr_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:background="@color/colorPrimaryDark"
+            android:text="Scan QR"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="15sp"
+            android:onClick="startBarCodeScanning"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_get_doc_pipb_details"
+        android:layout_below="@+id/linearlayout_docName_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <Button
+            android:id="@+id/btn_get_p_details"
+            android:text="Get Packing Details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.999"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textSize="15sp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/cardview_light_background"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_pbox_heading_label"
+        android:layout_below="@+id/linearlayout_get_doc_pipb_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_pbox_heading_label"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.6"
+            android:text="PBOX Details"
+            android:textColor="@color/textColor"
+            android:textSize="24dp"
+            android:textStyle="bold|italic" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearlayout_pbox_detaila"
+        android:layout_below="@+id/linearlayout_pbox_heading_label"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="0.35">
+
+            <TextView
+                android:id="@+id/tv_pi1"
+                android:text="NEEDED"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="0.50"
+                android:layout_marginLeft="@dimen/fabulous_margin"
+                android:textSize="14dp"
+                android:textColor="@color/textColor"
+                />
+
+            <Button
+                android:id="@+id/btn_pb_needed"
+                android:layout_width="wrap_content"
+                android:layout_height="33dp"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:text="00" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="0.35">
+
+            <TextView
+                android:id="@+id/tv_pi2"
+                android:text="COMPLETED"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="0.50"
+                android:layout_marginLeft="@dimen/fabulous_margin"
+                android:textSize="14dp"
+                android:textColor="@color/textColor"
+                />
+            <Button
+                android:id="@+id/btn_pb_completed"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="00" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="0.3">
+
+            <TextView
+                android:id="@+id/tv_pi3"
+                android:text="PARTIALLY COMPLETED"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="0.50"
+                android:layout_marginLeft="@dimen/fabulous_margin"
+                android:textSize="14dp"
+                android:textColor="@color/textColor"
+                />
+
+            <Button
+                android:id="@+id/btn_pb_par_completed"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="00"
+                android:layout_gravity="center_vertical|center_horizontal"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_pitem_heading_label"
+        android:layout_below="@+id/linearlayout_pbox_detaila"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_ptem_heading_label"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.6"
+            android:text="PITEM Details"
+            android:textColor="@color/textColor"
+            android:textSize="24dp"
+            android:textStyle="bold|italic" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_pitem_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearlayout_pitem_heading_label"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:orientation="horizontal"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="0.35">
+
+            <TextView
+                android:id="@+id/tv_pb1"
+                android:text="NEEDED"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="0.50"
+                android:layout_marginLeft="@dimen/fabulous_margin"
+                android:textSize="14dp"
+                android:textColor="@color/textColor"
+                />
+
+            <Button
+                android:id="@+id/btn_pi_neede"
+                android:layout_gravity="center_vertical|center_horizontal"                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="0.35">
+
+            <TextView
+                android:id="@+id/tv_pb2"
+                android:text="COMPLETED"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="0.50"
+                android:layout_marginLeft="@dimen/fabulous_margin"
+                android:textSize="14dp"
+                android:textColor="@color/textColor"
+                />
+            <Button
+                android:id="@+id/button4"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="00" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="0.3">
+
+            <TextView
+                android:id="@+id/tv_pb3"
+                android:text="PARTIALLY COMPLETED"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="0.50"
+                android:layout_marginLeft="@dimen/fabulous_margin"
+                android:textSize="14dp"
+                android:textColor="@color/textColor"
+                />
+
+            <Button
+                android:id="@+id/t10"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="00"
+                android:layout_gravity="center_vertical|center_horizontal"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_si_pipb_status"
+        android:layout_below="@+id/linearlayout_pitem_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_si_pipb_status_lab"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.7"
+            android:text="isReady To Deliver :"
+            android:textStyle="bold|italic"
+            android:textColor="@color/textColor"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/tv_si_delievery_status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.68"
+            android:text=""
+            android:textColor="@color/textColor"
+            android:textSize="24dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_make_dn"
+        android:layout_below="@+id/linearlayout_si_pipb_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <Button
+            android:id="@+id/btn_make_dn"
+            android:text="Make Delivery Note"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.999"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textSize="15sp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/cardview_light_background"
+            />
+    </LinearLayout>
+
+
+</RelativeLayout>
