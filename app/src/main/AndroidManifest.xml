@@ -15,19 +15,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SiDetails"></activity>
-        <activity android:name=".PackingDetails"></activity>
+        <activity android:name=".Packing.PBCreateActivity"></activity>
+        <activity android:name=".Packing.PICreateActivity" />
+        <activity android:name=".Packing.PackingUtility">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+       </activity>
+        <activity android:name=".SiPbDetails" />
+        <activity android:name=".SiDetails" />
+        <activity android:name=".PackingDetails" />
         <activity android:name=".BarCodeScanning" />
         <activity android:name=".FetchDocument" />
         <activity android:name=".UtilityScreen" />
         <activity
             android:name=".Login"
             android:label="RFID Association">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".MeritUHF"

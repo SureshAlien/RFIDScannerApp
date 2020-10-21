@@ -7,13 +7,14 @@ package com.example.myapplicationfirs.utils;
 
 public class CustomUrl {
 
+
+
     CustomUrl(){
         //do nothing here, default constructor
     }
 
 
     private static String SERVER_ADDRESS ;
-
 
     public static final String URL_SCHEME = "http";
     public static final String API = "api";
@@ -83,6 +84,9 @@ public class CustomUrl {
     public static final String FETCH_TAG_PACKING_DETAILS   =API_PATH_NAME+"fetch_tag_packing_details" ;
     public static final String TEST_PD_FROM_ANDROID   =API_PATH_NAME+"test_pd_from_android" ;
     public static final String FETCH_SI_PIPB_DETAILS   =API_PATH_NAME+"fetch_si_pipb_details" ;
+    public static final String FETCH_SI_PIPB_DETAILS_SISCREEN  =API_PATH_NAME+"fetch_si_pb_details_siscreen" ;
+    public static final String MAKE_DELIVERY_NOTE = API_PATH_NAME+"create_delivery_note";
+    public static final String CREATE_PI_DOC = API_PATH_NAME+"create_pi_doc";
 
 
 

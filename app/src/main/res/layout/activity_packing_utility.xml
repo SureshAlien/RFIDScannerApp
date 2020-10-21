@@ -12,7 +12,7 @@
     >
 
     <LinearLayout
-        android:id="@+id/linearlayout_associate_utility"
+        android:id="@+id/linearlayout_ReceiveStartNewUtility"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="1"
@@ -24,8 +24,8 @@
 
 
         <Button
-            android:id="@+id/btnAssociateUtility"
-            android:text="Associate RFID Tag"
+            android:id="@+id/btnReceiveStartNewUtility"
+            android:text="Receive Or Start New"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.999"
@@ -34,12 +34,11 @@
             android:background="@color/colorPrimaryDark"
             android:textColor="@color/cardview_light_background"
             />
-
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearlayout_packing_details"
-        android:layout_below="@+id/linearlayout_associate_utility"
+        android:id="@+id/linearlayout_MoveUtility"
+        android:layout_below="@+id/linearlayout_ReceiveStartNewUtility"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="1"
@@ -49,10 +48,9 @@
         android:paddingLeft="0dp"
         android:paddingRight="0dp">
 
-
         <Button
-            android:id="@+id/btnPackingDetails"
-            android:text="Packing Details"
+            android:id="@+id/btnMoveUtility"
+            android:text="Move"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.999"
@@ -61,12 +59,11 @@
             android:background="@color/colorPrimaryDark"
             android:textColor="@color/cardview_light_background"
             />
-
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearlayout_si_pipb_details"
-        android:layout_below="@+id/linearlayout_packing_details"
+        android:id="@+id/linearlayout_PackUtility"
+        android:layout_below="@+id/linearlayout_MoveUtility"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="1"
@@ -76,10 +73,9 @@
         android:paddingLeft="0dp"
         android:paddingRight="0dp">
 
-
         <Button
-            android:id="@+id/btn_si_pipb_details"
-            android:text="Sales Invoice PIPB"
+            android:id="@+id/btnPackUtility"
+            android:text="Pack"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.999"
@@ -88,8 +84,56 @@
             android:background="@color/colorPrimaryDark"
             android:textColor="@color/cardview_light_background"
             />
-
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/linearlayout_GrabUtility"
+        android:layout_below="@+id/linearlayout_PackUtility"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <Button
+            android:id="@+id/btnGrabUtility"
+            android:text="Grab"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.999"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textSize="15sp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/cardview_light_background"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_ScanUtility"
+        android:layout_below="@+id/linearlayout_GrabUtility"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <Button
+            android:id="@+id/btnScanUtility"
+            android:text="Scan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.999"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textSize="15sp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/cardview_light_background"
+            />
+    </LinearLayout>
 
 </RelativeLayout>

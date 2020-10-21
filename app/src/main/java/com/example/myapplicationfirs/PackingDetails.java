@@ -391,7 +391,6 @@ public class PackingDetails extends AppCompatActivity implements  OnClickListene
                             }
 
                              */
-
                         }catch (JSONException e) {
                             e.printStackTrace();
                         }

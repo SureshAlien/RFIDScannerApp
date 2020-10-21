@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearlayout_docName_details"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <EditText
+            android:id="@+id/editDocNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:layout_weight="0.70"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:hint="SI ID"
+            />
+        <Button
+            android:id="@+id/btn_scan_qr_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:background="@color/colorPrimaryDark"
+            android:text="Scan QR"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="15sp"
+            android:onClick="startBarCodeScanning"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_get_doc_pipb_details"
+        android:layout_below="@+id/linearlayout_docName_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <Button
+            android:id="@+id/btn_get_p_details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.999"
+            android:background="@color/colorPrimaryDark"
+            android:text="Get Packing Details"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_pbox_heading_label"
+        android:layout_below="@+id/linearlayout_get_doc_pipb_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_pbox_heading_label"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.6"
+            android:text="PBOX Details"
+            android:textColor="@color/textColor"
+            android:textSize="24dp"
+            android:textStyle="bold|italic" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_box_heading"
+        android:layout_below="@+id/linearlayout_pbox_heading_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/h1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.4"
+            android:text="Box Name"
+            android:textColor="@color/textColor"
+            android:textSize="24dp"
+            android:textStyle="bold|italic" />
+        <TextView
+            android:id="@+id/h2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.4"
+            android:text="Status"
+            android:textColor="@color/textColor"
+            android:textSize="24dp"
+            android:textStyle="bold|italic" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_box1"
+        android:layout_below="@+id/linearlayout_box_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/box_id1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.4"
+            android:text="Box Name"
+            android:textColor="@color/textColor"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/status1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.4"
+            android:text="Status"
+            android:textColor="@color/textColor"
+            android:textSize="15dp" />
+        <Button
+            android:id="@+id/btn_box1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.2"
+            android:background="@color/colorPrimaryDark"
+            android:text="PITEMS"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_box2"
+        android:layout_below="@+id/linearlayout_box1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/box_id2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.4"
+            android:text="Box Name"
+            android:textColor="@color/textColor"
+            android:textSize="15dp"
+           />
+
+        <TextView
+            android:id="@+id/status2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.4"
+            android:text="Status"
+            android:textColor="@color/textColor"
+            android:textSize="15dp"
+           />
+        <Button
+            android:id="@+id/btn_box2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.2"
+            android:background="@color/colorPrimaryDark"
+            android:text="PITEMS"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_box3"
+        android:layout_below="@+id/linearlayout_box2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/box_id3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.4"
+            android:text="Box Name"
+            android:textColor="@color/textColor"
+            android:textSize="15dp"
+          />
+
+        <TextView
+            android:id="@+id/status3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.4"
+            android:text="Status"
+            android:textColor="@color/textColor"
+            android:textSize="15dp"
+            />
+        <Button
+            android:id="@+id/btn_box3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.2"
+            android:background="@color/colorPrimaryDark"
+            android:text="PITEMS"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_box4"
+        android:layout_below="@+id/linearlayout_box3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/box_id4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.4"
+            android:text="Box Name"
+            android:textColor="@color/textColor"
+            android:textSize="15dp"
+            />
+
+        <TextView
+            android:id="@+id/status4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.4"
+            android:text="Status"
+            android:textColor="@color/textColor"
+            android:textSize="15dp"
+             />
+        <Button
+            android:id="@+id/btn_box4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.2"
+            android:background="@color/colorPrimaryDark"
+            android:text="PITEMS"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_box5"
+        android:layout_below="@+id/linearlayout_box4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/box_id5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.4"
+            android:text="Box Name"
+            android:textColor="@color/textColor"
+            android:textSize="15dp"
+             />
+
+        <TextView
+            android:id="@+id/status5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.4"
+            android:text="Status"
+            android:textColor="@color/textColor"
+            android:textSize="15dp"
+            />
+        <Button
+            android:id="@+id/btn_box5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.2"
+            android:background="@color/colorPrimaryDark"
+            android:text="PITEMS"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</RelativeLayout>

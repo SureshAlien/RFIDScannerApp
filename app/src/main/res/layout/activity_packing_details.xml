@@ -107,7 +107,7 @@
             android:textColor="@color/textColor"
             android:textSize="24dp" />
     </LinearLayout>
-
+ 
     <LinearLayout
         android:id="@+id/linearlayout_pointer_wh"
         android:layout_below="@+id/linearlayout_pointer"
@@ -173,7 +173,7 @@
             android:layout_weight="0.5"
             android:text=""
             android:textColor="@color/textColor"
-            android:textSize="24dp" />
+            android:textSize="20dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -207,7 +207,7 @@
             android:layout_weight="0.67"
             android:text=""
             android:textColor="@color/textColor"
-            android:textSize="24dp" />
+            android:textSize="20dp" />
 
     </LinearLayout>
 
@@ -242,7 +242,7 @@
             android:layout_weight="0.68"
             android:text=""
             android:textColor="@color/textColor"
-            android:textSize="24dp" />
+            android:textSize="20dp" />
 
     </LinearLayout>
 
@@ -277,7 +277,7 @@
             android:layout_weight="0.68"
             android:text=""
             android:textColor="@color/textColor"
-            android:textSize="24dp" />
+            android:textSize="20dp" />
 
     </LinearLayout>
 
@@ -312,7 +312,7 @@
             android:layout_weight="0.68"
             android:text=""
             android:textColor="@color/textColor"
-            android:textSize="24dp" />
+            android:textSize="20dp" />
 
     </LinearLayout>
 
@@ -347,7 +347,7 @@
             android:layout_weight="0.68"
             android:text=""
             android:textColor="@color/textColor"
-            android:textSize="24dp" />
+            android:textSize="20dp" />
 
     </LinearLayout>
 
@@ -382,7 +382,7 @@
             android:layout_weight="0.68"
             android:text=""
             android:textColor="@color/textColor"
-            android:textSize="24dp" />
+            android:textSize="20dp" />
 
     </LinearLayout>
 
@@ -417,7 +417,7 @@
             android:layout_weight="0.68"
             android:text=""
             android:textColor="@color/textColor"
-            android:textSize="24dp" />
+            android:textSize="20dp" />
 
     </LinearLayout>
 </RelativeLayout>

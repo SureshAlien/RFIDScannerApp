@@ -110,7 +110,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="0.35">
+            android:layout_weight="0.25">
 
             <TextView
                 android:id="@+id/tv_pi1"
@@ -119,14 +119,14 @@
                 android:layout_height="40dp"
                 android:layout_weight="0.50"
                 android:layout_marginLeft="@dimen/fabulous_margin"
-                android:textSize="14dp"
+                android:textSize="12dp"
                 android:textColor="@color/textColor"
                 />
 
             <Button
                 android:id="@+id/btn_pb_needed"
                 android:layout_width="wrap_content"
-                android:layout_height="33dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:text="00" />
 
@@ -136,7 +136,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="0.35">
+            android:layout_weight="0.25">
 
             <TextView
                 android:id="@+id/tv_pi2"
@@ -145,7 +145,7 @@
                 android:layout_height="40dp"
                 android:layout_weight="0.50"
                 android:layout_marginLeft="@dimen/fabulous_margin"
-                android:textSize="14dp"
+                android:textSize="12dp"
                 android:textColor="@color/textColor"
                 />
             <Button
@@ -160,7 +160,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="0.3">
+            android:layout_weight="0.25">
 
             <TextView
                 android:id="@+id/tv_pi3"
@@ -169,12 +169,37 @@
                 android:layout_height="40dp"
                 android:layout_weight="0.50"
                 android:layout_marginLeft="@dimen/fabulous_margin"
-                android:textSize="14dp"
+                android:textSize="12dp"
                 android:textColor="@color/textColor"
                 />
 
             <Button
                 android:id="@+id/btn_pb_par_completed"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="00"
+                android:layout_gravity="center_vertical|center_horizontal"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="0.25">
+
+            <TextView
+                android:id="@+id/tv_pb_pen"
+                android:text="PENDING"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="0.50"
+                android:layout_marginLeft="@dimen/fabulous_margin"
+                android:textSize="12dp"
+                android:textColor="@color/textColor"
+                />
+
+            <Button
+                android:id="@+id/btn_pb_pending"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:text="00"
@@ -223,7 +248,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="0.35">
+            android:layout_weight="0.25">
 
             <TextView
                 android:id="@+id/tv_pb1"
@@ -232,12 +257,12 @@
                 android:layout_height="40dp"
                 android:layout_weight="0.50"
                 android:layout_marginLeft="@dimen/fabulous_margin"
-                android:textSize="14dp"
+                android:textSize="12dp"
                 android:textColor="@color/textColor"
                 />
 
             <Button
-                android:id="@+id/btn_pi_neede"
+                android:id="@+id/btn_pi_needed"
                 android:layout_gravity="center_vertical|center_horizontal"                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="00" />
@@ -248,7 +273,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="0.35">
+            android:layout_weight="0.25">
 
             <TextView
                 android:id="@+id/tv_pb2"
@@ -257,11 +282,11 @@
                 android:layout_height="40dp"
                 android:layout_weight="0.50"
                 android:layout_marginLeft="@dimen/fabulous_margin"
-                android:textSize="14dp"
+                android:textSize="12dp"
                 android:textColor="@color/textColor"
                 />
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/btn_pi_completed"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
@@ -272,7 +297,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="0.3">
+            android:layout_weight="0.25">
 
             <TextView
                 android:id="@+id/tv_pb3"
@@ -281,12 +306,37 @@
                 android:layout_height="40dp"
                 android:layout_weight="0.50"
                 android:layout_marginLeft="@dimen/fabulous_margin"
-                android:textSize="14dp"
+                android:textSize="12dp"
                 android:textColor="@color/textColor"
                 />
 
             <Button
-                android:id="@+id/t10"
+                android:id="@+id/btn_pi_par_completed"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="00"
+                android:layout_gravity="center_vertical|center_horizontal"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="0.25">
+
+            <TextView
+                android:id="@+id/tv_pb_pe"
+                android:text="PENDING"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="0.50"
+                android:layout_marginLeft="@dimen/fabulous_margin"
+                android:textSize="12dp"
+                android:textColor="@color/textColor"
+                />
+
+            <Button
+                android:id="@+id/btn_pi_pending"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:text="00"

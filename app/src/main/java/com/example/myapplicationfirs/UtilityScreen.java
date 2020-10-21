@@ -37,6 +37,7 @@ public class UtilityScreen extends AppCompatActivity implements View.OnClickList
 
     private Button btnAssociateUtility;
     private Button btnPackingDetails;
+    private Button btn_si_pipb_details;
     JSONObject permitted_doctype_data ;
     private ProgressDialog progressDialog;
 
@@ -51,16 +52,27 @@ public class UtilityScreen extends AppCompatActivity implements View.OnClickList
 
         btnPackingDetails = (Button)findViewById(R.id.btnPackingDetails);
         btnPackingDetails.setOnClickListener(this);
+
+        btn_si_pipb_details = (Button)findViewById(R.id.btn_si_pipb_details);
+        btn_si_pipb_details.setOnClickListener(this);
+
     }
 
     public void onClick(View v) {
 
         switch (v.getId()) {
             case R.id.btnPackingDetails :
+                System.out.println("su_debug Packing details button pressed");
                 showProgress();
                 startPDActivity();
 
+            case R.id.btn_si_pipb_details :
+                System.out.println("su_debug btn_si_pipb_details button pressed");
+                showProgress();
+                startSiDetails();
+
             case R.id.btnAssociateUtility :
+                System.out.println("su_debug btnAssociateUtility button pressed");
                 showProgress();
                 View view = LayoutInflater.from(UtilityScreen.this).inflate(R.layout.activity_fetch_document,null);
 
@@ -157,7 +169,7 @@ public class UtilityScreen extends AppCompatActivity implements View.OnClickList
 
     public void startAssocistaionScanningActivity( String selected_doctype )
     {
-        System.out.println("cames inside  startAssocistaionScanningActivity");
+        System.out.println("su_debug cames inside  startAssocistaionScanningActivity");
         Intent startAssocistaionScanningActivity = new Intent(UtilityScreen.this,MeritUHF.class);
         startAssocistaionScanningActivity.putExtra("selected_doctype",selected_doctype) ;
         startAssocistaionScanningActivity.putExtra("permitted_doctype_data",permitted_doctype_data.toString()) ;
@@ -166,9 +178,16 @@ public class UtilityScreen extends AppCompatActivity implements View.OnClickList
 
     private void startPDActivity() {
         hideProgress();
-        System.out.println(" startPackingDetailsActivity started");
+        System.out.println("su_debug  startPackingDetailsActivity started");
         Intent PackingDetailsActivity = new Intent(UtilityScreen.this,PackingDetails.class);
         startActivity(PackingDetailsActivity);
+    }
+
+    private void startSiDetails() {
+        hideProgress();
+        System.out.println("su_debug  startSiDetails started");
+        Intent SiDetailsActivity = new Intent(UtilityScreen.this,SiPbDetails.class);
+        startActivity(SiDetailsActivity);
     }
 
     public void showProgress() {

@@ -2,12 +2,16 @@ package com.example.myapplicationfirs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -34,11 +38,18 @@ public class SiDetails extends AppCompatActivity implements View.OnClickListener
     private Button btn_pb_needed;
     private Button btn_pb_completed;
     private Button btn_pb_par_completed;
-    private Button btn_pi_needed;
+    private Button btn_pb_pending;
+
     private Button btn_pi_completed;
     private Button btn_pi_par_completed;
+    private Button btn_pi_pending;
+    private Button btn_pi_needed;
+
 
     private EditText editDocNo;
+    private TextView  tv_si_delievery_status ;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +60,25 @@ public class SiDetails extends AppCompatActivity implements View.OnClickListener
     }
 
     private void initview() {
+
         editDocNo = (EditText) findViewById(R.id.editDocNo);
+        tv_si_delievery_status = (TextView)   findViewById(R.id.tv_si_delievery_status);
 
         btn_get_p_details = (Button)findViewById(R.id.btn_get_p_details);
         btn_get_p_details.setOnClickListener(this);
 
         btn_make_dn = (Button)findViewById(R.id.btn_make_dn);
         btn_make_dn.setOnClickListener(this);
+
+        btn_pb_needed = (Button)findViewById(R.id.btn_pb_needed);
+        btn_pb_pending = (Button)findViewById(R.id.btn_pb_pending);
+        btn_pb_completed = (Button)findViewById(R.id.btn_pb_completed);
+        btn_pb_par_completed = (Button)findViewById(R.id.btn_pb_par_completed);
+
+        btn_pi_needed = (Button)findViewById(R.id.btn_pi_needed);
+        btn_pi_completed = (Button)findViewById(R.id.btn_pi_completed);
+        btn_pi_par_completed = (Button)findViewById(R.id.btn_pi_par_completed);
+        btn_pi_pending = (Button)findViewById(R.id.btn_pi_pending);
     }
 
     public void onClick(View v) {
@@ -66,7 +89,8 @@ public class SiDetails extends AppCompatActivity implements View.OnClickListener
                 set_pi_pb_details( doc_id );
                 break;
             case R.id.btn_make_dn:
-                craete_delivery_note() ;
+                String doc_id_temp = editDocNo.getText().toString() ;
+                craete_delivery_note(doc_id_temp) ;
                 break;
         }
     }//Onclick ends
@@ -91,33 +115,21 @@ public class SiDetails extends AppCompatActivity implements View.OnClickListener
                             JSONObject stat = response.getJSONObject("message");
                             System.out.println("***** From set_scanned_tag_details  stat : "+stat );
 
-                            /*
-                            tvPointer.setText(stat.getString("pointer"));
-                            tvTagReference.setText(stat.getString("tag_attached"));
-                            tv_tag_refrence_id.setText(stat.getString("tag_doc_id"));
-                            tvbox_status.setText(stat.getString("box_status"));
-                            tv_box_name.setText(stat.getString("box_name"));
-                            tv_box_id.setText(stat.getString("box_doc_id"));
+                            btn_pb_needed.setText(stat.getString("pb_needed"));
+                            btn_pb_completed.setText(stat.getString("pb_completed"));
+                            btn_pb_par_completed.setText(stat.getString("pb_par_completed"));
+                            btn_pi_pending.setText(stat.getString("pb_pending"));
 
-                             */
+                            btn_pi_needed.setText(stat.getString("pi_needed"));
+                            btn_pi_completed.setText(stat.getString("pi_completed"));
+                            btn_pi_par_completed.setText(stat.getString("pi_par_completed"));
+                            btn_pb_pending.setText(stat.getString("pi_pending"));
 
-                            /*
+                            tv_si_delievery_status.setText(stat.getString("isDeliverable"));
 
-                            if (jsonArray.length() != 0 ){  //RFID tag already exist
-                                JSONObject objects = jsonArray.getJSONObject(0);
-                                String matched_rfid_tag_details_name = objects.getString("name");
-                                //System.out.println("***** From response  rfid_validation_against_doc  matched_rfid_tag_details_name : "+matched_rfid_tag_details_name );
-                                fetch_rfidTagDetailsDoc_data(tagName, matched_rfid_tag_details_name) ;
-
-                            }
-                            else{ //New  RFID tag,NO duplication
-                                System.out.println("***** From response  rfid_validation_against_doc  No duplicate found for tag :"+rfid_tag);
-                            }
-                             */
                         }catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                 },
                 new Response.ErrorListener()
@@ -137,8 +149,52 @@ public class SiDetails extends AppCompatActivity implements View.OnClickListener
         requestQueue.add(JsonRequest);
     }
 
-    private void craete_delivery_note() {
+    private void craete_delivery_note(String doc_id_temp) {
+        String isDeliverable  = tv_si_delievery_status.getText().toString() ;
+        if(isDeliverable.equals("Yes")){
+            String dummy = "dummy " ;
+            make_delivery_note(doc_id_temp);
+        }
+        else{ //show alert dialog
+            String title= "Delievery Note";
+            String message = "Packing not yet completed" ;
+            Toast.makeText(SiDetails.this, message ,Toast.LENGTH_SHORT).show();
+        }
+    }
 
+    private void make_delivery_note(String doc_id_temp) {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        Map<String, String> make_delivery_note_map = new HashMap<>();
+        make_delivery_note_map.put("doc_id",doc_id_temp);
+
+        String make_delivery_note_map_url = Utility.getInstance().buildUrl(CustomUrl.API_METHOD, make_delivery_note_map, CustomUrl.MAKE_DELIVERY_NOTE);
+        System.out.println("***** From make_delivery_note make_delivery_note_map_url"+make_delivery_note_map_url);
+
+        JsonObjectRequest JsonRequest = new JsonObjectRequest(Request.Method.PUT, make_delivery_note_map_url,null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println("***** From make_delivery_note response dn successfuly created"+response.toString());
+                        Toast.makeText(SiDetails.this, "Delivery Note has been created sucessfully" ,Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("***** From make_delivery_note error ");
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                return SiDetails.this.getHeaders_one();
+            }
+        };
+        requestQueue.add(JsonRequest);
     }
 
     public Map<String, String> getHeaders_one () {
@@ -152,5 +208,4 @@ public class SiDetails extends AppCompatActivity implements View.OnClickListener
         headers.put("Content-Type", "application/json");
         return headers;
     }
-
 }
