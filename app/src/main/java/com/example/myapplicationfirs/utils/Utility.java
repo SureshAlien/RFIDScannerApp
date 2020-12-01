@@ -2,10 +2,16 @@ package com.example.myapplicationfirs.utils;
 
 
 
+import android.app.ProgressDialog;
 import android.net.Uri;
+import android.support.v7.app.AppCompatActivity;
+
+import com.example.myapplicationfirs.R;
+
 import java.util.Map;
 
-public class Utility {
+public class Utility  {
+    private ProgressDialog progressDialog;
     public static Utility utility;
     public static Utility getInstance(){
         if(utility==null){
@@ -43,5 +49,7 @@ public class Utility {
         }
         return  builder.build().toString();
     }
+
+
 
 }

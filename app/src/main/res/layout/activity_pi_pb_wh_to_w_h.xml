@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    >
+    <LinearLayout
+        android:id="@+id/linearlayout_scan_button"
+        android:layout_below="@+id/linearlayout_textVersion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <Button
+            android:id="@+id/btnScanRfid"
+            android:text="Scan RFID"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.999"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textSize="15sp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/cardview_light_background"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_scanned_rifd_tag"
+        android:layout_below="@+id/linearlayout_scan_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <TextView
+            android:id="@+id/tvEpcLabel"
+            android:text=""
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:layout_weight="0.90"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textColor="@color/textColor"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_packing_item"
+        android:layout_below="@id/linearlayout_scanned_rifd_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:orientation="vertical"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/packing_item"
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/linearlayout_username"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:hint="Packing Item"
+            android:text=""
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_parent_item"
+        android:layout_below="@id/linearlayout_packing_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:orientation="vertical"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/parent_item"
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/linearlayout_username"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:hint="Parent Item"
+            android:text=""
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_serial_no"
+        android:layout_below="@id/linearlayout_parent_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:orientation="vertical"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/serial_no"
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:hint="Serial No"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_tv_source_wh_heading_label"
+        android:layout_below="@+id/linearlayout_serial_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_source_wh_heading_label"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.6"
+            android:text="Source WH Details"
+            android:textColor="@color/textColor"
+            android:textSize="24dp"
+            android:textStyle="bold|italic" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_source_wh"
+        android:layout_below="@id/linearlayout_tv_source_wh_heading_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:orientation="vertical"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/source_wh"
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:hint=" Source WH Name"
+            android:text=""
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_source_rarb"
+        android:layout_below="@id/linearlayout_source_wh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:orientation="vertical"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/source_rarb"
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:hint="Source RARB"
+            android:text=""
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_tv_tw_heading_label"
+        android:layout_below="@+id/linearlayout_source_rarb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_tw_heading_label"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.6"
+            android:text="Target WH Details"
+            android:textColor="@color/textColor"
+            android:textSize="24dp"
+            android:textStyle="bold|italic" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_target_wh"
+        android:layout_below="@id/linearlayout_tv_tw_heading_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:orientation="vertical"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/target_wh"
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:hint=" Target WH Name"
+            android:text=""
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_target_rarb"
+        android:layout_below="@id/linearlayout_target_wh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:orientation="vertical"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/target_rarb"
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:hint=" Target RARB Name"
+            android:text=""
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_btn_make_transfer"
+        android:layout_below="@+id/linearlayout_target_rarb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <Button
+            android:id="@+id/btn_make_transfer"
+            android:text="Make Transfer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.999"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textSize="15sp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/cardview_light_background"
+            />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

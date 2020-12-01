@@ -6,13 +6,9 @@ package com.example.myapplicationfirs.utils;
 
 
 public class CustomUrl {
-
-
-
     CustomUrl(){
         //do nothing here, default constructor
     }
-
 
     private static String SERVER_ADDRESS ;
 
@@ -23,9 +19,9 @@ public class CustomUrl {
 
     //added on 27Oct 2017 to reflect changes made in the app name (new app name is motoinventory_tracker, old one renfield)
     //begin change
-    private static final String ERPNEXT_APPNAME = "rfid";
+    private static final String ERPNEXT_APPNAME = "nhance";
     private static final String DOT_STRING_IN_PATH_NAME = ".";
-    private static final String CUSTOM_API = "api";
+    private static final String CUSTOM_API = "packing_items_api";
     private static final String API_PATH_NAME = ERPNEXT_APPNAME+DOT_STRING_IN_PATH_NAME+CUSTOM_API+DOT_STRING_IN_PATH_NAME;
     public static final String COMPANY_NAME = "HSR Services";
     public static final String COMPANY_ABBR = "HSR";
@@ -86,8 +82,15 @@ public class CustomUrl {
     public static final String FETCH_SI_PIPB_DETAILS   =API_PATH_NAME+"fetch_si_pipb_details" ;
     public static final String FETCH_SI_PIPB_DETAILS_SISCREEN  =API_PATH_NAME+"fetch_si_pb_details_siscreen" ;
     public static final String MAKE_DELIVERY_NOTE = API_PATH_NAME+"create_delivery_note";
-    public static final String CREATE_PI_DOC = API_PATH_NAME+"create_pi_doc";
 
+    //new version with planned design
+    public static final String CREATE_PI_DOC = API_PATH_NAME+"create_pi_doc";
+    public static final String GET_PITEMS_AC_TO_BOX_NAME = API_PATH_NAME+"get_pitems_ac_to_box_name";
+    public static final String CREATE_PB_DOC = API_PATH_NAME+"create_pb_doc";
+    public static final String GET_PACKING_ITEM_DETAILS_AC_TO_RFID = API_PATH_NAME+"get_packing_item_details_ac_to_rfid";
+    public static final String GET_PACKING_BOX_DETAILS_AC_TO_RFID = API_PATH_NAME+"get_packing_box_details_ac_to_rfid";
+    public static final String CREATE_STOCK_ENTRY_TRANSFER = API_PATH_NAME+"craete_stock_entry_transfer";
+    public static final String MOVE_TO_BOX = API_PATH_NAME+"move_to_box";
 
 
     public static String getServerAddress() {

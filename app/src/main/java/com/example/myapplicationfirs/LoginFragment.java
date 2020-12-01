@@ -29,6 +29,7 @@ import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import com.example.myapplicationfirs.Packing.PackingUtility;
 import com.example.myapplicationfirs.common.BaseFragment;
 import com.example.myapplicationfirs.utils.CustomUrl;
 import com.example.myapplicationfirs.utils.Utility;
@@ -37,8 +38,6 @@ import com.example.myapplicationfirs.utils.Constants;
 
 //public class LoginFragment extends BaseF {
 public class LoginFragment extends BaseFragment {
-
-
     Button loginButton;
 
     JSONObject jsonObject;
@@ -49,13 +48,9 @@ public class LoginFragment extends BaseFragment {
     EditText password_entry;
     EditText server_address ; //as of now merged with login screen.Have to change in future
 
-
     public LoginFragment() {
         // Required empty public constructor
     }
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,10 +66,8 @@ public class LoginFragment extends BaseFragment {
             @Override
 
             public void onClick(View v) {
-
                 showProgress();
                 requestLogin();
-
             }
         });
 
@@ -126,11 +119,7 @@ public class LoginFragment extends BaseFragment {
                 } catch (Exception e) {
                     Log.e("ERROR",e.toString());
                 }
-
-
             }
-
-
         }//end of sucess response
                 , new Response.ErrorListener() {
             @Override
@@ -155,30 +144,22 @@ public class LoginFragment extends BaseFragment {
 
             }
         };
-
-
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(30 * 1000, 0,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
         requestQueue.add(stringRequest);
-
     }
 
     public void startUtilitiesActivity()
     {
-        Intent startUtilitiesActivity = new Intent(LoginFragment.super.getContext(),UtilityScreen.class);
+        Intent startUtilitiesActivity = new Intent(LoginFragment.super.getContext(), PackingUtility.class);
         startActivity(startUtilitiesActivity);
     }
-
+    
     /*
     public void startAssocistaionScanningActivity()
     {
         Intent startAssocistaionScanningActivity = new Intent(LoginFragment.super.getContext(),MeritUHF.class);
         startActivity(startAssocistaionScanningActivity);
     }
-
      */
-
-
-
 }

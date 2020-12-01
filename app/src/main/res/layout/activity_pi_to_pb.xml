@@ -8,184 +8,10 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    tools:context=".UtilityScreen"
     >
-
     <LinearLayout
-        android:id="@+id/linearlayout_pitem_screen_top_label"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/top_margin"
-        android:layout_marginTop="@dimen/top_margin"
-        android:layout_marginRight="@dimen/top_margin"
-        android:orientation="vertical"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:weightSum="1">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Please Enter The Packing Item Details "
-            android:textColor="@color/colorPrimary"
-            android:textStyle="bold|italic"
-
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearlayout_item_code_entry"
-        android:layout_below="@id/linearlayout_pitem_screen_top_label"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/top_margin"
-        android:layout_marginTop="@dimen/top_margin"
-        android:layout_marginRight="@dimen/top_margin"
-        android:orientation="vertical"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:weightSum="1">
-
-        <EditText
-            android:id="@+id/item_code_entry"
-            android:layout_width="329dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/linearlayout_username"
-            android:layout_marginLeft="@dimen/fabulous_margin"
-            android:hint="Item Code"
-            android:text=""
-            android:inputType="textEmailAddress"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearlayout_qty_entry"
-        android:layout_below="@id/linearlayout_item_code_entry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/top_margin"
-        android:layout_marginTop="@dimen/top_margin"
-        android:layout_marginRight="@dimen/top_margin"
-        android:orientation="vertical"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:weightSum="1">
-
-        <EditText
-            android:id="@+id/qty_entry"
-            android:layout_width="329dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/linearlayout_username"
-            android:layout_marginLeft="@dimen/fabulous_margin"
-            android:hint="Qty"
-            android:text=""
-            android:inputType="textEmailAddress"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearlayout_uom_entry"
-        android:layout_below="@id/linearlayout_qty_entry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/top_margin"
-        android:layout_marginTop="@dimen/top_margin"
-        android:layout_marginRight="@dimen/top_margin"
-        android:orientation="vertical"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:weightSum="1">
-
-        <EditText
-            android:id="@+id/uom_entry"
-            android:layout_width="329dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/fabulous_margin"
-            android:hint="Uom"
-            android:inputType="textEmailAddress"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearlayout_parent_item_code_entry"
-        android:layout_below="@id/linearlayout_uom_entry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/top_margin"
-        android:layout_marginTop="@dimen/top_margin"
-        android:layout_marginRight="@dimen/top_margin"
-        android:orientation="vertical"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:weightSum="1">
-
-        <EditText
-            android:id="@+id/parent_item_code_entry"
-            android:layout_width="329dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/fabulous_margin"
-            android:hint="Parent Item Name"
-            android:text=""
-            android:inputType="textEmailAddress"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearlayout_wh_entry"
-        android:layout_below="@id/linearlayout_parent_item_code_entry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/top_margin"
-        android:layout_marginTop="@dimen/top_margin"
-        android:layout_marginRight="@dimen/top_margin"
-        android:orientation="vertical"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:weightSum="1">
-
-        <EditText
-            android:id="@+id/wh_entry"
-            android:layout_width="329dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/fabulous_margin"
-            android:hint="Warehouse Name"
-            android:text=""
-            android:inputType="textEmailAddress"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearlayout_rarb_entry"
-        android:layout_below="@id/linearlayout_wh_entry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/top_margin"
-        android:layout_marginTop="@dimen/top_margin"
-        android:layout_marginRight="@dimen/top_margin"
-        android:orientation="vertical"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:weightSum="1">
-
-        <EditText
-            android:id="@+id/rarb_entry"
-            android:layout_width="329dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/fabulous_margin"
-            android:hint="RARB"
-            android:text=""
-            android:inputType="textEmailAddress"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearlayout_btn_submit"
-        android:layout_below="@+id/linearlayout_rarb_entry"
+        android:id="@+id/linearlayout_btnScanPackingItem"
+        android:layout_below="@+id/linearlayout_textVersion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="1"
@@ -196,8 +22,8 @@
         android:paddingRight="0dp">
 
         <Button
-            android:id="@+id/btn_submit"
-            android:text="Submit"
+            android:id="@+id/btnScanPackingItem"
+            android:text="Scan Packing Item"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.999"
@@ -207,5 +33,249 @@
             android:textColor="@color/cardview_light_background"
             />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_scanned_rifd_tag"
+        android:layout_below="@+id/linearlayout_btnScanPackingItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <TextView
+            android:id="@+id/tvEpcLabel"
+            android:text=""
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:layout_weight="0.90"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textColor="@color/textColor"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_packing_item"
+        android:layout_below="@id/linearlayout_scanned_rifd_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:orientation="vertical"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/packing_item"
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/linearlayout_username"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:hint="Packing Item"
+            android:text=""
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_parent_item"
+        android:layout_below="@id/linearlayout_packing_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:orientation="vertical"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/parent_item"
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/linearlayout_username"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:hint="Parent Item"
+            android:text=""
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_serial_no"
+        android:layout_below="@id/linearlayout_parent_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:orientation="vertical"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/serial_no"
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:hint="Serial No"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearlayout_source_wh"
+        android:layout_below="@id/linearlayout_serial_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:orientation="vertical"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/source_wh"
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:hint=" Source WH Name"
+            android:text=""
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_source_rarb"
+        android:layout_below="@id/linearlayout_source_wh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:orientation="vertical"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/source_rarb"
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:hint="Source RARB"
+            android:text=""
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_btnScanPackingBox"
+        android:layout_below="@+id/linearlayout_source_rarb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <Button
+            android:id="@+id/btnScanPackingBox"
+            android:text="Scan Packing Box"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.999"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textSize="15sp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/cardview_light_background"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_tvPBEpcLabel"
+        android:layout_below="@+id/linearlayout_btnScanPackingBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <TextView
+            android:id="@+id/tvPBEpcLabel"
+            android:text=""
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:layout_weight="0.90"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textColor="@color/textColor"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_pb_serial_no"
+        android:layout_below="@id/linearlayout_tvPBEpcLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:orientation="vertical"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/pb_serial_no"
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:hint="Packing Box's Serial No"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_btn_make_transfer"
+        android:layout_below="@+id/linearlayout_pb_serial_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <Button
+            android:id="@+id/btn_make_transfer"
+            android:text="Make Transfer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.999"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textSize="15sp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/cardview_light_background"
+            />
+    </LinearLayout>
+
+
 
 </RelativeLayout>

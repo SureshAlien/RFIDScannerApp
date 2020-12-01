@@ -1,9 +1,444 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Packing.PBCreateActivity">
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    tools:context=".UtilityScreen"
+    >
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/linearlayout_pitem_screen_top_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:orientation="vertical"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Please Enter The Packing Box Details "
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold|italic"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_item_code_entry"
+        android:layout_below="@id/linearlayout_pitem_screen_top_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:orientation="vertical"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/pb_item_code_entry"
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/linearlayout_username"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:hint="Packing Box Name"
+            android:text=""
+            android:inputType="textEmailAddress"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_parent_item_code_entry"
+        android:layout_below="@id/linearlayout_item_code_entry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:orientation="vertical"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/parent_item_code_entry_pb"
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:hint="Parent Item Name"
+            android:text=""
+            android:inputType="textEmailAddress"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_wh_entry"
+        android:layout_below="@id/linearlayout_parent_item_code_entry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:orientation="vertical"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/wh_entry_pb"
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:hint="Warehouse Name"
+            android:text=""
+            android:inputType="textEmailAddress"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_rarb_entry"
+        android:layout_below="@id/linearlayout_wh_entry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:orientation="vertical"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/rarb_entry_pb"
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:hint="RARB"
+            android:text=""
+            android:inputType="textEmailAddress"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_btn_get_packing_items"
+        android:layout_below="@+id/linearlayout_rarb_entry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <Button
+            android:id="@+id/btn_get_packing_items"
+            android:text="Get Packing Items"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.999"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textSize="15sp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/cardview_light_background"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_box_heading"
+        android:layout_below="@+id/linearlayout_btn_get_packing_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/h1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.5"
+            android:text="Packing Item Name"
+            android:textColor="@color/textColor"
+            android:textSize="15dp"
+            android:textStyle="bold|italic" />
+        <TextView
+            android:id="@+id/h2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.25"
+            android:text="Actual Qty"
+            android:textColor="@color/textColor"
+            android:textSize="15dp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/h3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.25"
+            android:text="Accept Qty"
+            android:textColor="@color/textColor"
+            android:textSize="15dp"
+            android:textStyle="bold|italic" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_pi1"
+        android:layout_below="@+id/linearlayout_box_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/pi_item1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.5"
+            android:text="Box Name"
+            android:textColor="@color/textColor"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/pi_item1_actual_qty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.25"
+            android:text="Status"
+            android:textColor="@color/textColor"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/pi_item1_accept_qty"
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/linearlayout_username"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_pi2"
+        android:layout_below="@+id/linearlayout_pi1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/pi_item2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.5"
+            android:text="Box Name"
+            android:textColor="@color/textColor"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/pi_item2_actual_qty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.25"
+            android:text="Status"
+            android:textColor="@color/textColor"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/pi_item2_accept_qty"
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/linearlayout_username"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearlayout_pi3"
+        android:layout_below="@+id/linearlayout_pi2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/pi_item3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.5"
+            android:text="Box Name"
+            android:textColor="@color/textColor"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/pi_item3_actual_qty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.25"
+            android:text="Status"
+            android:textColor="@color/textColor"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/pi_item3_accept_qty"
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/linearlayout_username"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearlayout_pi4"
+        android:layout_below="@+id/linearlayout_pi3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/pi_item4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.5"
+            android:text="Box Name"
+            android:textColor="@color/textColor"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/pi_item4_actual_qty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.25"
+            android:text="Status"
+            android:textColor="@color/textColor"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/pi_item4_accept_qty"
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/linearlayout_username"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_pi5"
+        android:layout_below="@+id/linearlayout_pi4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/pi_item5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.5"
+            android:text="Box Name"
+            android:textColor="@color/textColor"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/pi_item5_actual_qty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:layout_weight="0.25"
+            android:text="Status"
+            android:textColor="@color/textColor"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/pi_item5_accept_qty"
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/linearlayout_username"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_btn_submit"
+        android:layout_below="@+id/linearlayout_pi5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginLeft="@dimen/top_margin"
+        android:layout_marginRight="@dimen/top_margin"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:text="Submit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.999"
+            android:layout_marginLeft="@dimen/fabulous_margin"
+            android:textSize="15sp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/cardview_light_background"
+            />
+    </LinearLayout>
+
+</RelativeLayout>
